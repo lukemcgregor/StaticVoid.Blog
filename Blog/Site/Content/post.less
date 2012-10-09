@@ -1,0 +1,145 @@
+@background: rgba(237,237,237,1);
+@post-shadow: 15;
+@post-border: 75;
+
+body
+{
+	background-color: @background;
+}
+
+.container
+{
+	margin-right: auto;
+	margin-left: auto;
+	max-width: 950px;
+}
+
+.post
+{
+	border-style: solid;
+	border-width: 1px;
+	border-color: gray;
+	padding: @post-border * 1px;
+	box-shadow: 0 0 @post-shadow * 1px gray;
+	-webkit-box-shadow: 0 0 @post-shadow * 1px gray;
+	-moz-box-shadow: 0 0 @post-shadow * 1px gray;
+	background-color: white;
+	position: relative;
+}
+
+h3.post-title
+{
+	font-family: Arial;
+	font-weight: normal;
+	text-align: center;
+	margin-top:-30px;
+	padding-bottom:25px;
+}
+
+.post-spacer
+{
+	height: 40px;
+}
+
+@next-post-height:0;
+@next-post-gradient-offset:50;
+
+.gradient-container
+{
+	position: relative;
+	padding: @post-shadow * 1px @post-shadow * 1px @post-shadow * 1px;
+	margin: @post-shadow * -1px @post-shadow * -1px @post-shadow * -1px;
+	cursor: hand;
+}
+
+.next-post
+{
+	height: @next-post-height * 1px;
+	border-top: none;
+	cursor:pointer;
+}
+
+.next-post .date{
+	margin-top:50px;
+}
+
+.next-post .post-title{
+	margin-top:15px;
+}
+
+.next-post-gradient
+{
+	position: absolute;
+	z-index: 2;
+	right: 0; left: 0; bottom: @next-post-gradient-offset *1px;
+	background-image: -moz-linear-gradient(top, @background, fade(@background,0%));
+	background-image: -webkit-gradient(linear, 0 0, 0 0%, from(@background), to(fade(@background,0%)));
+	background-image: -webkit-linear-gradient(top, @background, fade(@background,0%));
+	background-image: -o-linear-gradient(top, @background, fade(@background,0%));
+	background-image: linear-gradient(to bottom, @background,fade(@background,0%));
+	background-repeat: repeat-x;
+	height: (@next-post-height - @next-post-gradient-offset + (2 * @post-border)) * 1px;
+	pointer-events: none;
+}
+
+.next-post-cutoff
+{
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	left: 0;
+	top: 0;
+	background-color: @background;
+	height: ((2 * @post-shadow) + 1) * 1px;
+}
+
+/*jump location pushes off the top so that the bottom of the next post isnt hidden by the title bar*/
+#top-of-post{
+	position: absolute;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	height:65px;
+	pointer-events: none;
+}
+
+@prev-post-height:0;
+@prev-post-gradient-offset:50;
+
+.prev-post
+{
+	height: @prev-post-height * 1px;
+	border-bottom: none;
+	cursor:pointer;
+}
+
+.prev-post-gradient
+{
+	position: absolute;
+	z-index: 2;
+	right: 0; left: 0; top: @prev-post-gradient-offset * 1px;
+	background-image: -moz-linear-gradient(top, fade(@background,0%), @background);
+	background-image: -webkit-gradient(linear, 0 0, 0 0%, from(fade(@background,0%)), to(@background));
+	background-image: -webkit-linear-gradient(top, fade(@background,0%), @background);
+	background-image: -o-linear-gradient(top, fade(@background,0%), @background);
+	background-image: linear-gradient(to bottom, fade(@background,0%),@background);
+	background-repeat: repeat-x;
+	height: (@prev-post-height - @prev-post-gradient-offset + (2* @post-border)) * 1px;
+	pointer-events: none;
+}
+
+.prev-post-cutoff
+{
+	position: absolute;
+	z-index: 2;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background-color: @background;
+	height: ((2 * @post-shadow) + 1) * 1px;
+}
+
+pre code
+{
+	/*font-family:Consolas;*/
+}

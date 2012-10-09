@@ -1,0 +1,60 @@
+﻿@model IEnumerable<StaticVoid.Blog.Site.Areas.Authors.Models.PostModel>
+
+@{
+    ViewBag.Title = "Posts";
+}
+
+<div class="row">
+    <div class="span8">
+        <h2>Posts</h2>
+    </div>
+    <div class="span4">
+        <p>
+            @Html.ActionLink("New Post", "Create", new { }, new { @class = "btn pull-right" })
+        </p>
+    </div>
+</div>
+
+
+
+
+<table class="table table-hover">
+    <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Title
+            </td>
+            <td>
+                @item.Status.ToString() @(item.HasDraftContent && item.Status != StaticVoid.Blog.Data.PostStatus.Draft ? " (with draft edits)" : "")
+
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-small" })
+                @if (item.HasDraftContent)
+                {
+                    @Html.ActionLink("Preview", "Preview", new { area = "", controller = "Post", id = item.Id }, new { @class = "btn btn-info btn-small" })
+                }
+                @if (item.Status == StaticVoid.Blog.Data.PostStatus.Draft || item.Status == StaticVoid.Blog.Data.PostStatus.Unpublished)
+                {
+                    @Html.ActionLink("Publish", "Publish", new { id = item.Id }, new { @class = "btn btn-success btn-small" })
+                }
+                @if (item.Status == StaticVoid.Blog.Data.PostStatus.Published && item.HasDraftContent)
+                {
+                    @Html.ActionLink("Publish Update", "Publish", new { id = item.Id }, new { @class = "btn btn-success btn-small" })
+                }
+                @if (item.Status == StaticVoid.Blog.Data.PostStatus.Published)
+                {
+                    @Html.ActionLink("Un-publish", "UnPublish", new { id = item.Id }, new { @class = "btn btn-warning btn-small" })
+                }
+            </td>
+        </tr>
+    }
+
+</table>

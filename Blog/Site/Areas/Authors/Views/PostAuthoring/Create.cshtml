@@ -1,0 +1,34 @@
+﻿@model StaticVoid.Blog.Site.Areas.Authors.Models.PostCreateModel
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.Fluid = true;
+}
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    @Html.TextBoxFor(model => model.Title, new { placeholder = "Title", @class = "input-xxlarge" })
+    @Html.ValidationMessageFor(model => model.Title)
+
+    <div id="editor-row" class="row-fluid zero-height">
+        <div class="span6 vertical-fill">
+            <div class="mdd_toolbar"></div>
+            @Html.TextAreaFor(m => m.Body, new { id = "body-edit", @class = "horizontal-fill vertical-fill mdd_editor" })
+        </div>
+        <div id="editor-preview" class="span6 mdd_preview article"></div>
+    </div>
+    <div class="spacer"></div>
+    <p>
+        <input class="btn btn-success" type="submit" value="Save" />
+    </p>
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/editor")
+}

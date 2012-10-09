@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @if (ViewBag.Fluid == null)
+    {
+        ViewBag.Fluid = false;
+    }
+    <meta charset="utf-8" />
+    <title>StaticVoid - @ViewBag.Title </title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="robots" content="noindex,nofollow">
+
+    @Styles.Render("~/Content/style")
+    @RenderSection("Styles", false)
+
+    @*<meta name="viewport" content="width=device-width" />*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/prettify")
+
+    <script type="text/javascript">
+        $(function () {
+            prettyPrint();
+        });
+    </script>
+    @RenderSection("AdditionalHead", false);
+
+</head>
+<body  onload="prettyPrint()">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand" href="#">StaticVoid <small>//blog</small></a>
+                <ul class="nav">
+                    <li class="divider-vertical"></li>
+                    @*<li>@Html.ActionLink("My Projects","MyProjects","Project",new{ userId = 1 },new{})</li>*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    @RenderSection("masthead", false)
+    <div class="body-content">
+        @if (ViewBag.Fluid)
+        {
+            <div class="container-fluid">
+                @RenderBody()
+            </div>
+        }
+        else
+        {
+            <div class="container">
+                @RenderBody()
+            </div>
+        }
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,39 @@
+.body-content
+{
+	padding-top: 60px;
+}
+
+
+.horizontal-fill
+{
+	width: 100%;
+}
+.vertical-fill
+{
+	height:100%;
+}
+
+#editor-row
+{
+	padding-bottom:30px;
+}
+
+.spacer
+{ 
+	padding:10px;
+}
+
+.mdd_editor_wrap
+{
+	height:100%
+}
+
+#editor-preview
+{
+	padding-top:30px;
+}
+
+.article
+{
+	text-align:justify;
+}

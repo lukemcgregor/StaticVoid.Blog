@@ -1,0 +1,113 @@
+﻿@model StaticVoid.Blog.Site.Models.PostModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+@section Styles{
+    @Styles.Render("~/Content/post")
+}
+
+@section AdditionalHead{
+    <link rel="canonical" href="@Model.CanonicalUrl" />
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-35392503-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    @Scripts.Render("~/bundles/scrollto")
+}
+
+
+@if (Model.HasNextPost)
+{
+    <script type="text/javascript">
+        $(function () {
+            $('.next-post').click(function () {
+                window.location = '/@Model.NextPostLink';
+            });
+        });
+
+    </script>
+    <div class="gradient-container">
+        <div class="next-post post">
+            <div class="date">
+                <p>@Model.NextPostDate.Day.ToString() <span>@Model.NextPostDate.ToString("MMM")</span></p>
+            </div>
+            <h3 class="post-title">@Model.NextPostTitle</h3>
+        </div>
+        <div class="next-post-gradient"></div>
+        <div class="next-post-cutoff"></div>    
+        <div id="top-of-post"></div>
+    </div>
+
+    <div  class="post-spacer"></div>
+    
+    <script type="text/javascript">
+        $(function () {
+            if (window.innerHeight + 200 > $('.body-content').height()) {
+                $('.body-content').height(window.innerHeight + 200);
+            }
+            $.scrollTo('#top-of-post');
+        });
+    </script>
+}
+
+<div class="post">
+    <div class="date">
+        <p>@Model.Posted.Day.ToString()  <span>@Model.Posted.ToString("MMM")</span></p>
+    </div>
+    <h3 class="post-title">@Model.Title</h3>
+
+    <div class="article">
+        @Html.Raw(Model.Body)
+    </div>
+
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'svmagnesium'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+@if (Model.HasPreviousPost)
+{
+    <div class="post-spacer"></div>
+    <script type="text/javascript">
+        $(function () {
+            $('.prev-post').click(function () {
+                window.location= '/@Model.PreviousPostLink';
+            });
+        });
+
+    </script>
+    <div class="gradient-container">
+        <div class="prev-post post">
+            <div class="date">
+                <p>@Model.PreviousPostDate.Day.ToString() <span>@Model.PreviousPostDate.ToString("MMM")</span></p>
+            </div>
+            <h3 class="post-title">@Model.PreviousPostTitle</h3>
+        </div>
+        <div class="prev-post-gradient"></div>
+        <div class="prev-post-cutoff"></div>
+    </div>
+}
+
+<div id="length-push"></div>

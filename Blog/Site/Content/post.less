@@ -1,10 +1,13 @@
 @background: rgba(237,237,237,1);
 @post-shadow: 15;
 @post-border: 75;
+@nav-bar: rgba(11, 83, 148, 1);
+@nav-bar-dark: rgba(11, 83, 148, 1);
 
 body
 {
 	background-color: @background;
+	margin-top: 115px;
 }
 
 .container
@@ -99,7 +102,7 @@ h3.post-title
 	right: 0;
 	left: 0;
 	bottom: 0;
-	height:65px;
+	height:135px;
 	pointer-events: none;
 }
 
@@ -147,4 +150,31 @@ pre code
 
 #disqus_thread{
 	min-height:290px;
+}
+
+.navbar{
+	margin-top: 70px;
+}
+
+.titlebar{
+	text-align: center;
+	height:70px;
+	background-color:@background;
+}
+
+.navbar-inner {
+  background-color: @nav-bar;
+
+    /* Gradients for modern browsers, replace as you see fit */
+  background-image: -moz-linear-gradient(top, @nav-bar, @nav-bar-dark);
+  background-image: -ms-linear-gradient(top, @nav-bar, @nav-bar-dark);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@nav-bar), to(@nav-bar-dark));
+  background-image: -webkit-linear-gradient(top, @nav-bar, @nav-bar-dark);
+  background-image: -o-linear-gradient(top, @nav-bar, @nav-bar-dark);
+  background-image: linear-gradient(top, @nav-bar, @nav-bar-dark);
+  background-repeat: repeat-x;
+
+  /* IE8-9 gradient filter */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{nav-bar}', endColorstr='@{nav-bar-dark}', GradientType=0);
+
 }

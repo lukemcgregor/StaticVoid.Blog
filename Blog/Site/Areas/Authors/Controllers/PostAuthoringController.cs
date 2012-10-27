@@ -115,6 +115,8 @@ namespace StaticVoid.Blog.Site.Areas.Authors.Controllers
 		{
 			var post = _postRepository.GetBy(p => p.Id == id);
 
+			post.DraftTitle = post.Title;
+			post.DraftBody = post.Body;
 			post.Status = PostStatus.Unpublished;
 
 			_postRepository.Update(post);

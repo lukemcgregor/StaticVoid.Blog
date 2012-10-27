@@ -14,6 +14,12 @@ namespace StaticVoid.Blog.Site
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 			routes.MapRoute(
+				name: "Feed",
+				url: "feed/{action}",
+				defaults: new { controller = "Feed", action = "Atom" }
+			);
+
+			routes.MapRoute(
 				name: "Post",
 				url: "{year}/{month}/{day}/{title}",
 				defaults: new { controller = "Post", action = "Display" }

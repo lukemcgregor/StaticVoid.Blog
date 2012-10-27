@@ -18,6 +18,7 @@ namespace StaticVoid.Blog.Data
 
 		public DbSet<User> Users { get; set; }
 		public DbSet<Post> Posts { get; set; }
+		public DbSet<Visit> Visits { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

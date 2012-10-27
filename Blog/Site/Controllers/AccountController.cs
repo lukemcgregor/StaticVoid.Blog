@@ -11,7 +11,6 @@ using StaticVoid.Blog.Data;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
-
     [Authorize]
     public class AccountController : Controller
     {

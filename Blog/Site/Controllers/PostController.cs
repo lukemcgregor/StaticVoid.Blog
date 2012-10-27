@@ -12,10 +12,12 @@ namespace StaticVoid.Blog.Site.Controllers
 	public class PostController : Controller
 	{
 		private IRepository<Post> _postRepository;
+		private readonly VisitLoggerService _visitLogger;
 
-		public PostController(IRepository<Post> postRepository)
+		public PostController(IRepository<Post> postRepository, VisitLoggerService visitLogger)
 		{
 			_postRepository = postRepository;
+			_visitLogger = visitLogger;
 		}
 
 		public ActionResult Index()
@@ -27,6 +29,8 @@ namespace StaticVoid.Blog.Site.Controllers
 
 		public ActionResult Display(int year, int month, int day, string title)
 		{
+			_visitLogger.LogCurrentRequest();
+
 			var url =PostHelpers.MakeUrl(year, month, day, title);
 			var post = _postRepository.GetBy(p => p.Path == url);
 

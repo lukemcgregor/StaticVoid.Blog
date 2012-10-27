@@ -49,7 +49,5 @@ namespace StaticVoid.Blog.Site.Security
                 return _user.Nickname ?? string.Empty;
             }
         }
-
-
     }
 }

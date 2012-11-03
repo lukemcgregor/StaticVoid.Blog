@@ -15,7 +15,7 @@ namespace StaticVoid.Blog.Site
 
 			routes.MapRoute(
 				name: "Feed",
-				url: "feed/{action}",
+				url: "feed.{action}",
 				defaults: new { controller = "Feed", action = "Atom" }
 			);
 

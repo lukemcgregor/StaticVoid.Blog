@@ -232,17 +232,11 @@
     <Content Include="Content\date.css">
       <DependentUpon>trendy-date.less</DependentUpon>
     </Content>
-    <Content Include="Content\post.css">
-      <DependentUpon>post.less</DependentUpon>
-    </Content>
-    <Content Include="Content\post.min.css">
-      <DependentUpon>post.less</DependentUpon>
-    </Content>
     <Content Include="Content\trendy-date.less">
       <Compile>False</Compile>
       <Minify>False</Minify>
     </Content>
-    <Content Include="Content\post.less" />
+    <None Include="Content\post.less" />
     <Content Include="Content\Prettify\prettify.css" />
     <Content Include="Content\Prettify\Themes\desert.css" />
     <Content Include="Content\Prettify\Themes\sons-of-obsidian.css" />
@@ -311,6 +305,7 @@
     <Content Include="Images\aspNetHome.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\facebook.png" />
+    <Content Include="Images\feed-icon-28x28.png" />
     <Content Include="Images\findHosting.png" />
     <Content Include="Images\glyphicons-halflings-white.png" />
     <Content Include="Images\glyphicons-halflings.png" />
@@ -329,6 +324,9 @@
     <Content Include="Images\orderedList7.png" />
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
+    <Content Include="Images\twitter-bird-dark-bgs.png" />
+    <Content Include="Images\twitter-bird-light-bgs.png" />
+    <Content Include="Images\twitter-bird-light-bgs_56x56.png" />
     <Content Include="Images\twitter.png" />
     <Content Include="Images\windowsLive.png" />
     <Content Include="Scripts\bootstrap.js" />

@@ -1,4 +1,4 @@
-@background: rgba(237,237,237,1);
+@background: rgba(245,245,245,1);
 @post-shadow: 15;
 @post-border: 75;
 @nav-bar: rgba(11, 83, 148, 1);
@@ -160,21 +160,63 @@ pre code
 	text-align: center;
 	height:70px;
 	background-color:@background;
+	background-repeat:no-repeat;
+	background-position:center;
+	background-image: url(http://1.bp.blogspot.com/-_46Y-VcRHoU/TvsFHmFqJ_I/AAAAAAAAAIA/DHpsfMJUvCA/s320/static-void-blog-logo.png);
+}
+
+.button-bar{
+	.button:hover {
+		margin-top: 5px;
+	}
+	
+	@button-size:56;
+	.button{
+		float:left;
+		background-repeat:no-repeat;
+		background-position:center;
+		text-align: center;
+		height:@button-size * 1px;
+		width:@button-size * 1px;
+	
+		margin: 7px;
+		-webkit-transition: margin 0.5s ease-out;
+		-moz-transition: margin 0.5s ease-out;
+		-o-transition: margin 0.5s ease-out;
+
+		.button-filler{
+			width:@button-size * 1px;
+			height:@button-size * 1px;
+		}
+
+		a:link {text-decoration:none;}
+		a:visited {text-decoration:none;}
+		a:hover {text-decoration:none;}
+		a:active {text-decoration:none;}
+	}
+}
+
+.twitter-button{
+	background-image: url(/Images/twitter-bird-light-bgs_56x56.png);
+}
+
+.atom-button{
+	background-image: url(/Images/feed-icon-28x28.png);
 }
 
 .navbar-inner {
-  background-color: @nav-bar;
+  background-color: @nav-bar !important;
 
     /* Gradients for modern browsers, replace as you see fit */
-  background-image: -moz-linear-gradient(top, @nav-bar, @nav-bar-dark);
-  background-image: -ms-linear-gradient(top, @nav-bar, @nav-bar-dark);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@nav-bar), to(@nav-bar-dark));
-  background-image: -webkit-linear-gradient(top, @nav-bar, @nav-bar-dark);
-  background-image: -o-linear-gradient(top, @nav-bar, @nav-bar-dark);
-  background-image: linear-gradient(top, @nav-bar, @nav-bar-dark);
-  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
+  background-image: -ms-linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@nav-bar), to(@nav-bar-dark)) !important;
+  background-image: -webkit-linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
+  background-image: -o-linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
+  background-image: linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
+  background-repeat: repeat-x !important;
+  border:none !important;
 
   /* IE8-9 gradient filter */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{nav-bar}', endColorstr='@{nav-bar-dark}', GradientType=0);
-
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{nav-bar}', endColorstr='@{nav-bar-dark}', GradientType=0) !important;
 }

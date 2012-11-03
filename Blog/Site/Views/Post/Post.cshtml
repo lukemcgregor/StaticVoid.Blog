@@ -1,7 +1,7 @@
 ﻿@model StaticVoid.Blog.Site.Models.PostModel
 @{
     Layout = null;
- }
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +19,7 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/prettify")
     @Scripts.Render("~/bundles/scrollto")
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
 
     <script type="text/javascript">
         $(function () {
@@ -29,11 +30,24 @@
 </head>
 <body>
     <div class="titlebar navbar-fixed-top">
-        <img src="http://1.bp.blogspot.com/-_46Y-VcRHoU/TvsFHmFqJ_I/AAAAAAAAAIA/DHpsfMJUvCA/s320/static-void-blog-logo.png" alt="StaticVoid Blog" />
+        <div class="container">
+            <div class="button-bar pull-right">
+                <div class="button atom-button">
+                    <a href="/feed.atom"><div class="button-filler"></div></a>
+                </div>
+                <div class="button twitter-button">
+                    <a href="https://twitter.com/intent/user?screen_name=staticv0id"><div class="button-filler"></div></a>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
+                <ul class="nav pull-right">
+                    <li><a href="https://trello.com/b/NuqDdxdm">Vote for Topics</a></li>
+                </ul>
+
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -46,8 +60,8 @@
                     $(function () {
                         $('.next-post').click(function () {
                             window.location = '/@Model.NextPostLink';
-                });
-            });
+                        });
+                    });
 
                 </script>
                 <div class="gradient-container">
@@ -84,6 +98,13 @@
                     @Html.Raw(Model.Body)
                 </div>
 
+                <div class="post-footer">
+                    Say thanks by sharing: 
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
+                    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+                    <div class="g-plusone"></div>
+                </div>
+
                 <div id="disqus_thread"></div>
                 <script type="text/javascript">
                     /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
@@ -107,8 +128,8 @@
                     $(function () {
                         $('.prev-post').click(function () {
                             window.location = '/@Model.PreviousPostLink';
-            });
-        });
+                        });
+                    });
 
                 </script>
                 <div class="gradient-container">
@@ -139,7 +160,6 @@
             ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
-
     </script>
 </body>
 </html>

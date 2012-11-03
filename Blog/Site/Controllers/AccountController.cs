@@ -34,8 +34,7 @@ namespace StaticVoid.Blog.Site.Controllers
 					ClaimedIdentifier = user.ClaimedIdentifier,
 					Email = user.Email,
 					FirstName = user.FullName.Split(' ').First(),
-					LastName = user.FullName.Split(' ').Last(),
-					IsAuthor = true
+					LastName = user.FullName.Split(' ').Last()
 				});
 
                 var cookie = _openIdMembership.CreateFormsAuthenticationCookie(user);

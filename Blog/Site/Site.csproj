@@ -236,7 +236,7 @@
       <Compile>False</Compile>
       <Minify>False</Minify>
     </Content>
-    <None Include="Content\post.less" />
+    <Content Include="Content\post.less" />
     <Content Include="Content\Prettify\prettify.css" />
     <Content Include="Content\Prettify\Themes\desert.css" />
     <Content Include="Content\Prettify\Themes\sons-of-obsidian.css" />

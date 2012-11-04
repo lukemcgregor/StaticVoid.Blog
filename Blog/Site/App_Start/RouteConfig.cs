@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StaticVoid.Blog.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,9 +10,14 @@ namespace StaticVoid.Blog.Site
 {
 	public class RouteConfig
 	{
-		public static void RegisterRoutes(RouteCollection routes)
+		public static void RegisterRoutes(RouteCollection routes, IEnumerable<Redirect> redirects)
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            foreach (var redirect in redirects)
+            {
+                routes.Add(new Route(redirect.OldRoute, new RedirectRouteHandler(redirect.NewRoute, redirect.IsPermanent)));
+            }
 
 			routes.MapRoute(
 				name: "Feed",
@@ -35,7 +41,7 @@ namespace StaticVoid.Blog.Site
 				name: "Default",
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Post", action = "Index", id = UrlParameter.Optional }
-			);
+            );
 		}
 	}
 }

@@ -57,6 +57,8 @@
     <Compile Include="Entities\Post\PostExtensions.cs" />
     <Compile Include="Entities\Post\PostHelpers.cs" />
     <Compile Include="Entities\Post\PostRepositoryExtensions.cs" />
+    <Compile Include="Entities\Redirect\RedirectRepositoryExtensions.cs" />
+    <Compile Include="Entities\Redirect\Redirect.cs" />
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Entities\Visit\Visit.cs" />
     <Compile Include="Migrations\Configuration.cs" />

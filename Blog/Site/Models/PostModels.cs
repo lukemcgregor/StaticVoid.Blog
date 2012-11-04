@@ -12,14 +12,23 @@ namespace StaticVoid.Blog.Site.Models
 		public DateTime Posted { get; set; }
 		public String CanonicalUrl { get; set; }
 
-		public bool HasNextPost { get; set; }
-		public String NextPostTitle { get; set; }
-		public String NextPostLink { get; set; }
-		public DateTime NextPostDate { get; set; }
+        public PartialPostForLinkModel NextPost { get; set; }
 
-		public bool HasPreviousPost { get; set; }
-		public String PreviousPostTitle { get; set; }
-		public String PreviousPostLink { get; set; }
-		public DateTime PreviousPostDate { get; set; }
+        public PartialPostForLinkModel PreviousPost { get; set; }
+
+        public PostAuthor Author { get; set; }
 	}
+
+    public class PartialPostForLinkModel
+    {
+        public String Title { get; set; }
+        public String Link { get; set; }
+        public DateTime Date { get; set; }
+    }
+
+    public class PostAuthor
+    {
+        public string Name { get; set; }
+        public string GravatarUrl { get; set; }
+    }
 }

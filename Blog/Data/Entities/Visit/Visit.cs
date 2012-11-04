@@ -16,5 +16,6 @@ namespace StaticVoid.Blog.Data
 		public String Languages { get; set; }
 		public String Referrer { get; set; }
 		public DateTime Timestamp { get; set; }
+        public String AuthenticatedUser { get; set; }
 	}
 }

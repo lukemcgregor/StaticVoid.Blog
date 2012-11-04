@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StaticVoid.Blog.Data;
+using StaticVoid.Core.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,7 +21,7 @@ namespace StaticVoid.Blog.Site
 
 			WebApiConfig.Register(GlobalConfiguration.Configuration);
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-			RouteConfig.RegisterRoutes(RouteTable.Routes);
+			RouteConfig.RegisterRoutes(RouteTable.Routes, DependencyResolver.Current.GetService<IRepository<Redirect>>().GetRedirects());
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 		}
 	}

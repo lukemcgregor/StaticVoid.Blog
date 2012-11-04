@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Models;
 using StaticVoid.Core.Repository;
+using StaticVoid.Blog.Site.Gravitar;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
@@ -32,35 +33,44 @@ namespace StaticVoid.Blog.Site.Controllers
 			_visitLogger.LogCurrentRequest();
 
 			var url =PostHelpers.MakeUrl(year, month, day, title);
-			var post = _postRepository.GetBy(p => p.Path == url);
+			var post = _postRepository.GetBy(p => p.Path == url, p=>p.Author);
 
 			var prevPost = _postRepository.GetPostBefore(post);
 			var nextPost = _postRepository.GetPostAfter(post);
 
 			var md = new MarkdownDeep.Markdown();
 
-			var model = new PostModel
-			{
-				Body = md.Transform(post.Body),
-				Title = post.Title,
-				HasNextPost = nextPost!=null,
-				HasPreviousPost = prevPost!= null,
-				Posted = post.Posted,
-				CanonicalUrl = post.Canonical
-			};
+            var model = new PostModel
+            {
+                Body = md.Transform(post.Body),
+                Title = post.Title,
+                Posted = post.Posted,
+                CanonicalUrl = post.Canonical,
+                Author = new PostAuthor
+                {
+                    GravatarUrl = post.Author.Email.GravitarUrlFromEmail(),
+                    Name = String.Format("{0} {1}", post.Author.FirstName,post.Author.LastName)
+                }
+            };
 
 			if(prevPost!= null)
 			{
-				model.PreviousPostDate = prevPost.Posted;
-				model.PreviousPostLink =prevPost.Path;
-				model.PreviousPostTitle = prevPost.Title;
+                model.PreviousPost = new PartialPostForLinkModel
+                {
+                    Date = prevPost.Posted,
+				    Link = prevPost.Path,
+				    Title = prevPost.Title
+                };
 			}
 
 			if(nextPost!= null)
 			{
-				model.NextPostDate = nextPost.Posted;
-				model.NextPostLink =nextPost.Path;
-				model.NextPostTitle = nextPost.Title;
+                model.NextPost = new PartialPostForLinkModel
+                {
+                    Date = nextPost.Posted,
+                    Link = nextPost.Path,
+                    Title = nextPost.Title
+                };
 			}
 
 			return View("Post", model);

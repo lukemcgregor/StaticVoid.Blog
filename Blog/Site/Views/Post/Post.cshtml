@@ -55,12 +55,12 @@
     </div>
     <div class="body-content">
         <div class="container">
-            @if (Model.HasNextPost)
+            @if (Model.NextPost != null)
             {
                 <script type="text/javascript">
                     $(function () {
                         $('.next-post').click(function () {
-                            window.location = '/@Model.NextPostLink';
+                            window.location = '/@Model.NextPost.Link';
                         });
                     });
 
@@ -68,9 +68,9 @@
                 <div class="gradient-container">
                     <div class="next-post post">
                         <div class="date">
-                            <p>@Model.NextPostDate.Day.ToString() <span>@Model.NextPostDate.ToString("MMM")</span></p>
+                            <p>@Model.NextPost.Date.Day.ToString() <span>@Model.NextPost.Date.ToString("MMM")</span></p>
                         </div>
-                        <h3 class="post-title">@Model.NextPostTitle</h3>
+                        <h3 class="post-title">@Model.NextPost.Title</h3>
                     </div>
                     <div class="next-post-gradient"></div>
                     <div class="next-post-cutoff"></div>
@@ -94,7 +94,9 @@
                     <p>@Model.Posted.Day.ToString()  <span>@Model.Posted.ToString("MMM")</span></p>
                 </div>
                 <h3 class="post-title">@Model.Title</h3>
-
+                <div class="author-flair">
+                    <img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" />
+                </div>
                 <div class="article">
                     @Html.Raw(Model.Body)
                 </div>
@@ -122,13 +124,13 @@
                 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
             </div>
 
-            @if (Model.HasPreviousPost)
+            @if (Model.PreviousPost != null)
             {
                 <div class="post-spacer"></div>
                 <script type="text/javascript">
                     $(function () {
                         $('.prev-post').click(function () {
-                            window.location = '/@Model.PreviousPostLink';
+                            window.location = '/@Model.PreviousPost.Link';
                         });
                     });
 
@@ -136,9 +138,9 @@
                 <div class="gradient-container">
                     <div class="prev-post post">
                         <div class="date">
-                            <p>@Model.PreviousPostDate.Day.ToString() <span>@Model.PreviousPostDate.ToString("MMM")</span></p>
+                            <p>@Model.PreviousPost.Date.Day.ToString() <span>@Model.PreviousPost.Date.ToString("MMM")</span></p>
                         </div>
-                        <h3 class="post-title">@Model.PreviousPostTitle</h3>
+                        <h3 class="post-title">@Model.PreviousPost.Title</h3>
                     </div>
                     <div class="prev-post-gradient"></div>
                     <div class="prev-post-cutoff"></div>

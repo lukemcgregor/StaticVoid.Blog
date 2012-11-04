@@ -14,7 +14,8 @@ namespace StaticVoid.Blog.Data.Migrations
 
 		protected override void Seed(StaticVoid.Blog.Data.BlogContext context)
 		{
-			//  This method will be called after migrating to the latest version.
+#if DEBUG			
+            //  This method will be called after migrating to the latest version.
 
 			//  You can use the DbSet<T>.AddOrUpdate() helper extension method 
 			//  to avoid creating duplicate seed data. E.g.
@@ -31,6 +32,7 @@ namespace StaticVoid.Blog.Data.Migrations
 
 			context.Users.AddOrUpdate(admin);
 
+
 			var postDate = new DateTime(2012, 10, 7, 12, 0, 0);
 
 			context.Posts.AddOrUpdate(
@@ -42,7 +44,8 @@ namespace StaticVoid.Blog.Data.Migrations
 					Body = "First Post!",
 					Posted = postDate,
 					Status = PostStatus.Published,
-					Path = PostHelpers.MakeUrl(postDate.Year, postDate.Month, postDate.Day, "First Post")
+					Path = PostHelpers.MakeUrl(postDate.Year, postDate.Month, postDate.Day, "First Post"),
+                    Canonical = "/"+ PostHelpers.MakeUrl(postDate.Year, postDate.Month, postDate.Day, "First Post")
 				});
 
 			postDate=postDate.AddDays(1);
@@ -55,8 +58,10 @@ namespace StaticVoid.Blog.Data.Migrations
 					Body = "Second Post!",
 					Posted = postDate,
 					Status = PostStatus.Published,
-					Path = PostHelpers.MakeUrl(postDate.Year, postDate.Month, postDate.Day, "Second Post")
+                    Path = PostHelpers.MakeUrl(postDate.Year, postDate.Month, postDate.Day, "Second Post"),
+                    Canonical = "/" + PostHelpers.MakeUrl(postDate.Year, postDate.Month, postDate.Day, "Second Post")
 				});
+#endif
 		}
 	}
 }

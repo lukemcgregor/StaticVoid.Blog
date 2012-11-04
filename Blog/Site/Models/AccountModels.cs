@@ -8,6 +8,7 @@ using DotNetOpenAuth.OpenId.Extensions.AttributeExchange;
 using DotNetOpenAuth.OpenId.Extensions.SimpleRegistration;
 using System.Security.Cryptography;
 using System.Text;
+using StaticVoid.Blog.Site.Gravitar;
 
 namespace StaticVoid.Blog.Site.Models
 {
@@ -79,15 +80,7 @@ namespace StaticVoid.Blog.Site.Models
 		{
 			get
 			{
-				if (String.IsNullOrWhiteSpace(_gravatarUrl))
-				{
-					var md5 = MD5.Create();
-					var hashedEmail = BitConverter.ToString(md5.ComputeHash(new UTF8Encoding().GetBytes(Email.Trim().ToLower()))).Replace("-", "").ToLower();
-
-					_gravatarUrl = String.Format("http://www.gravatar.com/avatar/{0}", hashedEmail);
-				}
-
-				return _gravatarUrl;
+                return Email.GravitarUrlFromEmail();
 			}
 		}
     }

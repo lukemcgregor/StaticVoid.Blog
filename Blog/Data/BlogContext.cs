@@ -19,9 +19,17 @@ namespace StaticVoid.Blog.Data
 		public DbSet<User> Users { get; set; }
 		public DbSet<Post> Posts { get; set; }
 		public DbSet<Visit> Visits { get; set; }
+        public DbSet<Redirect> Redirects { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
+            modelBuilder.Entity<Redirect>().Property(r => r.NewRoute).IsRequired();
+            modelBuilder.Entity<Redirect>().Property(r => r.OldRoute).IsRequired();
+
+            modelBuilder.Entity<Post>().HasRequired(r => r.Author);
+            modelBuilder.Entity<Post>().Property(r => r.Status).IsRequired();
+            modelBuilder.Entity<Post>().Property(r => r.Canonical).IsRequired();
+            modelBuilder.Entity<Post>().Property(r => r.Path).IsRequired();
 		}
 	}
 }

@@ -34,7 +34,8 @@ namespace StaticVoid.Blog.Site.Controllers
 					ClaimedIdentifier = user.ClaimedIdentifier,
 					Email = user.Email,
 					FirstName = user.FullName.Split(' ').First(),
-					LastName = user.FullName.Split(' ').Last()
+					LastName = user.FullName.Split(' ').Last(),
+                    CreatedVia = Request.Url.Authority
 				});
 
                 var cookie = _openIdMembership.CreateFormsAuthenticationCookie(user);
@@ -63,7 +64,7 @@ namespace StaticVoid.Blog.Site.Controllers
         {
             FormsAuthentication.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Post");
         }
     }
 }

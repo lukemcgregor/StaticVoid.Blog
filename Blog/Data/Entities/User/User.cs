@@ -13,5 +13,6 @@ namespace StaticVoid.Blog.Data
 		public string LastName { get; set; }
 		public string Email { get; set; }
 		public bool IsAuthor { get; set; }
+        public string CreatedVia { get; set; }
 	}
 }

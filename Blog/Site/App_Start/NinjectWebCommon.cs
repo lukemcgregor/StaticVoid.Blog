@@ -13,6 +13,7 @@ namespace StaticVoid.Blog.Site
 	using Ninject.Web.Common;
 	using StaticVoid.Blog.Data;
 	using StaticVoid.Blog.Site.Security;
+    using System.Data.Entity;
 
     public static class NinjectWebCommon 
     {
@@ -43,7 +44,8 @@ namespace StaticVoid.Blog.Site
         private static IKernel CreateKernel()
         {
 			var kernel = new StandardKernel();
-			kernel.Load(new PersistanceModule());
+            kernel.Load(new PersistanceModule());
+            kernel.Bind<DbContext>().To<BlogContext>().InRequestScope();
 			kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
 			kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 			kernel.Bind<OpenIdMembershipService>().ToSelf().InTransientScope();

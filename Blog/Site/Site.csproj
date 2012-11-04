@@ -203,7 +203,6 @@
     <Compile Include="AuthoritiveUrl.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\RedirectController.cs" />
     <Compile Include="Extensions\GravatarExtensions.cs" />
@@ -400,9 +399,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Post\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>

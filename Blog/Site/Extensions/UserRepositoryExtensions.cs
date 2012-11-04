@@ -13,9 +13,9 @@ namespace StaticVoid.Blog.Site
 		{
 			var currentUser = SecurityHelper.CurrentUser;
 
-			if (currentUser != null && !String.IsNullOrWhiteSpace(currentUser.Email))
+			if (currentUser != null && !String.IsNullOrWhiteSpace(currentUser.ClaimedIdentifier))
 			{
-				return repo.GetBy(u=>u.Email == currentUser.Email);
+                return repo.GetBy(u => u.ClaimedIdentifier == currentUser.ClaimedIdentifier);
 			}
 
 			return null;

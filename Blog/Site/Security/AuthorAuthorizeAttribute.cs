@@ -26,8 +26,8 @@ namespace StaticVoid.Blog.Site.Security
 		{
 			if (!HttpContext.Current.User.Identity.IsAuthenticated || 
 				SecurityHelper.CurrentUser == null || 
-				String.IsNullOrWhiteSpace(SecurityHelper.CurrentUser.Email) || 
-				!_userRepository.GetBy(u => u.Email == SecurityHelper.CurrentUser.Email).IsAuthor)
+				String.IsNullOrWhiteSpace(SecurityHelper.CurrentUser.ClaimedIdentifier) ||
+                !_userRepository.GetBy(u => u.ClaimedIdentifier == SecurityHelper.CurrentUser.ClaimedIdentifier).IsAuthor)
 			{
 				filterContext.Result = new HttpUnauthorizedResult();
 			}

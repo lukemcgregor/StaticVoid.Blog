@@ -51,6 +51,7 @@ namespace StaticVoid.Blog.Site
 			kernel.Bind<OpenIdMembershipService>().ToSelf().InTransientScope();
 			kernel.BindFilter<MyAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<AuthorAuthorizeAttribute>();
 			kernel.BindFilter<MyAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<AuthorAuthorizeAttribute>();
+            kernel.Bind<IAuthoritiveUrl>().To<AuthoritiveUrl>();
             
             RegisterServices(kernel);
             return kernel;

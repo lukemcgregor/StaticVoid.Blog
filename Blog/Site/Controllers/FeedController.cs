@@ -12,20 +12,34 @@ namespace StaticVoid.Blog.Site.Controllers
     public class FeedController : Controller
     {
 		private IRepository<Post> _postRepository;
+        private string _siteUrl;
 
-		public FeedController(IRepository<Post> postRepository)
+		public FeedController(IRepository<Post> postRepository, IAuthoritiveUrl authoritiveUrl)
 		{
 			_postRepository = postRepository;
+            _siteUrl = authoritiveUrl.Url;
 		}
 
 		private SyndicationFeed GenerateFeed()
-		{
-			var postItems = _postRepository.PublishedPosts().OrderByDescending(p=>p.Posted).Take(25).AsEnumerable()
-				.Select(p => new SyndicationItem(p.Title, p.Body, new Uri("http://blog.staticvoid.co.nz/" + p.Path)));
+        {
+            var md = new MarkdownDeep.Markdown();
+            List<SyndicationItem> posts = new List<SyndicationItem>();
+            foreach (var post in _postRepository.PublishedPosts().OrderByDescending(p => p.Posted).Take(25).AsEnumerable())
+            {
+                var item = new SyndicationItem(post.Title, post.Body, new Uri(_siteUrl + post.Path));
 
-			return new SyndicationFeed("", "", new Uri("http://blog.staticvoid.co.nz"), postItems)
+                item.Title = new TextSyndicationContent(post.Title);
+                item.Content = new TextSyndicationContent(md.Transform(post.Body), TextSyndicationContentKind.Html);
+                item.PublishDate = new DateTimeOffset(post.Posted);
+                item.LastUpdatedTime = new DateTimeOffset(post.Posted);
+                                
+                posts.Add(item);
+            }
+
+            return new SyndicationFeed("StaticVoid", "A blog on .Net", new Uri(_siteUrl), posts)
 			{
-				Language = "en-US"
+				Language = "en-US",
+                LastUpdatedTime = posts.Max(p=>p.LastUpdatedTime)
 			};
 		}
 

@@ -11,9 +11,9 @@ namespace StaticVoid.Blog.Site
         string Url { get; }
     }
 
-    public class AuthoritiveUrl
+    public class AuthoritiveUrl:IAuthoritiveUrl
     {
-        string Url
+        public string Url
         {
             get
             {

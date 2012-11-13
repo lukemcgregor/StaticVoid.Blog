@@ -29,8 +29,8 @@ namespace StaticVoid.Blog.Site.Controllers
             var user = _openIdMembership.GetUser();
             if (user != null)
             {
-				_userRepository.EnsureUser(new User
-				{
+				var authenticatedUser = _userRepository.EnsureUser(new User
+			    {
 					ClaimedIdentifier = user.ClaimedIdentifier,
 					Email = user.Email,
 					FirstName = user.FullName.Split(' ').First(),
@@ -38,8 +38,11 @@ namespace StaticVoid.Blog.Site.Controllers
                     CreatedVia = Request.Url.Authority
 				});
 
-                var cookie = _openIdMembership.CreateFormsAuthenticationCookie(user);
-                HttpContext.Response.Cookies.Add(cookie);
+                if (authenticatedUser.IsAuthor)
+                {
+                    var cookie = _openIdMembership.CreateFormsAuthenticationCookie(user);
+                    HttpContext.Response.Cookies.Add(cookie);
+                }
 
                 return new RedirectResult(Request.Params["ReturnUrl"] ?? "/");
             }

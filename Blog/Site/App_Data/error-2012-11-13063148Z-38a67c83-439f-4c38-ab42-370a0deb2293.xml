@@ -1,0 +1,165 @@
+﻿<error errorId="38a67c83-439f-4c38-ab42-370a0deb2293" application="/LM/W3SVC/5/ROOT" host="DALI" type="System.Web.HttpException" message="The controller for path '/favicon.ico' was not found or does not implement IController." source="System.Web.Mvc" detail="System.Web.HttpException (0x80004005): The controller for path '/favicon.ico' was not found or does not implement IController.&#xD;&#xA;   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)&#xD;&#xA;   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController&amp; controller, IControllerFactory&amp; factory)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="Luke McGregor" time="2012-11-13T06:31:48.4752427Z" statusCode="404">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:keep-alive&#xD;&#xA;HTTP_ACCEPT:*/*&#xD;&#xA;HTTP_ACCEPT_CHARSET:ISO-8859-1,utf-8;q=0.7,*;q=0.3&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip,deflate,sdch&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US,en;q=0.8&#xD;&#xA;HTTP_COOKIE:openid_provider=google; .ASPXAUTH=488999735C2F5AF66DEE6AFFCF9C986290ED5C2FFF8E9852CB35DC3846D90CC0AC42C03AB57126291073C359349017A912C9A11A83C3475C6A0A1ED53A10178DBFE055C90A8A1EFFF6488418F5859950A3D6AB850D134C55627FF9A0A31F35EC28992E97F1FD825FF916D661F9C94683B4B3629A7A9444B60DC22694DCE0181CF9BA2A81BC9DBDBD9C01D9832C360E14CA6FD54050682ACDE0647EA6599659C5A7C5CF6302D5C545F906D3E5DF9093FAD3897D308E903790D8CCEEFBF6AE7799ABACEAAC75C6218B1DB06044EE99D4371AABDA7CC99EFBC157BE5F759A7EB2A585593F2B9667F34C2F661ED6B048DFF077A1AC1C3D000EA9CF7477E63CAB3CEAC48F4B12C8E2DE5F69F81956791B15B6CCF2B7BD558B068BD3DBAAB95A584CBEEEB81E1A9F801FF2A92508CFF96C463DDDB4559C1B12BAE8C4709A166ECD2926BB1C92BD2F9E8486F384E02FF8D05A8A2B6851CD2F3B0860E67A09186AF4331D4B24E1477040D6C1729CE58F7608B4F8&#xD;&#xA;HTTP_HOST:localhost:34899&#xD;&#xA;HTTP_USER_AGENT:Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: keep-alive&#xD;&#xA;Accept: */*&#xD;&#xA;Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3&#xD;&#xA;Accept-Encoding: gzip,deflate,sdch&#xD;&#xA;Accept-Language: en-US,en;q=0.8&#xD;&#xA;Cookie: openid_provider=google; .ASPXAUTH=488999735C2F5AF66DEE6AFFCF9C986290ED5C2FFF8E9852CB35DC3846D90CC0AC42C03AB57126291073C359349017A912C9A11A83C3475C6A0A1ED53A10178DBFE055C90A8A1EFFF6488418F5859950A3D6AB850D134C55627FF9A0A31F35EC28992E97F1FD825FF916D661F9C94683B4B3629A7A9444B60DC22694DCE0181CF9BA2A81BC9DBDBD9C01D9832C360E14CA6FD54050682ACDE0647EA6599659C5A7C5CF6302D5C545F906D3E5DF9093FAD3897D308E903790D8CCEEFBF6AE7799ABACEAAC75C6218B1DB06044EE99D4371AABDA7CC99EFBC157BE5F759A7EB2A585593F2B9667F34C2F661ED6B048DFF077A1AC1C3D000EA9CF7477E63CAB3CEAC48F4B12C8E2DE5F69F81956791B15B6CCF2B7BD558B068BD3DBAAB95A584CBEEEB81E1A9F801FF2A92508CFF96C463DDDB4559C1B12BAE8C4709A166ECD2926BB1C92BD2F9E8486F384E02FF8D05A8A2B6851CD2F3B0860E67A09186AF4331D4B24E1477040D6C1729CE58F7608B4F8&#xD;&#xA;Host: localhost:34899&#xD;&#xA;User-Agent: Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="/LM/W3SVC/5/ROOT" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="C:\Users\luke\Documents\GitHub\lukemcgregor\StaticVoid.Blog\Blog\Site\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="Luke McGregor" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="*****" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="Luke McGregor" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="Luke McGregor" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="CGI/1.1" />
+    </item>
+    <item name="HTTPS">
+      <value string="off" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="5" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="/LM/W3SVC/5" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/favicon.ico" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="C:\Users\luke\Documents\GitHub\lukemcgregor\StaticVoid.Blog\Blog\Site\favicon.ico" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="::1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="60926" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/favicon.ico" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="34899" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="Microsoft-IIS/8.0" />
+    </item>
+    <item name="URL">
+      <value string="/favicon.ico" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="keep-alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="*/*" />
+    </item>
+    <item name="HTTP_ACCEPT_CHARSET">
+      <value string="ISO-8859-1,utf-8;q=0.7,*;q=0.3" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip,deflate,sdch" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US,en;q=0.8" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="openid_provider=google; .ASPXAUTH=488999735C2F5AF66DEE6AFFCF9C986290ED5C2FFF8E9852CB35DC3846D90CC0AC42C03AB57126291073C359349017A912C9A11A83C3475C6A0A1ED53A10178DBFE055C90A8A1EFFF6488418F5859950A3D6AB850D134C55627FF9A0A31F35EC28992E97F1FD825FF916D661F9C94683B4B3629A7A9444B60DC22694DCE0181CF9BA2A81BC9DBDBD9C01D9832C360E14CA6FD54050682ACDE0647EA6599659C5A7C5CF6302D5C545F906D3E5DF9093FAD3897D308E903790D8CCEEFBF6AE7799ABACEAAC75C6218B1DB06044EE99D4371AABDA7CC99EFBC157BE5F759A7EB2A585593F2B9667F34C2F661ED6B048DFF077A1AC1C3D000EA9CF7477E63CAB3CEAC48F4B12C8E2DE5F69F81956791B15B6CCF2B7BD558B068BD3DBAAB95A584CBEEEB81E1A9F801FF2A92508CFF96C463DDDB4559C1B12BAE8C4709A166ECD2926BB1C92BD2F9E8486F384E02FF8D05A8A2B6851CD2F3B0860E67A09186AF4331D4B24E1477040D6C1729CE58F7608B4F8" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:34899" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="openid_provider">
+      <value string="google" />
+    </item>
+    <item name=".ASPXAUTH">
+      <value string="488999735C2F5AF66DEE6AFFCF9C986290ED5C2FFF8E9852CB35DC3846D90CC0AC42C03AB57126291073C359349017A912C9A11A83C3475C6A0A1ED53A10178DBFE055C90A8A1EFFF6488418F5859950A3D6AB850D134C55627FF9A0A31F35EC28992E97F1FD825FF916D661F9C94683B4B3629A7A9444B60DC22694DCE0181CF9BA2A81BC9DBDBD9C01D9832C360E14CA6FD54050682ACDE0647EA6599659C5A7C5CF6302D5C545F906D3E5DF9093FAD3897D308E903790D8CCEEFBF6AE7799ABACEAAC75C6218B1DB06044EE99D4371AABDA7CC99EFBC157BE5F759A7EB2A585593F2B9667F34C2F661ED6B048DFF077A1AC1C3D000EA9CF7477E63CAB3CEAC48F4B12C8E2DE5F69F81956791B15B6CCF2B7BD558B068BD3DBAAB95A584CBEEEB81E1A9F801FF2A92508CFF96C463DDDB4559C1B12BAE8C4709A166ECD2926BB1C92BD2F9E8486F384E02FF8D05A8A2B6851CD2F3B0860E67A09186AF4331D4B24E1477040D6C1729CE58F7608B4F8" />
+    </item>
+  </cookies>
+</error>

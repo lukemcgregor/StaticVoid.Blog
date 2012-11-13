@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace StaticVoid.Blog.Site.Areas.Authors
+namespace StaticVoid.Blog.Site.Areas.Manage
 {
 	public class AuthorsAreaRegistration : AreaRegistration
 	{
@@ -8,15 +8,15 @@ namespace StaticVoid.Blog.Site.Areas.Authors
 		{
 			get
 			{
-				return "Authors";
+				return "Manage";
 			}
 		}
 
 		public override void RegisterArea(AreaRegistrationContext context)
 		{
 			context.MapRoute(
-				"Authors_default",
-				"Authors/{controller}/{action}/{id}",
+				"Manage_default",
+				"Manage/{controller}/{action}/{id}",
 				new { controller = "Dashboard", action = "Index", id = UrlParameter.Optional }
 			);
 		}

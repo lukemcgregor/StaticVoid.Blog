@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StaticVoid.Blog.Data;
-using StaticVoid.Blog.Site.Areas.Authors.Models;
+using StaticVoid.Blog.Site.Areas.Manage.Models;
 using StaticVoid.Blog.Site.Security;
 using StaticVoid.Core.Repository;
 
-namespace StaticVoid.Blog.Site.Areas.Authors.Controllers
+namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
 	[AuthorAuthorize]
 	public class PostAuthoringController : Controller

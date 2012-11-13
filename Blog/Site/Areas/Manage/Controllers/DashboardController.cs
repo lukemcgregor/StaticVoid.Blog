@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using StaticVoid.Blog.Site.Security;
 
-namespace StaticVoid.Blog.Site.Areas.Authors.Controllers
+namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
 	[AuthorAuthorize]
     public class DashboardController : Controller

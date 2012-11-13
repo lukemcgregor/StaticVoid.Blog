@@ -30,5 +30,6 @@ namespace StaticVoid.Blog.Site.Models
     {
         public string Name { get; set; }
         public string GravatarUrl { get; set; }
+        public string GooglePlusProfileUrl { get; set; }
     }
 }

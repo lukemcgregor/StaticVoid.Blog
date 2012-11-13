@@ -13,11 +13,13 @@ namespace StaticVoid.Blog.Site.Controllers
     {
 		private IRepository<Post> _postRepository;
         private string _siteUrl;
+        private Guid _blogGuid;
 
-		public FeedController(IRepository<Post> postRepository, IAuthoritiveUrl authoritiveUrl)
+		public FeedController(IRepository<Post> postRepository, IProvideBlogConfiguration blogConfig)
 		{
 			_postRepository = postRepository;
-            _siteUrl = authoritiveUrl.Url;
+            _siteUrl = blogConfig.CurrentBlog.AuthoritiveUrl;
+            _blogGuid = blogConfig.CurrentBlog.BlogGuid;
 		}
 
 		private SyndicationFeed GenerateFeed()
@@ -32,6 +34,7 @@ namespace StaticVoid.Blog.Site.Controllers
                 item.Content = new TextSyndicationContent(md.Transform(post.Body), TextSyndicationContentKind.Html);
                 item.PublishDate = new DateTimeOffset(post.Posted);
                 item.LastUpdatedTime = new DateTimeOffset(post.Posted);
+                item.Id = post.PostGuid.ToString();
                                 
                 posts.Add(item);
             }
@@ -39,7 +42,8 @@ namespace StaticVoid.Blog.Site.Controllers
             return new SyndicationFeed("StaticVoid", "A blog on .Net", new Uri(_siteUrl), posts)
 			{
 				Language = "en-US",
-                LastUpdatedTime = posts.Max(p=>p.LastUpdatedTime)
+                LastUpdatedTime = posts.Max(p=>p.LastUpdatedTime),
+                Id= _blogGuid.ToString()
 			};
 		}
 

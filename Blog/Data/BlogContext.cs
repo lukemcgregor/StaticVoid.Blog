@@ -20,6 +20,7 @@ namespace StaticVoid.Blog.Data
 		public DbSet<Post> Posts { get; set; }
 		public DbSet<Visit> Visits { get; set; }
         public DbSet<Redirect> Redirects { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{

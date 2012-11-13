@@ -34,10 +34,14 @@
         <div class="container">
             <div class="button-bar pull-right">
                 <div class="button atom-button">
-                    <a href="/feed.atom"><div class="button-filler"></div></a>
+                    <a href="/feed.atom">
+                        <div class="button-filler"></div>
+                    </a>
                 </div>
                 <div class="button twitter-button">
-                    <a href="https://twitter.com/intent/user?screen_name=staticv0id"><div class="button-filler"></div></a>
+                    <a href="https://twitter.com/intent/user?screen_name=staticv0id">
+                        <div class="button-filler"></div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -95,17 +99,25 @@
                 </div>
                 <h3 class="post-title">@Model.Title</h3>
                 <div class="author-flair">
-                    <img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" />
+                    @if(String.IsNullOrWhiteSpace(Model.Author.GooglePlusProfileUrl)){
+                        <img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" />
+                    }else{ 
+                        <a href="@(Model.Author.GooglePlusProfileUrl)?rel=author"><img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" /></a>
+                    }
                 </div>
                 <div class="article">
                     @Html.Raw(Model.Body)
                 </div>
 
-                <div class="post-footer">
-                    Say thanks by sharing: 
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a>
-                    @*<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>*@
-                    <div class="g-plusone"></div>
+                <div class="post-footer row">
+                    <div class="span5 offset2">
+                        <span>Say thanks by sharing: </span>
+                        <div class="twitter-share"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a></div>
+                        @*<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>*@
+                        <div class="plus-one">
+                            <div class="g-plusone"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="disqus_thread"></div>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using StaticVoid.Blog.Data;
 
-namespace StaticVoid.Blog.Site.Areas.Authors.Models
+namespace StaticVoid.Blog.Site.Areas.Manage.Models
 {
 	public class PostCreateModel
 	{

@@ -20,6 +20,8 @@ namespace StaticVoid.Blog.Data
 
 		public String Canonical { get; set; }
 		public String Path { get; set; }
+
+        public Guid PostGuid { get; set; }
 	}
 
 	public enum PostStatus

@@ -55,9 +55,18 @@ namespace StaticVoid.Blog.Site.Controllers
             };
 
             model.OtherPosts = new List<PartialPostForLinkModel>();
-            model.OtherPosts.AddRange(_postRepository.GetAll().OrderBy(p=>p.Posted).Where(p => p.Posted > post.Posted).Take(5).Select(p=> new PartialPostForLinkModel{ Title = p.Title, IsCurrentPost = false, Link =p.Path}) );
+            model.OtherPosts.AddRange(_postRepository.GetAll()
+                .OrderBy(p => p.Posted)
+                .Where(p => p.Posted > post.Posted)
+                .Take(5)
+                .OrderByDescending(p => p.Posted)
+                .Select(p => new PartialPostForLinkModel { Title = p.Title, IsCurrentPost = false, Link = p.Path }));
             model.OtherPosts.Add(new PartialPostForLinkModel { Link = post.Path, IsCurrentPost = true, Title = post.Title });
-            model.OtherPosts.AddRange(_postRepository.GetAll().OrderByDescending(p => p.Posted).Where(p => p.Posted < post.Posted).Take(5).Select(p => new PartialPostForLinkModel { Title = p.Title, IsCurrentPost = false, Link = p.Path }));
+            model.OtherPosts.AddRange(_postRepository.GetAll()
+                .OrderByDescending(p => p.Posted)
+                .Where(p => p.Posted < post.Posted)
+                .Take(5)
+                .Select(p => new PartialPostForLinkModel { Title = p.Title, IsCurrentPost = false, Link = p.Path }));
 
 			if(prevPost!= null)
 			{

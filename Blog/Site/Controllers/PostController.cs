@@ -54,6 +54,11 @@ namespace StaticVoid.Blog.Site.Controllers
                 }
             };
 
+            model.OtherPosts = new List<PartialPostForLinkModel>();
+            model.OtherPosts.AddRange(_postRepository.GetAll().Where(p => p.Posted > post.Posted).Take(5).Select(p=> new PartialPostForLinkModel{ Title = p.Title, IsCurrentPost = false, Link =p.Path}) );
+            model.OtherPosts.Add(new PartialPostForLinkModel { Link = post.Path, IsCurrentPost = true, Title = post.Title });
+            model.OtherPosts.AddRange(_postRepository.GetAll().Where(p => p.Posted < post.Posted).Take(5).Select(p => new PartialPostForLinkModel { Title = p.Title, IsCurrentPost = false, Link = p.Path }));
+
 			if(prevPost!= null)
 			{
                 model.PreviousPost = new PartialPostForLinkModel

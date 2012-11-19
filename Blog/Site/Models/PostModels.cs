@@ -17,6 +17,8 @@ namespace StaticVoid.Blog.Site.Models
         public PartialPostForLinkModel PreviousPost { get; set; }
 
         public PostAuthor Author { get; set; }
+
+        public List<PartialPostForLinkModel> OtherPosts { get; set; }
 	}
 
     public class PartialPostForLinkModel
@@ -24,6 +26,7 @@ namespace StaticVoid.Blog.Site.Models
         public String Title { get; set; }
         public String Link { get; set; }
         public DateTime Date { get; set; }
+        public bool IsCurrentPost { get; set; }
     }
 
     public class PostAuthor

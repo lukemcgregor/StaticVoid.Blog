@@ -34,12 +34,12 @@
     <div class="titlebar navbar-fixed-top">
         <div class="container">
             <div class="button-bar pull-right">
-                <div class="button atom-button">
+                <div class="button atom-button" title="Atom Feed">
                     <a href="/feed.atom">
                         <div class="button-filler"></div>
                     </a>
                 </div>
-                <div class="button twitter-button">
+                <div class="button twitter-button" title="Twitter">
                     <a href="https://twitter.com/intent/user?screen_name=staticv0id">
                         <div class="button-filler"></div>
                     </a>
@@ -50,11 +50,10 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
+                @Html.Partial("_LoginPartial")                
                 <ul class="nav pull-right">
                     <li><a href="https://trello.com/b/NuqDdxdm">Vote for Topics</a></li>
                 </ul>
-
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
@@ -66,9 +65,10 @@
                         <li class="nav-header">Other Posts</li>
                         @foreach (var p in Model.OtherPosts)
                         {
-                            <li class='@(p.IsCurrentPost? "active" : "")'><a href="/@p.Link">@p.Title</a></li>
-                            if(Model.OtherPosts.Last() != p){
-                                <li class="divider"></li>
+                            <li class='@(p.IsCurrentPost ? "active" : "")'><a href="/@p.Link">@p.Title</a></li>
+                            if (Model.OtherPosts.Last() != p)
+                            {
+                            <li class="divider"></li>
                             }
                         }
                     </ul>
@@ -128,13 +128,15 @@
                             @Html.Raw(Model.Body)
                         </div>
 
-                        <div class="post-footer row">
-                            <div class="span5 offset2">
-                                <span>Say thanks by sharing: </span>
-                                <div class="twitter-share"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a></div>
-                                @*<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>*@
-                                <div class="plus-one">
-                                    <div class="g-plusone"></div>
+                        <div class="post-footer">
+                            <div class="row">
+                                <div class="span5 offset2">
+                                    <span>Say thanks by sharing: </span>
+                                    <div class="twitter-share"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a></div>
+                                    @*<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>*@
+                                    <div class="plus-one">
+                                        <div class="g-plusone"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -153,6 +155,11 @@
                         </script>
                         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
                         <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                        <div class="row class copyright">
+                            <div class="span10">
+                                Luke McGregor &copy; 2012, Reproduce only with written concent from the author.
+                            </div>
+                        </div>
                     </div>
 
                     @if (Model.PreviousPost != null)

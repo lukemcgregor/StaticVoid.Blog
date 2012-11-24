@@ -55,7 +55,7 @@ namespace StaticVoid.Blog.Site.Controllers
             };
 
             model.OtherPosts = new List<PartialPostForLinkModel>();
-            model.OtherPosts.AddRange(_postRepository.GetAll()
+            model.OtherPosts.AddRange(_postRepository.PublishedPosts()
                 .OrderBy(p => p.Posted)
                 .Where(p => p.Posted > post.Posted)
                 .Take(5)

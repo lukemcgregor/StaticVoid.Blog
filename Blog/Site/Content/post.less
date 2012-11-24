@@ -1,6 +1,7 @@
 @background: rgba(245,245,245,1);
 @post-shadow: 15;
 @post-border: 75;
+@footer-height: 75;
 @nav-bar: rgba(11, 83, 148, 1);
 @nav-bar-dark: rgba(11, 83, 148, 1);
 
@@ -27,6 +28,20 @@ body
 	-moz-box-shadow: 0 0 @post-shadow * 1px gray;
 	background-color: white;
 	position: relative;
+}
+
+.post-list-container,
+.post-list{
+	margin-left:0px;
+}
+
+.post-list{
+	padding-left:0px;
+	padding-right:0px;
+}
+
+.post-list .divider {
+	margin: 3px -15px;
 }
 
 h3.post-title
@@ -204,20 +219,52 @@ pre code
 }
 
 .navbar-inner {
-  background-color: @nav-bar !important;
+  background-color: @nav-bar ;
 
     /* Gradients for modern browsers, replace as you see fit */
-  background-image: -moz-linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
-  background-image: -ms-linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@nav-bar), to(@nav-bar-dark)) !important;
-  background-image: -webkit-linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
-  background-image: -o-linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
-  background-image: linear-gradient(top, @nav-bar, @nav-bar-dark) !important;
-  background-repeat: repeat-x !important;
-  border:none !important;
+  background-image: -moz-linear-gradient(top, @nav-bar, @nav-bar-dark) ;
+  background-image: -ms-linear-gradient(top, @nav-bar, @nav-bar-dark) ;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(@nav-bar), to(@nav-bar-dark)) ;
+  background-image: -webkit-linear-gradient(top, @nav-bar, @nav-bar-dark) ;
+  background-image: -o-linear-gradient(top, @nav-bar, @nav-bar-dark) ;
+  background-image: linear-gradient(top, @nav-bar, @nav-bar-dark) ;
+  background-repeat: repeat-x ;
+  border:none ;
 
   /* IE8-9 gradient filter */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='@{nav-bar}', endColorstr='@{nav-bar-dark}', GradientType=0) !important;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle{
+	background-color: @nav-bar-dark ;
+		color: #fff;
+
+}
+.navbar .nav li.dropdown > .dropdown-toggle .caret {
+border-top-color: #aaa;
+border-bottom-color: #aaa;
+}
+
+.navbar .nav li.dropdown.open > .dropdown-toggle .caret, .navbar .nav li.dropdown.active > .dropdown-toggle .caret, .navbar .nav li.dropdown.open.active > .dropdown-toggle .caret {
+border-top-color: #fff;
+border-bottom-color: #fff;
+}
+
+.navbar .nav > li > a{
+	color: #aaa;
+	text-shadow: none;
+}
+
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover {
+  color: #fff;
+}
+
+
+.navbar .nav > .active > a,
+.navbar .nav > .active > a:hover,
+.navbar .nav > .active > a:focus{
+	color: #fff;
 }
 
 .author-flair {

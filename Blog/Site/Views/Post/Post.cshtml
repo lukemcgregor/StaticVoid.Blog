@@ -25,6 +25,7 @@
     <script type="text/javascript">
         $(function () {
             prettyPrint();
+            //$('.post-list').width($('.post-list').parent().innerWidth());
         });
     </script>
 
@@ -46,7 +47,7 @@
             </div>
         </div>
     </div>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
                 <ul class="nav pull-right">
@@ -60,12 +61,15 @@
     <div class="body-content">
         <div class="container">
             <div class="row">
-                <div class="span2">
-                    <ul class="nav nav-list affix">
+                <div class="span2 post-list-container">
+                    <ul class="nav nav-list affix post-list span2">
                         <li class="nav-header">Other Posts</li>
                         @foreach (var p in Model.OtherPosts)
                         {
                             <li class='@(p.IsCurrentPost? "active" : "")'><a href="/@p.Link">@p.Title</a></li>
+                            if(Model.OtherPosts.Last() != p){
+                                <li class="divider"></li>
+                            }
                         }
                     </ul>
                 </div>

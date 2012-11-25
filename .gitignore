@@ -67,3 +67,7 @@ packages/
 # Public Script #
 #################
 PublishProfiles
+
+# Elmah Errors #
+################
+Blog/Site/App_Data/error-*

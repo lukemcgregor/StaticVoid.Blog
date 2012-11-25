@@ -199,12 +199,14 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RedirectRouting.cs" />
     <Compile Include="Areas\Manage\Controllers\BlogConfigurationController.cs" />
+    <Compile Include="Areas\Manage\Controllers\RedirectsController.cs" />
     <Compile Include="Areas\Manage\ManageAreaRegistration.cs" />
     <Compile Include="Areas\Manage\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Manage\Controllers\PostAuthoringController.cs" />
     <Compile Include="Areas\Manage\Models\BlogConfigurationModels.cs" />
     <Compile Include="Areas\Manage\Models\DashboardModels.cs" />
     <Compile Include="Areas\Manage\Models\PostModels.cs" />
+    <Compile Include="Areas\Manage\Models\RedirectsModels.cs" />
     <Compile Include="CachedCurrentBlogProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
@@ -350,6 +352,9 @@
     <Content Include="Areas\Manage\Views\PostAuthoring\Edit.cshtml" />
     <Content Include="Areas\Manage\Views\PostAuthoring\Index.cshtml" />
     <Content Include="Areas\Manage\Views\BlogConfiguration\Edit.cshtml" />
+    <Content Include="Areas\Manage\Views\Redirects\Index.cshtml" />
+    <Content Include="Areas\Manage\Views\Redirects\DeleteModal.cshtml" />
+    <Content Include="Areas\Manage\Views\Redirects\CreateModal.cshtml" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\editor.js" />
@@ -376,6 +381,7 @@
     <Content Include="Content\mdd_modal_background.png" />
     <Content Include="Content\mdd_styles.css" />
     <Content Include="Content\mdd_toolbar.png" />
+    <Content Include="Scripts\modals.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\openid-en.js" />
     <Content Include="Scripts\openid-jquery.js" />

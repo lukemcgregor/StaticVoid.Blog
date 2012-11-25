@@ -1,0 +1,63 @@
+﻿@model IEnumerable<StaticVoid.Blog.Site.Areas.Manage.Models.RedirectModel>
+
+@{
+    ViewBag.Title = "Redirects";
+}
+
+
+
+<div class="row">
+    <div class="span8">
+        <h2>Redirects</h2>
+    </div>
+    <div class="span4">
+        <p>
+            @Html.ActionLink("Add Redirect", "Create", new { }, new {id = "add-redirect", @class = "btn pull-right" })
+        </p>
+    </div>
+</div>
+
+<div class="alert">
+  <button type="button" class="close" data-dismiss="alert">×</button>
+  <strong>Note:</strong> Redirects are only applied at app start so setting up redirects here will not have any effect until the next app recycle.
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td>From</td>
+            <td>To</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td><a href="@r.From">@r.From</a></td>
+                <td><a href="@r.To">@r.To</a></td>
+                <td>@(r.Temporary ? "Temporary" : "Permanant")</td>
+                <td>@Html.ActionLink("Remove Redirect", "Delete", new { id = r.Id }, new {id = "delete-redirect", @class = "btn btn-danger btn-small" })</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div id='delete-redirect-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("Delete")'>
+    <div id='delete-redirect-container'>
+    </div>
+</div>
+
+<div id='add-redirect-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("Create")'>
+    <div id='add-redirect-container'>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        setupModal('add-redirect', true);
+        setupModal('delete-redirect', true);
+    });
+</script>

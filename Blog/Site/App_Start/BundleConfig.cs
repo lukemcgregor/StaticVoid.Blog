@@ -43,6 +43,9 @@ namespace StaticVoid.Blog.Site
 						"~/Scripts/jquery.ba-resize.js",
 						"~/Scripts/editor.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/modals").Include(
+                        "~/Scripts/modals.js"));
+
 			bundles.Add(new StyleBundle("~/Content/css/openid").Include(
 						"~/Content/openid-shadow.css",
 						"~/Content/openid.css"));

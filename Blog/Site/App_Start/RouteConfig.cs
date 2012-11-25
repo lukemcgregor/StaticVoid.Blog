@@ -16,7 +16,7 @@ namespace StaticVoid.Blog.Site
 
             foreach (var redirect in redirects)
             {
-                routes.Add(new Route(redirect.OldRoute, new RedirectRouteHandler(redirect.NewRoute, redirect.IsPermanent)));
+                routes.Add(new Route(redirect.OldRoute.TrimStart('/', '~'), new RedirectRouteHandler(redirect.NewRoute.TrimStart('/', '~'), redirect.IsPermanent)));
             }
 
 			routes.MapRoute(

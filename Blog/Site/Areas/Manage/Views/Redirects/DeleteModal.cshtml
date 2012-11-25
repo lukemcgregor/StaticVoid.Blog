@@ -1,0 +1,25 @@
+﻿@model StaticVoid.Blog.Site.Areas.Manage.Models.RedirectModel
+
+@{
+    ViewBag.Title = "Remove Redirect";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Delete @(Model.Temporary ? "Temporary" : "Permanant") Redirect</h3>
+</div>
+
+
+@using (Html.BeginForm("Delete", "Redirects", FormMethod.Post, new { @class = "modal-form" }))
+{
+    @Html.ValidationSummary(true)
+    
+    <div class="modal-body">
+        <a href="@Model.From">@Model.From</a> -&gt; <a href="@Model.To">@Model.To</a>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-danger" type="submit">Confirm Remove</button>
+    </div>
+}

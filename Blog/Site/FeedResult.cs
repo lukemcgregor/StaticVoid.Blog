@@ -14,34 +14,35 @@ namespace StaticVoid.Blog.Site
 		public Encoding ContentEncoding { get; set; }
 		public string ContentType { get; set; }
 
-		private readonly SyndicationFeedFormatter feed;
+		private readonly SyndicationFeedFormatter _feed;
 		public SyndicationFeedFormatter Feed
 		{
-			get { return feed; }
+			get { return _feed; }
 		}
 
 		public FeedResult(SyndicationFeedFormatter feed)
 		{
-			this.feed = feed;
+			this._feed = feed;
 		}
+
+        public FeedResult(SyndicationFeedFormatter feed, string contentType) : this(feed)
+        {
+            ContentType = contentType;
+        }
 
 		public override void ExecuteResult(ControllerContext context)
 		{
-			if (context == null)
-				throw new ArgumentNullException("context");
-
 			HttpResponseBase response = context.HttpContext.Response;
-			response.ContentType = !string.IsNullOrEmpty(ContentType) ? ContentType : "application/rss+xml";
+			response.ContentType = "application/rss+xml";
 
-			if (ContentEncoding != null)
-				response.ContentEncoding = ContentEncoding;
-
-			if (feed != null)
-				using (var xmlWriter = new XmlTextWriter(response.Output))
-				{
-					xmlWriter.Formatting = Formatting.Indented;
-					feed.WriteTo(xmlWriter);
-				}
+            if (_feed != null)
+            {
+                using (var xmlWriter = new XmlTextWriter(response.Output))
+                {
+                    xmlWriter.Formatting = Formatting.Indented;
+                    _feed.WriteTo(xmlWriter);
+                }
+            }
 		}
 	}
 }

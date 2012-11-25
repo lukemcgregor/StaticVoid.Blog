@@ -11,6 +11,12 @@ body
 	margin-top: 115px;
 }
 
+@media (max-width: 979px) {
+	body{
+		margin-top: 0px;
+	}
+}
+
 .container
 {
 	margin-right: auto;
@@ -166,7 +172,7 @@ pre code
 	min-height:290px;
 }
 
-.navbar{
+.navbar.navbar-fixed-top{
 	margin-top: 70px;
 }
 
@@ -193,7 +199,7 @@ pre code
 		height:@button-size * 1px;
 		width:@button-size * 1px;
 	
-		margin-top: 15px;
+		margin-top: 14px;
 		-webkit-transition: margin 0.15s ease-out;
 		-moz-transition: margin 0.15s ease-out;
 		-o-transition: margin 0.15s ease-out;

@@ -49,7 +49,7 @@ namespace StaticVoid.Blog.Site.Controllers
 
 		public ActionResult Atom()
 		{
-			return new FeedResult(new Atom10FeedFormatter(GenerateFeed()));
+			return new FeedResult(new Atom10FeedFormatter(GenerateFeed()), "application/atom+xml");
 		}
     }
 }

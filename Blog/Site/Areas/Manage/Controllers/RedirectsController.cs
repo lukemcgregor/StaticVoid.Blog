@@ -73,7 +73,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult Create()
         {
-            return PartialView("CreateModal");
+            return PartialView("CreateModal", new RedirectModel { Temporary = true  });
         }
 
         [HttpPost]
@@ -84,8 +84,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 _redirectRepository.Create(new Redirect
                 {
                     IsPermanent = !model.Temporary,
-                    OldRoute = model.From,
-                    NewRoute = model.To
+                    OldRoute = model.From.TrimStart('/'),
+                    NewRoute = "/" + model.To.TrimStart('/')
                 });
                 return Json(new { success = true });
             }

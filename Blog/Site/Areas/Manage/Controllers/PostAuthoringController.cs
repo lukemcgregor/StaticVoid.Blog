@@ -26,11 +26,12 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
 		public ActionResult Index()
 		{
-			return View(_postRepository.GetAll().AsEnumerable().Select(p => new PostModel
+			return View(_postRepository.GetAll().AsEnumerable().OrderByDescending(p=>p.Posted).Select(p => new PostModel
 					{
 						Id = p.Id,
 						Title = p.GetDraftTitle(),
 						Status = p.Status,
+                        Posted = p.Posted,
 						HasDraftContent= p.HasDraftContent()
 					}));
 		}
@@ -176,5 +177,15 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             return PartialView("EditPostUrlModal", model);
         }
 
+        public ActionResult RebuildAllUrls()
+        {
+            var posts = _postRepository.GetAll().ToList();
+            foreach (var post in posts)
+            {
+                post.Path = PostHelpers.MakeUrl(post.Posted.Year, post.Posted.Month, post.Posted.Day, post.Title);
+                _postRepository.Update(post);
+            }
+            return RedirectToAction("Index");
+        }
 	}
 }

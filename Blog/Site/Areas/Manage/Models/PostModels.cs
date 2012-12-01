@@ -28,7 +28,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Models
 		public String Title { get; set; }
 		public PostStatus Status { get; set; }
 		public bool HasDraftContent { get; set; }
-	}
+        public DateTime Posted { get; set; }
+    }
 
     public class PostUrlEditModel
     {

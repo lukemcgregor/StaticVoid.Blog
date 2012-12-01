@@ -22,6 +22,7 @@
     <tr>
         <th>Title</th>
         <th>Status</th>
+        <th>Posted</th>
         <th></th>
     </tr>
 
@@ -33,7 +34,9 @@
             </td>
             <td>
                 @item.Status.ToString() @(item.HasDraftContent && item.Status != StaticVoid.Blog.Data.PostStatus.Draft ? " (with draft edits)" : "")
-
+            </td>
+            <td>
+                @item.Posted.ToLongDateString()
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-small" })

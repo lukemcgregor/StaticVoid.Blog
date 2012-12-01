@@ -46,13 +46,23 @@ namespace StaticVoid.Blog.Site
             bundles.Add(new ScriptBundle("~/bundles/modals").Include(
                         "~/Scripts/modals.js"));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/postscripts").Include(
+                        "~/Scripts/jquery-1.8.2.js",
+                        "~/Scripts/modernizr-*",
+                        "~/Scripts/bootstrap.js",
+                        "~/Scripts/Prettify/prettify.js",
+                        "~/Scripts/jquery.scrollTo.js"));
+
+
 			bundles.Add(new StyleBundle("~/Content/css/openid").Include(
 						"~/Content/openid-shadow.css",
 						"~/Content/openid.css"));
 
 			var post = new StyleBundle("~/Content/post").Include(
 						"~/Content/post.less",
-						"~/Content/trendy-date.less");
+						"~/Content/trendy-date.less",
+						"~/Content/Prettify/prettify.css");
 			post.Transforms.Clear();
 			post.Transforms.Add(new LessTransform());
 			post.Transforms.Add(new CssMinify());

@@ -14,5 +14,10 @@ namespace StaticVoid.Blog.Data
 		{
 			return repo.GetAll().AsNoTracking().AsEnumerable();
 		}
+
+        public static Redirect GetRedirectFor(this IRepository<Redirect> repo, string url)
+        {
+            return repo.GetBy(r => r.OldRoute == url);
+        }
 	}
 }

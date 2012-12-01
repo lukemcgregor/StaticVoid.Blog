@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StaticVoid.Blog.Data;
+using StaticVoid.Core.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,10 +9,29 @@ using System.Web.Mvc;
 namespace StaticVoid.Blog.Site.Controllers
 {
     public class RedirectController : Controller
-    {
-        public ActionResult From(string path)
+    {       
+        private readonly IRepository<Redirect> _redirectRepository;
+
+        public RedirectController(IRepository<Redirect> redirectRepository)
         {
-            return View();
+            _redirectRepository = redirectRepository;
+        }
+
+        public ActionResult ProcessRedirect(string path)
+        {
+            var redirect = _redirectRepository.GetRedirectFor(path);
+            if (redirect == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            else if(redirect.IsPermanent)
+            {
+                return RedirectPermanent(redirect.NewRoute);
+            }
+            else
+            {
+                return Redirect(redirect.NewRoute);
+            }
         }
 
     }

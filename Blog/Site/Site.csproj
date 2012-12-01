@@ -197,7 +197,8 @@
     <Compile Include="App_Start\BundleTransforms\LessTransform.cs" />
     <Compile Include="App_Start\EntityFrameworkConfiguration.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
-    <Compile Include="App_Start\RedirectRouting.cs" />
+    <Compile Include="Routing\PostRouteConstraint.cs" />
+    <Compile Include="Routing\RedirectRouteConstraint.cs" />
     <Compile Include="Areas\Manage\Controllers\BlogConfigurationController.cs" />
     <Compile Include="Areas\Manage\Controllers\RedirectsController.cs" />
     <Compile Include="Areas\Manage\ManageAreaRegistration.cs" />
@@ -233,7 +234,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Routing\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="App_Readme\Elmah.txt" />
     <Content Include="Content\blog.css" />
@@ -355,6 +356,7 @@
     <Content Include="Areas\Manage\Views\Redirects\Index.cshtml" />
     <Content Include="Areas\Manage\Views\Redirects\DeleteModal.cshtml" />
     <Content Include="Areas\Manage\Views\Redirects\CreateModal.cshtml" />
+    <Content Include="Areas\Manage\Views\PostAuthoring\EditPostUrlModal.cshtml" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\editor.js" />

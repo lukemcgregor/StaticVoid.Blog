@@ -28,12 +28,11 @@ namespace StaticVoid.Blog.Site.Controllers
 			return Redirect("/" + post.Path);
 		}
 
-		public ActionResult Display(int year, int month, int day, string title)
+		public ActionResult Display(string path)
 		{
 			_visitLogger.LogCurrentRequest();
 
-			var url =PostHelpers.MakeUrl(year, month, day, title);
-			var post = _postRepository.GetBy(p => p.Path == url, p=>p.Author);
+			var post = _postRepository.GetPostAtUrl(path, p=>p.Author);
 
 			var prevPost = _postRepository.GetPostBefore(post);
 			var nextPost = _postRepository.GetPostAfter(post);

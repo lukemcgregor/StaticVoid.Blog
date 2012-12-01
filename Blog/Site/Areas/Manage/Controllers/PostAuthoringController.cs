@@ -123,5 +123,43 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
 			return RedirectToAction("Index");
 		}
+
+        public ActionResult EditPostUrl(int id)
+        {
+            var post = _postRepository.GetBy(p => p.Id == id);
+            
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            return PartialView("EditPostUrlModal", new PostUrlEditModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Url = post.Path
+            });
+        }
+
+        [HttpPost]
+        public ActionResult EditPostUrl(int id, PostUrlEditModel model)
+        {
+            var post = _postRepository.GetBy(p => p.Id == id);
+
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+            if (ModelState.IsValid)
+            {
+                post.Path = model.Url;
+
+                _postRepository.Update(post);
+                return Json(new { success = true });
+            }
+
+            return PartialView("EditPostUrlModal", model);
+        }
+
 	}
 }

@@ -53,8 +53,21 @@
                 {
                     @Html.ActionLink("Un-publish", "UnPublish", new { id = item.Id }, new { @class = "btn btn-warning btn-small" })
                 }
+                @Html.ActionLink("Edit Post Url", "EditPostUrl", new { id = item.Id }, new {id = "edit-post-url", @class = "btn btn-small" })
             </td>
         </tr>
     }
 
 </table>
+
+
+<div id='edit-post-url-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("EditPostUrl")'>
+    <div id='edit-post-url-container'>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        setupModal('edit-post-url');
+    });
+</script>

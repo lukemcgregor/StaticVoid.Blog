@@ -1,4 +1,5 @@
 ﻿using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,9 @@ namespace StaticVoid.Blog.Site
 {
 	public class RouteConfig
 	{
-		public static void RegisterRoutes(RouteCollection routes, IEnumerable<Redirect> redirects)
+		public static void RegisterRoutes(RouteCollection routes)
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            foreach (var redirect in redirects)
-            {
-                routes.Add(new Route(redirect.OldRoute.TrimStart('/', '~'), new RedirectRouteHandler(redirect.NewRoute.TrimStart('/', '~'), redirect.IsPermanent)));
-            }
-
 			routes.MapRoute(
 				name: "Feed",
 				url: "feed.{action}",
@@ -26,16 +21,28 @@ namespace StaticVoid.Blog.Site
 			);
 
 			routes.MapRoute(
-				name: "Post",
-				url: "{year}/{month}/{day}/{title}",
-				defaults: new { controller = "Post", action = "Display" }
-			);
-
-			routes.MapRoute(
 				name: "Preview",
 				url: "Preview/{id}",
 				defaults: new { controller = "Post", action = "Preview" }
 			);
+
+            var redirectConstraint = new RedirectRouteConstraint();
+
+            routes.MapRoute(
+                name: "Redirect",
+                url: "{*Path}",
+                defaults: new { controller = "Redirect", action = "ProcessRedirect" },
+                constraints: new { redirectConstraint }
+            );
+
+
+            var postConstraint = new PostRouteConstraint();
+            routes.MapRoute(
+                name: "Post",
+                url: "{*Path}",
+                defaults: new { controller = "Post", action = "Display" },
+                constraints: new { postConstraint }
+            );
 
 			routes.MapRoute(
 				name: "Default",

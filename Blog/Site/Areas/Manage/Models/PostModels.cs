@@ -29,4 +29,11 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Models
 		public PostStatus Status { get; set; }
 		public bool HasDraftContent { get; set; }
 	}
+
+    public class PostUrlEditModel
+    {
+        public int Id { get; set; }
+        public String Title { get; set; }
+        public String Url { get; set; }
+    }
 }

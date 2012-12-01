@@ -53,7 +53,7 @@
                 {
                     @Html.ActionLink("Un-publish", "UnPublish", new { id = item.Id }, new { @class = "btn btn-warning btn-small" })
                 }
-                @Html.ActionLink("Edit Post Url", "EditPostUrl", new { id = item.Id }, new {id = "edit-post-url", @class = "btn btn-small" })
+                @Html.ActionLink("Edit Post Url", "EditPostUrl", new { id = item.Id }, new {@class = "btn btn-small edit-post-url" })
             </td>
         </tr>
     }

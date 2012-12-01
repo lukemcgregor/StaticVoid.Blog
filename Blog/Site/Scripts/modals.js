@@ -1,5 +1,5 @@
 ﻿function setupModal (modalId, refresh, loadFunctionName) {
-    $('#' + modalId).click(function () {
+    $('.' + modalId).click(function () {
         $('#' + modalId+'-container').load(this.href, function () {
             $('#' + modalId + '-modal').modal({
                 backdrop: 'static',

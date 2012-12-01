@@ -12,7 +12,7 @@
     </div>
     <div class="span4">
         <p>
-            @Html.ActionLink("Add Redirect", "Create", new { }, new {id = "add-redirect", @class = "btn pull-right" })
+            @Html.ActionLink("Add Redirect", "Create", new { }, new { @class = "btn pull-right add-redirect" })
         </p>
     </div>
 </div>
@@ -38,7 +38,7 @@
                 <td><a href="@r.From">@r.From</a></td>
                 <td><a href="@r.To">@r.To</a></td>
                 <td>@(r.Temporary ? "Temporary" : "Permanant")</td>
-                <td>@Html.ActionLink("Remove Redirect", "Delete", new { id = r.Id }, new {id = "delete-redirect", @class = "btn btn-danger btn-small" })</td>
+                <td>@Html.ActionLink("Remove Redirect", "Delete", new { id = r.Id }, new {@class = "btn btn-danger btn-small delete-redirect" })</td>
             </tr>
         }
     </tbody>

@@ -20,11 +20,17 @@ namespace StaticVoid.Blog.Site.Controllers
         public ActionResult ProcessRedirect(string path)
         {
             var redirect = _redirectRepository.GetRedirectFor(path);
+
             if (redirect == null)
             {
                 return new HttpNotFoundResult();
             }
-            else if(redirect.IsPermanent)
+            else if(!redirect.NewRoute.StartsWith("/"))
+            {
+                redirect.NewRoute =  "/" + redirect.NewRoute;
+            }
+
+            if(redirect.IsPermanent)
             {
                 return RedirectPermanent(redirect.NewRoute);
             }

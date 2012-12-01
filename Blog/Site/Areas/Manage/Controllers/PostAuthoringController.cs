@@ -15,11 +15,13 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 	{
 		private readonly IRepository<Post> _postRepository;
 		private readonly IRepository<User> _userRepository;
+        private readonly IRepository<Redirect> _redirectRepository;
 
-		public PostAuthoringController(IRepository<Post> postRepository, IRepository<User> userRepository)
+        public PostAuthoringController(IRepository<Post> postRepository, IRepository<User> userRepository, IRepository<Redirect> redirectRepository)
 		{
 			_postRepository = postRepository;
 			_userRepository = userRepository;
+            _redirectRepository = redirectRepository;
 		}
 
 		public ActionResult Index()
@@ -151,10 +153,23 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 return HttpNotFound();
             }
             if (ModelState.IsValid)
-            {
+            {                
+                _redirectRepository.Create(new Redirect
+                {
+                    IsPermanent = false,//TODO when im more confident in this functionality make this permanant
+                    NewRoute= model.Url,
+                    OldRoute = post.Path
+                });
+
+                //Change the cannonical URL if the current URL was set to canonical
+                if (post.Path.TrimStart('/') == post.Canonical.TrimStart('/'))
+                {
+                    post.Canonical = "/" + model.Url.TrimStart('/');
+                }
                 post.Path = model.Url;
 
                 _postRepository.Update(post);
+
                 return Json(new { success = true });
             }
 

@@ -1,6 +1,6 @@
 ﻿using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Routing;
-using StaticVoid.Core.Repository;
+using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

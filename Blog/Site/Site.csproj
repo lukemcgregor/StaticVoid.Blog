@@ -115,8 +115,8 @@
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.MVC3.3.0.0.6\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Core.Repository">
-      <HintPath>..\packages\StaticVoid.Core.Repository.1.2.4\lib\net40\StaticVoid.Core.Repository.dll</HintPath>
+    <Reference Include="StaticVoid.Repository">
+      <HintPath>..\packages\StaticVoid.Repository.2.0.0-beta1\lib\net45\StaticVoid.Repository.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -197,6 +197,7 @@
     <Compile Include="App_Start\BundleTransforms\LessTransform.cs" />
     <Compile Include="App_Start\EntityFrameworkConfiguration.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="Extensions\BlogRepositoryExtensions.cs" />
     <Compile Include="Routing\PostRouteConstraint.cs" />
     <Compile Include="Routing\RedirectRouteConstraint.cs" />
     <Compile Include="Areas\Manage\Controllers\BlogConfigurationController.cs" />
@@ -208,7 +209,6 @@
     <Compile Include="Areas\Manage\Models\DashboardModels.cs" />
     <Compile Include="Areas\Manage\Models\PostModels.cs" />
     <Compile Include="Areas\Manage\Models\RedirectsModels.cs" />
-    <Compile Include="CachedCurrentBlogProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -220,7 +220,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IProvideBlogConfiguration.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\PostModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -354,7 +353,7 @@
     <Content Include="Areas\Manage\Views\PostAuthoring\Create.cshtml" />
     <Content Include="Areas\Manage\Views\PostAuthoring\Edit.cshtml" />
     <Content Include="Areas\Manage\Views\PostAuthoring\Index.cshtml" />
-    <Content Include="Areas\Manage\Views\BlogConfiguration\Edit.cshtml" />
+    <Content Include="Areas\Manage\Views\BlogConfiguration\EditModal.cshtml" />
     <Content Include="Areas\Manage\Views\Redirects\Index.cshtml" />
     <Content Include="Areas\Manage\Views\Redirects\DeleteModal.cshtml" />
     <Content Include="Areas\Manage\Views\Redirects\CreateModal.cshtml" />

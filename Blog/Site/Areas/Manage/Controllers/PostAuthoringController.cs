@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Areas.Manage.Models;
 using StaticVoid.Blog.Site.Security;
-using StaticVoid.Core.Repository;
+using StaticVoid.Repository;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {

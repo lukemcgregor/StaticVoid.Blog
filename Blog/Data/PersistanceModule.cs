@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Ninject;
 using Ninject.Modules;
-using StaticVoid.Core.Repository;
+using StaticVoid.Repository;
 
 namespace StaticVoid.Blog.Data
 {
@@ -15,6 +15,9 @@ namespace StaticVoid.Blog.Data
 		{
 			Bind(typeof(IRepositoryDataSource<>)).To(typeof(DbContextRepositoryDataSource<>));
 			Bind(typeof(IRepository<>)).To(typeof(SimpleRepository<>));
+
+            Bind<ICachedBlogRepositoryStorage>().To<CachedBlogRepositoryStorage>().InSingletonScope();
+            Rebind<IRepository<Data.Blog>>().To<CachedBlogRepository>();
 		}
 	}
 }

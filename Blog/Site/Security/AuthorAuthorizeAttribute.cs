@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Models;
-using StaticVoid.Core.Repository;
+using StaticVoid.Repository;
 
 namespace StaticVoid.Blog.Site.Security
 {

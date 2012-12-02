@@ -32,12 +32,18 @@ namespace StaticVoid.Blog.Site
 
 		public override void ExecuteResult(ControllerContext context)
 		{
-			HttpResponseBase response = context.HttpContext.Response;
-			response.ContentType = "application/rss+xml";
+            if (ContentType != null)
+            {
+                context.HttpContext.Response.ContentType = ContentType;
+            }
+            else
+            {
+                context.HttpContext.Response.ContentType = "application/rss+xml";
+            }
 
             if (_feed != null)
             {
-                using (var xmlWriter = new XmlTextWriter(response.Output))
+                using (var xmlWriter = new XmlTextWriter(context.HttpContext.Response.Output))
                 {
                     xmlWriter.Formatting = Formatting.Indented;
                     _feed.WriteTo(xmlWriter);

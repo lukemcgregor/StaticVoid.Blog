@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using StaticVoid.Blog.Data;
-using StaticVoid.Core.Repository;
+using StaticVoid.Repository;
 
 namespace StaticVoid.Blog.Site
 {

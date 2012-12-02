@@ -2,3 +2,18 @@
     ViewBag.Title = "Home Page";
 }
 
+@Html.ActionLink("Author Posts", "Index", "PostAuthoring")
+@Html.ActionLink("Configure Redirects", "Index", "Redirects")
+@Html.ActionLink("Modify Blog Config", "Edit", "BlogConfiguration",new {}, new {@class = "edit-blog-config" })
+
+
+<div id='edit-blog-config-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("Edit", "BlogConfiguration")'>
+    <div id='edit-blog-config-container'>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        setupModal('edit-blog-config');
+    });
+</script>

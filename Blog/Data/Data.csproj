@@ -32,14 +32,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Core.Repository">
-      <HintPath>..\packages\StaticVoid.Core.Repository.1.2.4\lib\net40\StaticVoid.Core.Repository.dll</HintPath>
+    <Reference Include="StaticVoid.Core.Repository, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StaticVoid.Core.Repository.2.0.0-beta1\lib\net45\StaticVoid.Core.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="StaticVoid.Repository">
+      <HintPath>..\packages\StaticVoid.Repository.2.0.0-beta1\lib\net45\StaticVoid.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="StaticVoid.Repository.EntityFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StaticVoid.Repository.EntityFramework.1.0.0-beta2\lib\net45\StaticVoid.Repository.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -54,6 +63,7 @@
   <ItemGroup>
     <Compile Include="BlogContext.cs" />
     <Compile Include="Entities\Blog\Blog.cs" />
+    <Compile Include="Entities\Blog\CachedBlogRepository.cs" />
     <Compile Include="Entities\Post\Post.cs" />
     <Compile Include="Entities\Post\PostExtensions.cs" />
     <Compile Include="Entities\Post\PostHelpers.cs" />

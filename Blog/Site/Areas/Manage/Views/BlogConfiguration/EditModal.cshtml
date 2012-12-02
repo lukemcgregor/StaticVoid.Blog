@@ -1,0 +1,52 @@
+﻿@model StaticVoid.Blog.Site.Areas.Manage.Models.BlogConfigModel
+
+@{
+    ViewBag.Title = "Blog Configuration";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Blog Configuration</h3>
+</div>
+
+
+@using (Html.BeginForm("Edit", "BlogConfiguration", FormMethod.Post, new { @class = "modal-form" }))
+{
+    <div class="modal-body">
+        @Html.ValidationSummary(true)
+
+        <div>
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.Description)
+            @Html.TextBoxFor(m => m.Description)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.AnalyticsKey)
+            @Html.TextBoxFor(m => m.AnalyticsKey)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.AuthoritiveUrl)
+            @Html.TextBoxFor(m => m.AuthoritiveUrl)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.DisqusShortname)
+            @Html.TextBoxFor(m => m.DisqusShortname)
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.Twitter)
+            @Html.TextBoxFor(m => m.Twitter)
+        </div>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-success" type="submit">Save</button>
+    </div>
+}

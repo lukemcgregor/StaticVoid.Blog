@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.Messaging;
-using StaticVoid.Core.Repository;
+using StaticVoid.Repository;
 using StaticVoid.Blog.Site.Security;
 using StaticVoid.Blog.Data;
 

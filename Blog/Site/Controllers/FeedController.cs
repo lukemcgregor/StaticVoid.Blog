@@ -5,7 +5,7 @@ using System.ServiceModel.Syndication;
 using System.Web;
 using System.Web.Mvc;
 using StaticVoid.Blog.Data;
-using StaticVoid.Core.Repository;
+using StaticVoid.Repository;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
@@ -15,11 +15,11 @@ namespace StaticVoid.Blog.Site.Controllers
         private string _siteUrl;
         private Guid _blogGuid;
 
-		public FeedController(IRepository<Post> postRepository, IProvideBlogConfiguration blogConfig)
+        public FeedController(IRepository<Post> postRepository, IRepository<Data.Blog> blogRepository)
 		{
 			_postRepository = postRepository;
-            _siteUrl = blogConfig.CurrentBlog.AuthoritiveUrl;
-            _blogGuid = blogConfig.CurrentBlog.BlogGuid;
+            _siteUrl = blogRepository.CurrentBlog().AuthoritiveUrl;
+            _blogGuid = blogRepository.CurrentBlog().BlogGuid;
 		}
 
 		private SyndicationFeed GenerateFeed()
@@ -38,6 +38,7 @@ namespace StaticVoid.Blog.Site.Controllers
                                 
                 posts.Add(item);
             }
+
 
             return new SyndicationFeed("StaticVoid", "A blog on .Net", new Uri(_siteUrl), posts)
 			{

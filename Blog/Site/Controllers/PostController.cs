@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Models;
-using StaticVoid.Core.Repository;
+using StaticVoid.Repository;
 using StaticVoid.Blog.Site.Gravitar;
 
 namespace StaticVoid.Blog.Site.Controllers
@@ -13,11 +13,13 @@ namespace StaticVoid.Blog.Site.Controllers
 	public class PostController : Controller
 	{
 		private IRepository<Post> _postRepository;
+        private readonly IRepository<Data.Blog> _blogRepo;
 		private readonly VisitLoggerService _visitLogger;
 
-		public PostController(IRepository<Post> postRepository, VisitLoggerService visitLogger)
+		public PostController(IRepository<Post> postRepository,IRepository<Data.Blog> blogRepo, VisitLoggerService visitLogger)
 		{
 			_postRepository = postRepository;
+            _blogRepo = blogRepo;
 			_visitLogger = visitLogger;
 		}
 
@@ -33,6 +35,7 @@ namespace StaticVoid.Blog.Site.Controllers
 			_visitLogger.LogCurrentRequest();
 
 			var post = _postRepository.GetPostAtUrl(path, p=>p.Author);
+            var blog = _blogRepo.CurrentBlog();
 
 			var prevPost = _postRepository.GetPostBefore(post);
 			var nextPost = _postRepository.GetPostAfter(post);
@@ -48,8 +51,14 @@ namespace StaticVoid.Blog.Site.Controllers
                 Author = new PostAuthor
                 {
                     GravatarUrl = post.Author.Email.GravitarUrlFromEmail(),
-                    Name = String.Format("{0} {1}", post.Author.FirstName,post.Author.LastName),
+                    Name = String.Format("{0} {1}", post.Author.FirstName, post.Author.LastName),
                     GooglePlusProfileUrl = post.Author.GooglePlusProfileUrl
+                },
+                BlogConfig = new BlogConfig
+                {
+                    Analytics = blog.AnalyticsKey,
+                    Disqus = blog.DisqusShortname,
+                    Twitter = blog.Twitter
                 }
             };
 

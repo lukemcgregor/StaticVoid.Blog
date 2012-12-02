@@ -1,7 +1,7 @@
 ﻿using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Areas.Manage.Models;
 using StaticVoid.Blog.Site.Security;
-using StaticVoid.Core.Repository;
+using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -51,7 +51,6 @@ namespace StaticVoid.Blog.Site
 			kernel.Bind<OpenIdMembershipService>().ToSelf().InTransientScope();
 			kernel.BindFilter<MyAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<AuthorAuthorizeAttribute>();
 			kernel.BindFilter<MyAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<AuthorAuthorizeAttribute>();
-            kernel.Bind<IProvideBlogConfiguration>().To<CachedCurrentBlogProvider>().InSingletonScope();
             
             RegisterServices(kernel);
             return kernel;

@@ -29,6 +29,7 @@ body {
 #editor-preview
 {
 	padding-top:30px;
+    overflow: auto;
 }
 
 .article

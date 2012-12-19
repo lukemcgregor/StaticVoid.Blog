@@ -101,17 +101,24 @@ namespace StaticVoid.Blog.Site.Controllers
 
 		public ActionResult Preview(int id)
 		{
-			var post = _postRepository.GetBy(p => p.Id == id);
+            var post = _postRepository.GetBy(p => p.Id == id, p => p.Author);
 
 			var md = new MarkdownDeep.Markdown();
 
-			return View("Post", new PostModel
-			{
-				Body = md.Transform(post.DraftBody),
-				Title = post.DraftTitle,
-				Posted = DateTime.Now,
-				CanonicalUrl = post.Canonical
-			});
+            return View("Post", new PostModel
+            {
+                Body = md.Transform(post.DraftBody),
+                Title = post.DraftTitle,
+                Posted = DateTime.Now,
+                CanonicalUrl = post.Canonical,
+                OtherPosts = new List<PartialPostForLinkModel>(),
+                Author = new PostAuthor
+                {
+                    GravatarUrl = post.Author.Email.GravitarUrlFromEmail(),
+                    Name = String.Format("{0} {1}", post.Author.FirstName, post.Author.LastName),
+                    GooglePlusProfileUrl = post.Author.GooglePlusProfileUrl
+                }
+            });
 		}
 	}
 }

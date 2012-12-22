@@ -26,7 +26,7 @@ namespace StaticVoid.Blog.Site.Controllers
         {
             var md = new MarkdownDeep.Markdown();
             List<SyndicationItem> posts = new List<SyndicationItem>();
-            foreach (var post in _postRepository.PublishedPosts().OrderByDescending(p => p.Posted).Take(25).AsEnumerable())
+            foreach (var post in _postRepository.FeedPosts().OrderByDescending(p => p.Posted).Take(25).AsEnumerable())
             {
                 var item = new SyndicationItem(post.Title, post.Body, new Uri(_siteUrl + post.Path));
 

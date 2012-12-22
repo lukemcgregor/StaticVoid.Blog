@@ -32,7 +32,7 @@ namespace StaticVoid.Blog.Site.Controllers
 
 		public ActionResult Display(string path)
 		{
-			_visitLogger.LogCurrentRequest();
+            _visitLogger.LogCurrentRequest();
 
 			var post = _postRepository.GetPostAtUrl(path, p=>p.Author);
             var blog = _blogRepo.CurrentBlog();

@@ -22,6 +22,7 @@ namespace StaticVoid.Blog.Data
 		public String Path { get; set; }
 
         public Guid PostGuid { get; set; }
+        public bool ExcludeFromFeed { get; set; }
 	}
 
 	public enum PostStatus

@@ -58,7 +58,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 					DraftTitle = model.Title,
 					Status = PostStatus.Draft,
 					Path = url,
-					Canonical = model.Reposted ? model.CanonicalUrl : "/" + url
+					Canonical = model.Reposted ? model.CanonicalUrl : "/" + url,
+                    ExcludeFromFeed = false
 				});
 
 				return RedirectToAction("Index");

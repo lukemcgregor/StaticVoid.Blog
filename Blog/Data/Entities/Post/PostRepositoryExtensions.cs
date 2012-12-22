@@ -21,6 +21,11 @@ namespace StaticVoid.Blog.Data
 			return set.Where(p => p.Status == PostStatus.Published);
 		}
 
+        public static IQueryable<Post> FeedPosts(this IRepository<Post> repo, params Expression<Func<Post, object>>[] includes)
+        {
+            return repo.PublishedPosts(includes).Where(p => !p.ExcludeFromFeed);
+        }
+
 		public static Post LatestPublishedPost(this IRepository<Post> repo)
 		{
 			return repo.PublishedPosts().OrderByDescending(p=>p.Posted).FirstOrDefault();

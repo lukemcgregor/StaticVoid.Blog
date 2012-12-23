@@ -52,7 +52,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
 				_postRepository.Create(new Post
 				{
-					Author = _userRepository.GetCurrentUser(),
+					AuthorId = _userRepository.GetCurrentUser().Id,
 					DraftBody = model.Body,
 					Posted = DateTime.Now,
 					DraftTitle = model.Title,

@@ -32,14 +32,13 @@ namespace StaticVoid.Blog.Data.Migrations
 
 			context.Users.AddOrUpdate(admin);
 
-
 			var postDate = new DateTime(2012, 10, 7, 12, 0, 0);
 
 			context.Posts.AddOrUpdate(
 				new Post
 				{
 					Id = 1,
-					Author = admin,
+					AuthorId = 1,
 					Title = "First Post",
 					Body = "First Post!",
 					Posted = postDate,
@@ -52,8 +51,8 @@ namespace StaticVoid.Blog.Data.Migrations
 			context.Posts.AddOrUpdate(
 				new Post
 				{
-					Id = 2,
-					Author = admin,
+                    Id = 2,
+                    AuthorId = 1,
 					Title = "Second Post",
 					Body = "Second Post!",
 					Posted = postDate,

@@ -14,6 +14,7 @@ namespace StaticVoid.Blog.Data
 		public String Body { get; set; }
 		public String DraftTitle { get; set; }
 		public String DraftBody { get; set; }
+        public int AuthorId { get; set; }
 		public User Author { get; set; }
 
 		public PostStatus Status { get; set; }

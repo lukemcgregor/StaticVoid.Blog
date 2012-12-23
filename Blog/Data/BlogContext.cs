@@ -27,7 +27,7 @@ namespace StaticVoid.Blog.Data
             modelBuilder.Entity<Redirect>().Property(r => r.NewRoute).IsRequired();
             modelBuilder.Entity<Redirect>().Property(r => r.OldRoute).IsRequired();
 
-            modelBuilder.Entity<Post>().HasRequired(r => r.Author);
+            modelBuilder.Entity<Post>().HasRequired(r => r.Author).WithMany().HasForeignKey(p=>p.AuthorId);
             modelBuilder.Entity<Post>().Property(r => r.Status).IsRequired();
             modelBuilder.Entity<Post>().Property(r => r.Canonical).IsRequired();
             modelBuilder.Entity<Post>().Property(r => r.Path).IsRequired();

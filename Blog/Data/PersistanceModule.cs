@@ -18,6 +18,15 @@ namespace StaticVoid.Blog.Data
 
             Bind<ICachedBlogRepositoryStorage>().To<CachedBlogRepositoryStorage>().InSingletonScope();
             Rebind<IRepository<Data.Blog>>().To<CachedBlogRepository>();
+
+            Bind<ICachedPostRepositoryStorage>().To<CachedPostRepositoryStorage>().InSingletonScope();
+            Rebind<IRepository<Data.Post>>().To<CachedPostRepository>();
+
+            Bind<ICachedUserRepositoryStorage>().To<CachedUserRepositoryStorage>().InSingletonScope();
+            Rebind<IRepository<Data.User>>().To<CachedUserRepository>();
+
+            Bind<ICachedRedirectRepositoryStorage>().To<CachedRedirectRepositoryStorage>().InSingletonScope();
+            Rebind<IRepository<Data.Redirect>>().To<CachedRedirectRepository>();
 		}
 	}
 }

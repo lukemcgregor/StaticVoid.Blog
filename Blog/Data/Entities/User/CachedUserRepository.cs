@@ -61,7 +61,7 @@ namespace StaticVoid.Blog.Data
 
         public Data.User GetBy(Expression<Func<Data.User, bool>> predicate, params Expression<Func<Data.User, object>>[] includes)
         {
-            return GetAll().SingleOrDefault(predicate.Compile());
+            return GetAll().FirstOrDefault(predicate.Compile());
         }
 
         public void Update(Data.User entity)

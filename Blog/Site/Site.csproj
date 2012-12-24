@@ -197,6 +197,7 @@
     <Compile Include="App_Start\BundleTransforms\LessTransform.cs" />
     <Compile Include="App_Start\EntityFrameworkConfiguration.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="Areas\Manage\Controllers\HacksController.cs" />
     <Compile Include="Extensions\BlogRepositoryExtensions.cs" />
     <Compile Include="Routing\PostRouteConstraint.cs" />
     <Compile Include="Routing\RedirectRouteConstraint.cs" />

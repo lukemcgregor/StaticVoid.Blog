@@ -43,7 +43,7 @@ namespace StaticVoid.Blog.Site.Controllers
             return new SyndicationFeed("StaticVoid", "A blog on .Net", new Uri(_siteUrl), posts)
 			{
 				Language = "en-US",
-                LastUpdatedTime = posts.Max(p=>p.LastUpdatedTime),
+                LastUpdatedTime = posts.Any() ? posts.Max(p=>p.LastUpdatedTime) : new DateTime(2012,12,21),
                 Id= _blogGuid.ToString()
 			};
 		}

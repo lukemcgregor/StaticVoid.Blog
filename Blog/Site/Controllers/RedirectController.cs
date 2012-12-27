@@ -3,6 +3,7 @@ using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,7 +24,7 @@ namespace StaticVoid.Blog.Site.Controllers
 
             if (redirect == null)
             {
-                return new HttpNotFoundResult();
+                throw new HttpException((int)HttpStatusCode.NotFound, "Resource not found");
             }
             else if(!redirect.NewRoute.StartsWith("/"))
             {

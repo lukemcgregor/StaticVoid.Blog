@@ -1,6 +1,8 @@
-﻿using System;
+﻿using StaticVoid.Blog.Site.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,17 +10,24 @@ namespace StaticVoid.Blog.Site.Controllers
 {
     public class ErrorController : Controller
     {
-        public ActionResult Http404()
+        public ActionResult NotFound(string aspxerrorpath)
         {
-            Response.StatusCode = 404;
-            return View();
+            Response.TrySkipIisCustomErrors = true;
+            ViewData["error_path"] = aspxerrorpath;
+            Response.StatusCode = (int)HttpStatusCode.NotFound;
+            return View("NotFound");
         }
 
-        public ActionResult Error(int? statusCode)
+        public ActionResult Error()
         {
-            if(statusCode.HasValue)
-                Response.StatusCode = statusCode.Value;
-            return View();
+            Response.TrySkipIisCustomErrors = true;
+            return View("Error");
+        }
+
+        [AuthorAuthorize]
+        public ActionResult Test(int statusCode)
+        {
+            throw new HttpException(statusCode,"");
         }
     }
 }

@@ -7,6 +7,7 @@ using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Areas.Manage.Models;
 using StaticVoid.Blog.Site.Security;
 using StaticVoid.Repository;
+using System.Net;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
@@ -134,7 +135,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             
             if (post == null)
             {
-                return HttpNotFound();
+                throw new HttpException((int)HttpStatusCode.NotFound, "The specified post was not found");
             }
 
             return PartialView("EditPostUrlModal", new PostUrlEditModel
@@ -152,7 +153,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
             if (post == null)
             {
-                return HttpNotFound();
+                throw new HttpException((int)HttpStatusCode.NotFound, "The specified post was not found");
             }
             if (ModelState.IsValid)
             {                

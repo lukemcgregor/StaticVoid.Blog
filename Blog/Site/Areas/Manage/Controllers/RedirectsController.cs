@@ -5,6 +5,7 @@ using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -35,7 +36,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
             if (redirect == null)
             {
-                return HttpNotFound();
+                throw new HttpException((int)HttpStatusCode.NotFound, "The specified redirect was not found");
             }
 
             return PartialView("DeleteModal", new RedirectModel
@@ -54,7 +55,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
             if (redirect == null)
             {
-                return HttpNotFound();
+                throw new HttpException((int)HttpStatusCode.NotFound, "The specified redirect was not found");
             }
             if (ModelState.IsValid)
             {

@@ -22,8 +22,8 @@ namespace StaticVoid.Blog.Site.Controllers
             _blogGuid = blogRepository.CurrentBlog().BlogGuid;
 		}
 
-		private SyndicationFeed GenerateFeed()
-        {
+		private SyndicationFeed GenerateFeed()        {
+
             var md = new MarkdownDeep.Markdown();
             List<SyndicationItem> posts = new List<SyndicationItem>();
             foreach (var post in _postRepository.FeedPosts().OrderByDescending(p => p.Posted).Take(25).AsEnumerable())

@@ -10,6 +10,11 @@ namespace StaticVoid.Blog.Site.Controllers
 {
     public class ErrorController : Controller
     {
+        public ActionResult ThrowNotFound()
+        {
+            throw new HttpException((int)HttpStatusCode.NotFound, "The requested URL was not found");
+        }
+
         public ActionResult NotFound(string aspxerrorpath)
         {
             Response.TrySkipIisCustomErrors = true;

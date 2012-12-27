@@ -73,7 +73,7 @@ namespace StaticVoid.Blog.Site
             );
 
             routes.MapRoute("Error", "{*url}",
-                new { controller = "Error", action = "NotFound" }
+                new { controller = "Error", action = "ThrowNotFound" }
             );
         }
     }

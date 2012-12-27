@@ -26,6 +26,12 @@ namespace StaticVoid.Blog.Site
 				defaults: new { controller = "Post", action = "Preview" }
 			);
 
+            routes.MapRoute(
+                name: "404",
+                url: "404",
+                defaults: new { controller = "Error", action = "Http404" }
+            );
+
             var redirectConstraint = new RedirectRouteConstraint();
 
             routes.MapRoute(

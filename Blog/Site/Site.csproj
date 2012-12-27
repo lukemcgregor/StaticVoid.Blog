@@ -198,6 +198,8 @@
     <Compile Include="App_Start\EntityFrameworkConfiguration.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Areas\Manage\Controllers\HacksController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="ElmahHandleErrorAttribute.cs" />
     <Compile Include="Extensions\BlogRepositoryExtensions.cs" />
     <Compile Include="Routing\PostRouteConstraint.cs" />
     <Compile Include="Routing\RedirectRouteConstraint.cs" />
@@ -419,6 +421,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Post\Post.cshtml" />
+    <Content Include="Views\Error\Http404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Start\App_Data\" />

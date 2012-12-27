@@ -68,6 +68,14 @@ namespace StaticVoid.Blog.Site
 			post.Transforms.Add(new CssMinify());
 			bundles.Add(post);
 
+            var error = new StyleBundle("~/Content/error").Include(
+                        "~/Content/error.less");
+            error.Transforms.Clear();
+            error.Transforms.Add(new LessTransform());
+            error.Transforms.Add(new CssMinify());
+            bundles.Add(error);
+
+
 			bundles.Add(new StyleBundle("~/Content/style").Include(
 						"~/Content/bootstrap.css",
 						"~/Content/bootstrap-responsive.css",

@@ -32,7 +32,7 @@ namespace StaticVoid.Blog.Site.Controllers
         [AuthorAuthorize]
         public ActionResult Test(int statusCode)
         {
-            throw new HttpException(statusCode,"");
+            throw new HttpException(statusCode, "");
         }
     }
 }

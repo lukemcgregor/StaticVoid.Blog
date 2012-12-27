@@ -1,17 +1,7 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
+    ViewBag.Title = "Not Found";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Not Found - StaticVoid</title>
-</head>
-<body>
-    <div>
-        Not found, //TODO make me friendlier
-    </div>
-</body>
-</html>
+<div class="error-code">404</div>
+<div class="comment">//The resource you were looking for isn't at this URL</div>

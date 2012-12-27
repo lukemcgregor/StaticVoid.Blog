@@ -1,23 +1,17 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_ErrorLayout.cshtml";
+    ViewBag.Title = "Error";
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Error - StaticVoid</title>
-</head>
-<body>
-    <div>
-        <hgroup class="title">
-            <h1 class="error">Error.</h1>
-            <h2 class="error">You seem to have encountered some kind of error, the problem has been logged and I will look at it asap</h2>
-        </hgroup>
-        @if (Model != null && Model.Exception != null)
-        {
-            <text>Hello</text>
-        }
-    </div>
-</body>
-</html>
+@if (Model != null && Model.Exception != null)
+{
+    <div class="error-code">500</div>
+    <div class="comment">Oh no! It seems you have found a bug!</div>
+    <div class="comment">Ive logged the issue and will get on it right away</div>
+}
+else
+{
+    <div class="error-code">Error</div>
+    <div class="comment">Not too sure what happened here</div>
+    <div class="comment">Ive logged the issue anyway...</div>
+}

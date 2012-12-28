@@ -1,59 +1,105 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    @if (ViewBag.Fluid == null)
-    {
-        ViewBag.Fluid = false;
+    @{
+        Layout = null;
     }
     <meta charset="utf-8" />
     <title>@ViewBag.Title - StaticVoid</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
+    
     @Styles.Render("~/Content/style")
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-icons.min.css" rel="stylesheet">
+    @Styles.Render("~/Content/post")
     @RenderSection("Styles", false)
 
     @*<meta name="viewport" content="width=device-width" />*@
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/prettify")
 
-    <script type="text/javascript">
-        $(function() {
-            prettyPrint();
-        });
-    </script>
-    @RenderSection("AdditionalHead", false)
 
+    @*<meta name="viewport" content="width=device-width" />*@
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-inner">
+    <!--TODO: Work out a DRY-er way of doing the responsive modes-->
+    <div class="blog-header visible-desktop">
+        <div class="titlebar navbar-fixed-top">
             <div class="container">
-                <a class="brand" href="#">StaticVoid <small>//blog</small></a>
-                <ul class="nav">
-                    <li class="divider-vertical"></li>
-                    @*<li>@Html.ActionLink("My Projects","MyProjects","Project",new{ userId = 1 },new{})</li>*@
-                </ul>
-                @Html.Partial("_LoginPartial")
+                <div class="button-bar pull-right">
+                    <div class="button atom-button" title="Atom Feed">
+                        <a href="/feed.atom">
+                            <div class="button-filler"></div>
+                        </a>
+                    </div>
+                   @* @if(Model.BlogConfig != null && Model.BlogConfig.Twitter!=null){
+                    <div class="button twitter-button" title="Twitter">
+                        <a href="https://twitter.com/intent/user?screen_name=@Model.BlogConfig.Twitter">
+                            <div class="button-filler"></div>
+                        </a>
+                    </div>
+                    }*@
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    @Html.Partial("_LoginPartial")
+                    <ul class="nav pull-right">
+                        <li><a href="https://trello.com/b/NuqDdxdm">Vote for Topics</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    @RenderSection("masthead", false)
-    <div class="body-content">
-        @if (ViewBag.Fluid)
-        {
-            <div class="container-fluid">
-                @RenderBody()
-            </div>
-        }
-        else
-        {
+    <div class="blog-header visible-tablet visible-phone">
+        <div class="titlebar">
             <div class="container">
-                @RenderBody()
+                <div class="button-bar pull-right">
+                    <div class="button atom-button" title="Atom Feed">
+                        <a href="/feed.atom">
+                            <div class="button-filler"></div>
+                        </a>
+                    </div>
+                    @*@if(Model.BlogConfig != null && Model.BlogConfig.Twitter!=null){
+                    <div class="button twitter-button" title="Twitter">
+                        <a href="https://twitter.com/intent/user?screen_name=@Model.BlogConfig.Twitter">
+                            <div class="button-filler"></div>
+                        </a>
+                    </div>
+                    }*@
+                </div>
             </div>
-        }
+        </div>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    @Html.Partial("_LoginPartial")
+                    <ul class="nav pull-right">
+                        <li><a href="https://trello.com/b/NuqDdxdm">Vote for Topics</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    @Scripts.Render("~/bundles/bootstrap")
+    <div class="body-content">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </div>
+@*    
+    @if(Model.BlogConfig != null && Model.BlogConfig.Analytics!=null){
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '@Model.BlogConfig.Analytics']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+    }*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

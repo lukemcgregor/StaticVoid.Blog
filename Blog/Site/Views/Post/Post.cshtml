@@ -83,6 +83,9 @@
                     <ul class="nav pull-right">
                         <li><a href="https://trello.com/b/NuqDdxdm">Vote for Topics</a></li>
                     </ul>
+                    <ul class="nav pull-right">
+                        <li>@Html.ActionLink("All Posts", "Posts", "Index", new { }, new { })</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -101,6 +104,8 @@
                             <li class="divider"></li>
                             }
                         }
+                        <li class="divider"></li>
+                        <li>@Html.ActionLink("All Posts", "Posts", "Index", new { }, new { @class="all-posts-link" })</li>
                     </ul>
                 </div>
                 <div class="span2 post-list-container visible-tablet">
@@ -114,6 +119,8 @@
                             <li class="divider"></li>
                             }
                         }
+                        <li class="divider"></li>
+                        <li>@Html.ActionLink("All Posts", "Posts", "Index", new { }, new {@class="all-posts-link" })</li>
                     </ul>
                 </div>
                 <div class="span10">

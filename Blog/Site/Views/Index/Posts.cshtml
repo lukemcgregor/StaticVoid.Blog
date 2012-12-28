@@ -1,0 +1,26 @@
+﻿@model IEnumerable<StaticVoid.Blog.Site.Models.PostRowIndexModel>
+
+@{
+    ViewBag.Title = "Posts";
+}
+
+@section Styles {
+}
+
+<h2>Posts</h2>
+
+<table>
+
+    @foreach (var row in Model)
+    {
+        <tr>
+            <td>
+                <div class="date small">
+                    <p>@row.Posted.Day.ToString()  <span>@row.Posted.ToString("MMM")</span></p>
+                </div>
+            </td>
+            <td><a href="/@row.Url">@row.Title</a></td>
+        </tr>
+    }
+
+</table>

@@ -199,8 +199,10 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Areas\Manage\Controllers\HacksController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="ElmahHandleErrorAttribute.cs" />
     <Compile Include="Extensions\BlogRepositoryExtensions.cs" />
+    <Compile Include="Models\IndexModels.cs" />
     <Compile Include="Routing\PostRouteConstraint.cs" />
     <Compile Include="Routing\RedirectRouteConstraint.cs" />
     <Compile Include="Areas\Manage\Controllers\BlogConfigurationController.cs" />
@@ -424,6 +426,7 @@
     <Content Include="Views\Post\Post.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
+    <Content Include="Views\Index\Posts.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

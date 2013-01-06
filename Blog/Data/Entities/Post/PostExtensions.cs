@@ -22,5 +22,10 @@ namespace StaticVoid.Blog.Data
 		{
 			return String.IsNullOrWhiteSpace(post.DraftBody) ? post.Body : post.DraftBody;
 		}
+
+        public static string GetDraftDescription(this Post post)
+        {
+            return String.IsNullOrWhiteSpace(post.DraftDescription) ? post.Description : post.DraftDescription;
+        }
 	}
 }

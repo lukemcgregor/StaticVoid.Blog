@@ -55,6 +55,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 				{
 					AuthorId = _userRepository.GetCurrentUser().Id,
 					DraftBody = model.Body,
+                    DraftDescription = model.Description,
 					Posted = DateTime.Now,
 					DraftTitle = model.Title,
 					Status = PostStatus.Draft,
@@ -76,8 +77,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
 			return View(new PostEditModel
 			{
-				Body = post.GetDraftBody(),
-				Title = post.GetDraftTitle(),
+                Body = post.GetDraftBody(),
+                Title = post.GetDraftTitle(),
+                Description = post.GetDraftDescription(),
 				CanonicalUrl = post.Canonical,
 				Reposted = !String.IsNullOrWhiteSpace(post.Canonical) && post.Canonical != "/"+post.Path
 			});
@@ -91,8 +93,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 			{
 				var post = _postRepository.GetBy(p => p.Id == id);
 
-				post.DraftTitle = model.Title;
-				post.DraftBody = model.Body;
+                post.DraftTitle = model.Title;
+                post.DraftDescription = model.Description;
+                post.DraftBody = model.Body;
 				post.Canonical = model.Reposted ? model.CanonicalUrl : "/" + post.Path;
 
 				_postRepository.Update(post);
@@ -106,10 +109,12 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 			var post = _postRepository.GetBy(p => p.Id == id);
 
 			post.Status = PostStatus.Published;
-			post.Title = post.DraftTitle;
-			post.Body = post.DraftBody;
-			post.DraftBody = null;
-			post.DraftTitle = null;
+            post.Title = post.DraftTitle;
+            post.Description = post.DraftDescription;
+            post.Body = post.DraftBody;
+            post.DraftBody = null;
+            post.DraftDescription = null;
+            post.DraftTitle = null;
 
 			_postRepository.Update(post);
 
@@ -120,8 +125,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 		{
 			var post = _postRepository.GetBy(p => p.Id == id);
 
-			post.DraftTitle = post.Title;
-			post.DraftBody = post.Body;
+            post.DraftTitle = post.Title;
+            post.DraftDescription = post.Description;
+            post.DraftBody = post.Body;
 			post.Status = PostStatus.Unpublished;
 
 			_postRepository.Update(post);

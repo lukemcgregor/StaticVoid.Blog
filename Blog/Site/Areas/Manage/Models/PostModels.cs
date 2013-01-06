@@ -8,7 +8,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Models
 {
 	public class PostCreateModel
 	{
-		public String Title { get; set; }
+        public String Title { get; set; }
+        public String Description { get; set; }
 		public String Body { get; set; }
 		public String CanonicalUrl { get; set; }
 		public bool Reposted { get; set; }
@@ -16,8 +17,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Models
 
 	public class PostEditModel
 	{
-		public String Title { get; set; }
-		public String Body { get; set; }
+        public String Title { get; set; }
+        public String Description { get; set; }
+        public String Body { get; set; }
 		public String CanonicalUrl { get; set; }
 		public bool Reposted { get; set; }
 	}

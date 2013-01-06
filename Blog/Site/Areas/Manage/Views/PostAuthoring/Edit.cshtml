@@ -16,6 +16,12 @@
                     <td>@Html.CheckBoxFor(model => model.Reposted, new { @class = "input-xxlarge" })</td>
                     <td>@Html.TextBoxFor(model => model.CanonicalUrl, new { placeholder = "Reposted From Url", @class = "input-xxlarge", style=(Model!=null && Model.Reposted ?"":"display:none;") })</td>
                 </tr>
+                <tr>
+                   <td colspan="4">@Html.LabelFor(model => model.Description)</td> 
+                </tr>
+                <tr>
+                   <td colspan="4">@Html.TextAreaFor(model => model.Description, new { placeholder = "Description", @class = "input-xxlarge" })</td> 
+                </tr>
             </table>
         </div>
     </div>

@@ -45,6 +45,7 @@ namespace StaticVoid.Blog.Site.Controllers
             var model = new PostModel
             {
                 Body = md.Transform(post.Body),
+                Description = post.Description,
                 Title = post.Title,
                 Posted = post.Posted,
                 CanonicalUrl = post.Canonical,
@@ -108,6 +109,7 @@ namespace StaticVoid.Blog.Site.Controllers
             return View("Post", new PostModel
             {
                 Body = md.Transform(post.DraftBody),
+                Description=post.DraftDescription,
                 Title = post.DraftTitle,
                 Posted = DateTime.Now,
                 CanonicalUrl = post.Canonical,

@@ -18,12 +18,23 @@ namespace StaticVoid.Blog.Data.Migrations
             //  This method will be called after migrating to the latest version.
 
 			//  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-			//  to avoid creating duplicate seed data. E.g.
-			//
+			//  to avoid creating duplicate seed data.
+            var blog = new Data.Blog
+            {
+                AuthoritiveUrl = "http://localhost:34899",
+                Description ="",
+                BlogGuid = new Guid("fe9cde14-aa63-4022-a804-90041a6f3ad8"),
+                Id = 1,
+                Name ="StaticVoid - Test",
+                Twitter = "@staticv0id"
+            };
+
+            context.Blogs.AddOrUpdate(blog);
+
 			var admin = new User
 			{
 				Id = 1,
-				ClaimedIdentifier = "https://www.google.com/accounts/o8/id?id=AItOawlniRA6iVTSBAxw-dE10eUxy0Rgbek6u4A",
+                ClaimedIdentifier = "https://www.google.com/accounts/o8/id?id=AItOawkczLfuxJhI-txNzlg53wsgWu2gdSALgVU",
 				Email = "luke.mcgregor@gmail.com",
 				FirstName = "Luke",
 				LastName = "McGregor",

@@ -7,6 +7,9 @@
     }
     <meta charset="utf-8" />
     <title>@Model.Title</title>
+    @if(!String.IsNullOrWhiteSpace(Model.Description)){
+    <meta name="description" content="@Model.Description" />
+    }
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="canonical" href="@Model.CanonicalUrl" />
 

@@ -355,7 +355,6 @@
     <Content Include="Areas\Manage\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Manage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Manage\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Manage\Views\PostAuthoring\Create.cshtml" />
     <Content Include="Areas\Manage\Views\PostAuthoring\Edit.cshtml" />
     <Content Include="Areas\Manage\Views\PostAuthoring\Index.cshtml" />
     <Content Include="Areas\Manage\Views\BlogConfiguration\EditModal.cshtml" />
@@ -465,7 +464,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>49420</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:34899/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

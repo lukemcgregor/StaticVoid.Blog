@@ -26,8 +26,15 @@ namespace StaticVoid.Blog.Site.Controllers
                 .Select(p => new PostRowIndexModel
             {
                 Title = p.Title,
+                Description = p.Description,
                 Url = p.Path,
-                Posted = p.Posted
+                Posted = p.Posted,
+                Author = new PostAuthor
+                {
+                    GravatarUrl = p.Author.Email.GravitarUrlFromEmail(),
+                    Name = String.Format("{0} {1}", p.Author.FirstName, p.Author.LastName),
+                    GooglePlusProfileUrl = p.Author.GooglePlusProfileUrl
+                },
             }));
         }
     }

@@ -8,7 +8,10 @@ namespace StaticVoid.Blog.Site.Models
     public class PostRowIndexModel
     {
         public string Title { get; set; }
+        public string Description { get; set; }
         public string Url { get; set; }
         public DateTime Posted { get; set; }
+
+        public PostAuthor Author { get; set; }
     }
 }

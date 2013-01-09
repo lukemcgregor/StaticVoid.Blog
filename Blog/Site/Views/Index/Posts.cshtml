@@ -1,26 +1,43 @@
 ﻿@model IEnumerable<StaticVoid.Blog.Site.Models.PostRowIndexModel>
 
 @{
-    ViewBag.Title = "Posts";
+    ViewBag.Title = "All Posts";
 }
 
 @section Styles {
 }
 
-<h2>Posts</h2>
 
-<table>
-
-    @foreach (var row in Model)
-    {
-        <tr>
-            <td>
-                <div class="date small">
+<div class="row post-index">
+    <div class="span8 offset2">
+        <div class="row">
+            <div class="span8 page-title">
+                <h1>All Posts</h1>
+            </div>
+        </div>
+        @foreach (var row in Model)
+        {
+            <div class="row">
+                <div class="date small pull-left">
                     <p>@row.Posted.Day.ToString()  <span>@row.Posted.ToString("MMM")</span></p>
                 </div>
-            </td>
-            <td><a href="/@row.Url">@row.Title</a></td>
-        </tr>
-    }
-
-</table>
+                <div class="span7 details">
+                    <div class="title">
+                        <a href="/@row.Url">@row.Title</a>
+                    </div>
+                    <div class="by-line">
+                        By <a href="/@row.Author.GooglePlusProfileUrl">@row.Author.Name</a>
+                    </div>
+                    @if (!String.IsNullOrWhiteSpace(row.Description))
+                    {
+                        <div class="description">
+                            @row.Description
+                        </div>
+                    }
+                </div>
+            </div>
+            
+            <div class="row spacer"></div>
+        }
+    </div>
+</div>

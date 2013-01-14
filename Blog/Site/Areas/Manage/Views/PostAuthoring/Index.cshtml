@@ -39,24 +39,32 @@
                 @item.Posted.ToLongDateString()
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-small" })
-                @if (item.HasDraftContent)
-                {
-                    @Html.ActionLink("Preview", "Preview", new { area = "", controller = "Post", id = item.Id }, new { @class = "btn btn-info btn-small" })
-                }
-                @if (item.Status == StaticVoid.Blog.Data.PostStatus.Draft || item.Status == StaticVoid.Blog.Data.PostStatus.Unpublished)
-                {
-                    @Html.ActionLink("Publish", "Publish", new { id = item.Id }, new { @class = "btn btn-success btn-small" })
-                }
-                @if (item.Status == StaticVoid.Blog.Data.PostStatus.Published && item.HasDraftContent)
-                {
-                    @Html.ActionLink("Publish Update", "Publish", new { id = item.Id }, new { @class = "btn btn-success btn-small" })
-                }
-                @if (item.Status == StaticVoid.Blog.Data.PostStatus.Published)
-                {
-                    @Html.ActionLink("Un-publish", "UnPublish", new { id = item.Id }, new { @class = "btn btn-warning btn-small" })
-                }
-                @Html.ActionLink("Edit Post Url", "EditPostUrl", new { id = item.Id }, new {@class = "btn btn-small edit-post-url" })
+                <div class="btn-group">
+                    <a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
+                        <i class="icon-cog"></i>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action( "Edit", new { id = item.Id })"><i class="icon-edit"></i> Edit</a></li>
+                        @if (item.HasDraftContent)
+                        {
+                            <li><a href="@Url.Action( "Preview", new { area = "", controller = "Post", id = item.Id })"><i class="icon-eye-open"></i> Preview</a></li>
+                        }
+                        <li><a href="@Url.Action( "EditPostUrl", new { id = item.Id })" class="edit-post-url"><i class="icon-globe"></i> Edit Url</a></li>
+                        @if (item.Status == StaticVoid.Blog.Data.PostStatus.Draft || item.Status == StaticVoid.Blog.Data.PostStatus.Unpublished)
+                        {
+                            <li><a href="@Url.Action( "Publish", new { id = item.Id })"><i class="icon-thumbs-up"></i> Publish</a></li>
+                        }
+                        @if (item.Status == StaticVoid.Blog.Data.PostStatus.Published && item.HasDraftContent)
+                        {
+                            <li><a href="@Url.Action( "Publish", new { id = item.Id })"><i class="icon-thumbs-up"></i> Publish Update</a></li>
+                        }
+                         @if (item.Status == StaticVoid.Blog.Data.PostStatus.Published)
+                        {
+                            <li><a href="@Url.Action( "UnPublish", new { id = item.Id })"><i class="icon-thumbs-down"></i> UnPublish</a></li>
+                        }
+                    </ul>
+                </div>
             </td>
         </tr>
     }

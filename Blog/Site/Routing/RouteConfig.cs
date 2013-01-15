@@ -21,6 +21,12 @@ namespace StaticVoid.Blog.Site
             );
 
             routes.MapRoute(
+                name: "Sitemap",
+                url: "sitemap.xml",
+                defaults: new { controller = "Sitemap", action = "Sitemap" }
+            );            
+            
+            routes.MapRoute(
                 name: "Preview",
                 url: "Preview/{id}",
                 defaults: new { controller = "Post", action = "Preview" }

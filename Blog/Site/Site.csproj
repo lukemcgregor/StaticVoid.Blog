@@ -118,6 +118,9 @@
     <Reference Include="StaticVoid.Repository">
       <HintPath>..\packages\StaticVoid.Repository.2.0.0-beta1\lib\net45\StaticVoid.Repository.dll</HintPath>
     </Reference>
+    <Reference Include="StaticVoid.Xml">
+      <HintPath>..\packages\StaticVoid.Xml.0.1.0.0\lib\net40\StaticVoid.Xml.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -200,6 +203,7 @@
     <Compile Include="Areas\Manage\Controllers\HacksController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Controllers\SitemapController.cs" />
     <Compile Include="ElmahHandleErrorAttribute.cs" />
     <Compile Include="Extensions\BlogRepositoryExtensions.cs" />
     <Compile Include="Models\IndexModels.cs" />

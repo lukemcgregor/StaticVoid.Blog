@@ -104,36 +104,88 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 			return View(model);
 		}
 
-		public ActionResult Publish(int id)
-		{
-			var post = _postRepository.GetBy(p => p.Id == id);
+        public ActionResult ConfirmPublish(int id)
+        {
+            var post = _postRepository.GetBy(p => p.Id == id);
 
-			post.Status = PostStatus.Published;
-            post.Title = post.DraftTitle;
-            post.Description = post.DraftDescription;
-            post.Body = post.DraftBody;
-            post.DraftBody = null;
-            post.DraftDescription = null;
-            post.DraftTitle = null;
+            if (post == null)
+            {
+                throw new HttpException((int)HttpStatusCode.NotFound, "The specified post was not found");
+            }
 
-			_postRepository.Update(post);
+            return PartialView("ConfirmPublishModal", new ConfirmPublishModel
+            {
+                Id = post.Id,
+                Title = post.DraftTitle
+            });
+        }
 
-			return RedirectToAction("Index");
-		}
+        [HttpPost]
+        public ActionResult ConfirmPublish(int id, ConfirmPublishModel model)
+        {
+            var post = _postRepository.GetBy(p => p.Id == id);
 
-		public ActionResult UnPublish(int id)
-		{
-			var post = _postRepository.GetBy(p => p.Id == id);
+            if (post == null)
+            {
+                throw new HttpException((int)HttpStatusCode.NotFound, "The specified post was not found");
+            }
+            if (ModelState.IsValid)
+            {
+                post.Status = PostStatus.Published;
+                post.Title = post.DraftTitle;
+                post.Description = post.DraftDescription;
+                post.Body = post.DraftBody;
+                post.DraftBody = null;
+                post.DraftDescription = null;
+                post.DraftTitle = null;
 
-            post.DraftTitle = post.Title;
-            post.DraftDescription = post.Description;
-            post.DraftBody = post.Body;
-			post.Status = PostStatus.Unpublished;
+                _postRepository.Update(post);
 
-			_postRepository.Update(post);
+                return Json(new { success = true });
+            }
 
-			return RedirectToAction("Index");
-		}
+            return PartialView("ConfirmPublishModal", model);
+        }
+
+        public ActionResult ConfirmUnPublish(int id)
+        {
+            var post = _postRepository.GetBy(p => p.Id == id);
+
+            if (post == null)
+            {
+                throw new HttpException((int)HttpStatusCode.NotFound, "The specified post was not found");
+            }
+
+            return PartialView("ConfirmUnPublishModal", new ConfirmPublishModel
+            {
+                Id = post.Id,
+                Title = post.DraftTitle
+            });
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmUnPublish(int id, ConfirmPublishModel model)
+        {
+            var post = _postRepository.GetBy(p => p.Id == id);
+
+            if (post == null)
+            {
+                throw new HttpException((int)HttpStatusCode.NotFound, "The specified post was not found");
+            }
+            if (ModelState.IsValid)
+            {
+                post.DraftTitle = post.Title;
+                post.DraftDescription = post.Description;
+                post.DraftBody = post.Body;
+                post.Status = PostStatus.Unpublished;
+
+                _postRepository.Update(post);
+
+                return Json(new { success = true });
+            }
+
+            return PartialView("ConfirmUnPublishModal", model);
+        }
 
         public ActionResult EditPostUrl(int id)
         {

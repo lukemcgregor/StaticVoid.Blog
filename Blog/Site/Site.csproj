@@ -367,6 +367,8 @@
     <Content Include="Areas\Manage\Views\Redirects\CreateModal.cshtml" />
     <Content Include="Areas\Manage\Views\PostAuthoring\EditPostUrlModal.cshtml" />
     <Content Include="Content\error.less" />
+    <Content Include="Areas\Manage\Views\PostAuthoring\ConfirmPublishModal.cshtml" />
+    <Content Include="Areas\Manage\Views\PostAuthoring\ConfirmUnPublishModal.cshtml" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\editor.js" />

@@ -39,4 +39,10 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Models
         public String Title { get; set; }
         public String Url { get; set; }
     }
+
+    public class ConfirmPublishModel
+    {
+        public int Id { get; set; }
+        public String Title { get; set; }
+    }
 }

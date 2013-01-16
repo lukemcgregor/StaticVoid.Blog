@@ -1,0 +1,21 @@
+﻿@model StaticVoid.Blog.Site.Areas.Manage.Models.ConfirmPublishModel
+
+@{
+    ViewBag.Title = "Confirm Un-Publish";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Un-Publish <i>@Model.Title</i></h3>
+    Are you sure you want to Unpublish this article? 
+    This will mean that readers will no longer be able to view the article and any existing links will 404.
+</div>
+
+
+@using (Html.BeginForm("ConfirmUnPublish", "PostAuthoring", FormMethod.Post, new { @class = "modal-form" }))
+{
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-danger" type="submit">Un-Publish</button>
+    </div>
+}

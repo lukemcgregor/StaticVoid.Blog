@@ -50,15 +50,15 @@
                         <li><a href="@Url.Action( "EditPostUrl", new { id = item.Id })" class="edit-post-url"><i class="icon-globe"></i> Edit Url</a></li>
                         @if (item.Status == StaticVoid.Blog.Data.PostStatus.Draft || item.Status == StaticVoid.Blog.Data.PostStatus.Unpublished)
                         {
-                            <li><a href="@Url.Action( "Publish", new { id = item.Id })"><i class="icon-thumbs-up"></i> Publish</a></li>
+                            <li><a href="@Url.Action( "ConfirmPublish", new { id = item.Id })" class="confirm-publish"><i class="icon-thumbs-up"></i> Publish</a></li>
                         }
                         @if (item.Status == StaticVoid.Blog.Data.PostStatus.Published && item.HasDraftContent)
                         {
-                            <li><a href="@Url.Action( "Publish", new { id = item.Id })"><i class="icon-thumbs-up"></i> Publish Update</a></li>
+                            <li><a href="@Url.Action( "ConfirmPublish", new { id = item.Id })" class="confirm-publish"><i class="icon-thumbs-up"></i> Publish Update</a></li>
                         }
                          @if (item.Status == StaticVoid.Blog.Data.PostStatus.Published)
                         {
-                            <li><a href="@Url.Action( "UnPublish", new { id = item.Id })"><i class="icon-thumbs-down"></i> UnPublish</a></li>
+                            <li><a href="@Url.Action( "ConfirmUnPublish", new { id = item.Id })" class="confirm-unpublish"><i class="icon-thumbs-down"></i> UnPublish</a></li>
                         }
                     </ul>
                 </div>
@@ -74,8 +74,20 @@
     </div>
 </div>
 
+<div id='confirm-publish-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("ConfirmPublish")'>
+    <div id='confirm-publish-container'>
+    </div>
+</div>
+
+<div id='confirm-unpublish-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("ConfirmUnPublish")'>
+    <div id='confirm-unpublish-container'>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(function () {
         setupModal('edit-post-url');
+        setupModal('confirm-publish', true);
+        setupModal('confirm-unpublish', true);
     });
 </script>

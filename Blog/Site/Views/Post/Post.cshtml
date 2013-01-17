@@ -139,9 +139,7 @@
                         </script>
                         <div class="gradient-container">
                             <div class="next-post post">
-                                <div class="date">
-                                    <p>@Model.NextPost.Date.Day.ToString() <span>@Model.NextPost.Date.ToString("MMM")</span></p>
-                                </div>
+                                @{Html.RenderPartial("PrettyDate", Model.NextPost.Date);}
                                 <div class="post-title">@Model.NextPost.Title</div>
                             </div>
                             <div class="next-post-gradient"></div>
@@ -162,9 +160,7 @@
                     }
 
                     <div class="post">
-                        <div class="date">
-                            <p>@Model.Posted.Day.ToString()  <span>@Model.Posted.ToString("MMM")</span></p>
-                        </div>
+                        @{Html.RenderPartial("PrettyDate", Model.Posted);}
                         <h1 class="post-title">@Model.Title</h1>
                         <div class="author-flair">
                             @if (String.IsNullOrWhiteSpace(Model.Author.GooglePlusProfileUrl))
@@ -229,9 +225,7 @@
                         </script>
                         <div class="gradient-container">
                             <div class="prev-post post">
-                                <div class="date">
-                                    <p>@Model.PreviousPost.Date.Day.ToString() <span>@Model.PreviousPost.Date.ToString("MMM")</span></p>
-                                </div>
+                                @{Html.RenderPartial("PrettyDate", Model.PreviousPost.Date);}
                                 <div class="post-title">@Model.PreviousPost.Title</div>
                             </div>
                             <div class="prev-post-gradient"></div>

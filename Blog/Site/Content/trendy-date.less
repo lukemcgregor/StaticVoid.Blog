@@ -23,6 +23,10 @@
 		font-family: Helvetica, sans-serif;
 		font-size: @sizeMultiplier * 1px; text-align: center; color: #9e9e9e; 
 	}
+
+	.date.month p {
+		font-size: @sizeMultiplier * 0.7px;
+	}
 	
 	.date p span {
 		background: #0000d1; 
@@ -47,17 +51,22 @@
     }
 }
 
-.small.date{
+.small .date{
 	width: @sizeMultiplier-small *1.3px; height: @sizeMultiplier-small *1.6px;
 	border-radius: @sizeMultiplier-small * 0.1px;
 	-moz-border-radius: @sizeMultiplier-small * 0.1px;
 	-webkit-border-radius: @sizeMultiplier-small * 0.1px;
 }	
 	
-.small.date p {
+.small .date p {
 	font-size: @sizeMultiplier-small * 1px; text-align: center; color: #9e9e9e; 
 }
-.small.date p span {
+
+.small .date.month p {
+	font-size: @sizeMultiplier-small * 0.7px; text-align: center; color: #9e9e9e; 
+}
+
+.small .date p span {
 	font-size: @sizeMultiplier-small * .45px; font-weight: bold; color: #fff; text-transform: uppercase; 	
 	border-top: @sizeMultiplier-small * 0.03px solid #3838a1;
 	border-radius: 0 0 @sizeMultiplier-small * 0.1px @sizeMultiplier-small * 0.1px;

@@ -1,0 +1,15 @@
+﻿@model DateTime
+
+@*If its this year (yeah i know its not quite right but its good enough*@
+@if (Model > DateTime.Today.AddDays(-365))
+{
+    <div class="date">
+        <p>@Model.Day.ToString()  <span>@Model.ToString("MMM")</span></p>
+    </div>
+}
+else
+{
+    <div class="date month">
+        <p>@Model.ToString("MMM")  <span>@Model.Year.ToString()</span></p>
+    </div>
+}

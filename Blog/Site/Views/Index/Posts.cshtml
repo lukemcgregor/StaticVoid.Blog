@@ -18,8 +18,8 @@
         @foreach (var row in Model)
         {
             <div class="row">
-                <div class="date small pull-left">
-                    <p>@row.Posted.Day.ToString()  <span>@row.Posted.ToString("MMM")</span></p>
+                <div class="small pull-left">
+                    @{Html.RenderPartial("PrettyDate", row.Posted);}
                 </div>
                 <div class="span7 details">
                     <div class="title">

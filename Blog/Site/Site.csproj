@@ -432,6 +432,7 @@
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Shared\_ErrorLayout.cshtml" />
     <Content Include="Views\Index\Posts.cshtml" />
+    <Content Include="Views\Shared\PrettyDate.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

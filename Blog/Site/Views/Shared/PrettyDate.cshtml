@@ -3,13 +3,13 @@
 @*If its this year (yeah i know its not quite right but its good enough*@
 @if (Model.Year >= DateTime.Today.Year)
 {
-    <div class="date">
+    <div class="date" title="@Model.ToLongDateString()">
         <p>@Model.Day.ToString()  <span>@Model.ToString("MMM")</span></p>
     </div>
 }
 else
 {
-    <div class="date month">
+    <div class="date month" title="@Model.ToLongDateString()">
         <p>@Model.ToString("MMM")  <span>@Model.Year.ToString()</span></p>
     </div>
 }

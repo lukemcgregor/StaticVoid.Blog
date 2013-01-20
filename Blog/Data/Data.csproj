@@ -72,6 +72,7 @@
     <Compile Include="Entities\Redirect\CachedRedirectRepository.cs" />
     <Compile Include="Entities\Redirect\RedirectRepositoryExtensions.cs" />
     <Compile Include="Entities\Redirect\Redirect.cs" />
+    <Compile Include="Entities\Style\Style.cs" />
     <Compile Include="Entities\User\CachedUserRepository.cs" />
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Entities\Visit\Visit.cs" />

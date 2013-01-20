@@ -59,7 +59,8 @@ namespace StaticVoid.Blog.Site.Controllers
                 {
                     Analytics = blog.AnalyticsKey,
                     Disqus = blog.DisqusShortname,
-                    Twitter = blog.Twitter
+                    Twitter = blog.Twitter,
+                    BlogStyleId = blog.StyleId
                 }
             };
 

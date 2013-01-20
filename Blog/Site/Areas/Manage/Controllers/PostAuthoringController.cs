@@ -17,12 +17,18 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 		private readonly IRepository<Post> _postRepository;
 		private readonly IRepository<User> _userRepository;
         private readonly IRepository<Redirect> _redirectRepository;
+        private readonly IRepository<Data.Blog> _blogRepository;
 
-        public PostAuthoringController(IRepository<Post> postRepository, IRepository<User> userRepository, IRepository<Redirect> redirectRepository)
+        public PostAuthoringController(
+            IRepository<Post> postRepository, 
+            IRepository<User> userRepository, 
+            IRepository<Redirect> redirectRepository,
+            IRepository<Data.Blog> blogRepository)
 		{
 			_postRepository = postRepository;
 			_userRepository = userRepository;
             _redirectRepository = redirectRepository;
+            _blogRepository = blogRepository;
 		}
 
 		public ActionResult Index()
@@ -40,7 +46,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 		public ActionResult Create()
 		{
 			ViewBag.Title = "Create";
-			return View("Edit");
+            return View("Edit", new PostEditModel { BlogStyleId = _blogRepository.CurrentBlog().StyleId });
 		}
 
 		[HttpPost,ValidateInput(false)]
@@ -81,7 +87,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 Title = post.GetDraftTitle(),
                 Description = post.GetDraftDescription(),
 				CanonicalUrl = post.Canonical,
-				Reposted = !String.IsNullOrWhiteSpace(post.Canonical) && post.Canonical != "/"+post.Path
+				Reposted = !String.IsNullOrWhiteSpace(post.Canonical) && post.Canonical != "/"+post.Path,
+                BlogStyleId = _blogRepository.CurrentBlog().StyleId
 			});
 		}
 

@@ -54,3 +54,13 @@
         });
     </script>
 }
+
+
+@section Styles {
+    @if(Model.BlogStyleId.HasValue){
+        <link href="@Url.Action("Css","Style",new{ Area="", Id= @Model.BlogStyleId.Value  })" rel="stylesheet">
+    }
+    @if(Model.PostStyleId.HasValue){
+        <link href="@Url.Action("Css","Style",new{ Area="", Id= @Model.PostStyleId.Value  })" rel="stylesheet">
+    }
+}

@@ -1,0 +1,39 @@
+﻿@model StaticVoid.Blog.Site.Areas.Manage.Models.StyleModel
+
+@{
+    ViewBag.Title = "Edit Style";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Edit Style</h3>
+</div>
+
+
+@using (Html.BeginForm("Edit", "StyleEditor", FormMethod.Post, new { @class = "modal-form" }))
+{
+    <div class="modal-body">
+        @Html.ValidationSummary(true)
+        <div>
+            @Html.LabelFor(m => m.Css)
+            <div class="css-editor">
+                @Html.HiddenFor(m => m.Css, new { id="hidden-css" })
+                <div id="editor" class="css-editor" >@Model.Css</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-success submit-style-button" type="submit">Save Style</button>
+    </div>
+}
+
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/less");
+    $(".submit-style-button").click(function () {
+        $("#hidden-css").val(editor.getValue());
+    });
+</script>

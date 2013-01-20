@@ -12,6 +12,7 @@ namespace StaticVoid.Blog.Site.Models
         public String Body { get; set; }
 		public DateTime Posted { get; set; }
 		public String CanonicalUrl { get; set; }
+        public Guid? PostStyleId { get; set; }
 
         public PartialPostForLinkModel NextPost { get; set; }
 
@@ -44,5 +45,7 @@ namespace StaticVoid.Blog.Site.Models
         public string Twitter { get; set; }
         public string Disqus { get; set; }
         public string Analytics { get; set; }
+        public Guid? BlogStyleId { get; set; }
+
     }
 }

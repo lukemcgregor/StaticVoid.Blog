@@ -2,9 +2,15 @@
     ViewBag.Title = "Home Page";
 }
 
-@Html.ActionLink("Author Posts", "Index", "PostAuthoring")
-@Html.ActionLink("Configure Redirects", "Index", "Redirects")
-@Html.ActionLink("Modify Blog Config", "Edit", "BlogConfiguration",new {}, new {@class = "edit-blog-config" })
+<ul>
+    <li>@Html.ActionLink("Author Posts", "Index", "PostAuthoring")</li>
+    <li>@Html.ActionLink("Configure Redirects", "Index", "Redirects")</li>
+    <li>@Html.ActionLink("Modify Blog Config", "Edit", "BlogConfiguration",new {}, new {@class = "edit-blog-config" })</li>
+    <li>@Html.ActionLink("Modify Blog Style", "EditBlogStyle", "StyleEditor",new { }, new {@class = "edit-blog-style" })</li>
+</ul>
+
+
+
 
 
 <div id='edit-blog-config-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("Edit", "BlogConfiguration")'>
@@ -12,8 +18,14 @@
     </div>
 </div>
 
+<div id='edit-blog-style-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("EditBlogStyle", "StyleEditor")'>
+    <div id='edit-blog-style-container'>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(function () {
         setupModal('edit-blog-config');
+        setupModal('edit-blog-style',true);
     });
 </script>

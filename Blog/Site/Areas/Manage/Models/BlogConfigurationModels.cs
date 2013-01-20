@@ -14,5 +14,6 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Models
         public string AuthoritiveUrl { get; set; }
         public string AnalyticsKey { get; set; }
         public string DisqusShortname { get; set; }
+        public Guid? BlogStyleId { get; set; }
     }
 }

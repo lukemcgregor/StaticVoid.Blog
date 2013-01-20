@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using StaticVoid.Blog.Data.Migrations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StaticVoid.Blog.Data
 {
@@ -21,6 +22,7 @@ namespace StaticVoid.Blog.Data
 		public DbSet<Visit> Visits { get; set; }
         public DbSet<Redirect> Redirects { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Style> Styles { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -31,6 +33,9 @@ namespace StaticVoid.Blog.Data
             modelBuilder.Entity<Post>().Property(r => r.Status).IsRequired();
             modelBuilder.Entity<Post>().Property(r => r.Canonical).IsRequired();
             modelBuilder.Entity<Post>().Property(r => r.Path).IsRequired();
+
+            modelBuilder.Entity<Blog>().HasOptional(b => b.Style).WithMany().HasForeignKey(b => b.StyleId);
+            modelBuilder.Entity<Style>().Property(s => s.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 		}
 	}
 }

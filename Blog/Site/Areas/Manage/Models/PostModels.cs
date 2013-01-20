@@ -6,15 +6,6 @@ using StaticVoid.Blog.Data;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Models
 {
-	public class PostCreateModel
-	{
-        public String Title { get; set; }
-        public String Description { get; set; }
-		public String Body { get; set; }
-		public String CanonicalUrl { get; set; }
-		public bool Reposted { get; set; }
-	}
-
 	public class PostEditModel
 	{
         public String Title { get; set; }
@@ -22,6 +13,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Models
         public String Body { get; set; }
 		public String CanonicalUrl { get; set; }
 		public bool Reposted { get; set; }
+        public Guid? PostStyleId { get; set; }
+        public Guid? BlogStyleId { get; set; }
 	}
 
 	public class PostModel

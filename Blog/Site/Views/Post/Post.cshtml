@@ -15,9 +15,16 @@
 
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-icons.min.css" rel="stylesheet">
     @Styles.Render("~/Content/post")
-
+    @if(Model.BlogConfig.BlogStyleId.HasValue){
+        <link href="@Url.Action("Css","Style",new{ Area="", Id= @Model.BlogConfig.BlogStyleId.Value  })" rel="stylesheet">
+    }
+    @if(Model.PostStyleId.HasValue){
+        <link href="@Url.Action("Css","Style",new{ Area="", Id= @Model.PostStyleId.Value  })" rel="stylesheet">
+    }
+    
     @*<meta name="viewport" content="width=device-width" />*@
     @Scripts.Render("~/bundles/postscripts")
+
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
     <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
 

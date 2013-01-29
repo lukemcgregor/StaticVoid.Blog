@@ -46,6 +46,9 @@ namespace StaticVoid.Blog.Site
             bundles.Add(new ScriptBundle("~/bundles/modals").Include(
                         "~/Scripts/modals.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/pure").Include(
+                        "~/Scripts/Pure/pure.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/postscripts").Include(
                         "~/Scripts/jquery-1.8.2.js",

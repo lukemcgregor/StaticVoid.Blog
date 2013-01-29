@@ -5,8 +5,16 @@ using System.Web;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Models
 {
-    public class DashboardStats
+    public class DashboardModel
     {
-        public int PageViews { get; set; }
+        public List<Tuple<string,int>> Posts { get; set; }
+    }
+
+    public class DashboardPostModel
+    {
+        public int Id { get; set; }
+        public String Title { get; set; }
+        public String Url { get; set; }
+        public String Description { get; set; }
     }
 }

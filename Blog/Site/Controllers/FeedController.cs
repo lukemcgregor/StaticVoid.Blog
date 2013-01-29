@@ -28,7 +28,7 @@ namespace StaticVoid.Blog.Site.Controllers
             List<SyndicationItem> posts = new List<SyndicationItem>();
             foreach (var post in _postRepository.FeedPosts().OrderByDescending(p => p.Posted).Take(25).AsEnumerable())
             {
-                var item = new SyndicationItem(post.Title, post.Body, new Uri(_siteUrl + post.Path));
+                var item = new SyndicationItem(post.Title, post.Body, new Uri(_siteUrl.TrimEnd('/') +"/"+ post.Path.TrimStart('/')));
 
                 item.Title = new TextSyndicationContent(post.Title);
                 item.Content = new TextSyndicationContent(md.Transform(post.Body), TextSyndicationContentKind.Html);

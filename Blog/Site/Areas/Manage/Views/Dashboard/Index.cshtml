@@ -4,25 +4,35 @@
     ViewBag.Title = "Dashboard";
 }
 
+@section Styles {
+    @Styles.Render("~/Content/dashboard")
+}
+
 <ul>
     <li>@Html.ActionLink("Author Posts", "Index", "PostAuthoring")</li>
     <li>@Html.ActionLink("Configure Redirects", "Index", "Redirects")</li>
-    <li>@Html.ActionLink("Modify Blog Config", "Edit", "BlogConfiguration",new {}, new {@class = "edit-blog-config" })</li>
-    <li>@Html.ActionLink("Modify Blog Style", "EditBlogStyle", "StyleEditor",new { }, new {@class = "edit-blog-style" })</li>
+    <li>@Html.ActionLink("Modify Blog Config", "Edit", "BlogConfiguration", new { }, new { @class = "edit-blog-config" })</li>
+    <li>@Html.ActionLink("Modify Blog Style", "EditBlogStyle", "StyleEditor", new { }, new { @class = "edit-blog-style" })</li>
 </ul>
 
-<div class="row" >
-    <ul class="nav nav-list span2">
-        @foreach (var post in Model.Posts)
-        {
-            <li><a href="#" class="post-list-item" id="post-@post.Item2">@post.Item1</a></li>
-        }
-    </ul>
+<div class="row">
+    <div class="">
+        <ul class="post-nav nav nav-list span2">
+            @foreach (var post in Model.Posts)
+            {
+                <li><a href="#" class="post-list-item" id="post-@post.Item2">@post.Item1</a></li>
+            }
+        </ul>
+    </div>
     <div class="post-detail span6">
-        <div class="post-detail-loader" style="display:none;">loading</div>
-        <div class="post-detail-contents" style="display:none;">
-            <a></a>
-            <span class="description"></span>
+        <div class="post-detail-loader" style="display: none;">loading</div>
+        <div class="post-detail-contents" style="display: none;">
+            <div class="">
+                <a class="post-title-link"></a>
+            </div>
+            <div class="">
+                <span class="description"></span>
+            </div>
         </div>
     </div>
 </div>
@@ -49,7 +59,9 @@
             $('.post-detail-loader').show();
             $.getJSON('@Url.Action("PostDetail")' + '/' + $(this).attr('id').replace('post-', ''), function (data) {
                 var directive = {
-                    'a': 'Title'
+                    'a': 'Title',
+                    'a@href': 'Url',
+                    '.description': 'Description'
                 }
                 $('.post-detail-contents').render(data, directive);
                 $('.post-detail-loader').hide();

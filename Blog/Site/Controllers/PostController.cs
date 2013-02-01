@@ -37,6 +37,9 @@ namespace StaticVoid.Blog.Site.Controllers
 			var post = _postRepository.GetPostAtUrl(path, p=>p.Author);
             var blog = _blogRepo.CurrentBlog();
 
+            ViewBag.Analytics = blog.AnalyticsKey;
+            ViewBag.Twitter = blog.Twitter;
+
 			var prevPost = _postRepository.GetPostBefore(post);
 			var nextPost = _postRepository.GetPostAfter(post);
 
@@ -57,9 +60,7 @@ namespace StaticVoid.Blog.Site.Controllers
                 },
                 BlogConfig = new BlogConfig
                 {
-                    Analytics = blog.AnalyticsKey,
                     Disqus = blog.DisqusShortname,
-                    Twitter = blog.Twitter,
                     BlogStyleId = blog.StyleId
                 }
             };

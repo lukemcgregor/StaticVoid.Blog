@@ -10,14 +10,11 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="robots" content="noindex,nofollow">
 
-    @Styles.Render("~/Content/style")
+    @Styles.Render("~/Content/blog-admin")
     @RenderSection("Styles", false)
 
     @*<meta name="viewport" content="width=device-width" />*@
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/prettify")
-    @Scripts.Render("~/bundles/pure")
+    @Scripts.Render("~/bundles/blog-admin")
     
     <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
@@ -57,8 +54,6 @@
             </div>
         }
     </div>
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/modals")
     @RenderSection("scripts", required: false)
 </body>
 </html>

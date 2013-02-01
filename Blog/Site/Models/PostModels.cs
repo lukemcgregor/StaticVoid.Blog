@@ -42,9 +42,7 @@ namespace StaticVoid.Blog.Site.Models
 
     public class BlogConfig
     {
-        public string Twitter { get; set; }
         public string Disqus { get; set; }
-        public string Analytics { get; set; }
         public Guid? BlogStyleId { get; set; }
 
     }

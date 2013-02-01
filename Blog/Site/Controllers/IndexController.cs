@@ -13,13 +13,19 @@ namespace StaticVoid.Blog.Site.Controllers
     public class IndexController : Controller
     {
         private readonly IRepository<Post> _postRepo;
+        private readonly IRepository<Data.Blog> _blogRepo;
 
-        public IndexController(IRepository<Post> postRepo)
+        public IndexController(IRepository<Post> postRepo, IRepository<Data.Blog> blogRepo)
         {
             _postRepo = postRepo;
+            _blogRepo = blogRepo;
         }
         public ActionResult Posts()
         {
+            var blog = _blogRepo.CurrentBlog();
+            ViewBag.Analytics = blog.AnalyticsKey;
+            ViewBag.Twitter = blog.Twitter;
+
             return View(_postRepo
                 .PublishedPosts(p => p.Author)
                 .OrderByDescending(p=>p.Posted)

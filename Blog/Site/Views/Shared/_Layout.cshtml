@@ -7,17 +7,15 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title - StaticVoid</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @RenderSection("Head", required: false)
     
-    @Styles.Render("~/Content/style")
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-icons.min.css" rel="stylesheet">
     @Styles.Render("~/Content/post")
-    @RenderSection("Styles", false)
+    @Styles.Render("~/Content/post_less")
+    @RenderSection("Styles", required: false)
 
     @*<meta name="viewport" content="width=device-width" />*@
-    @Scripts.Render("~/bundles/jquery")
-
-
-    @*<meta name="viewport" content="width=device-width" />*@
+    @Scripts.Render("~/bundles/blog")
 </head>
 <body>
     <!--TODO: Work out a DRY-er way of doing the responsive modes-->
@@ -30,13 +28,13 @@
                             <div class="button-filler"></div>
                         </a>
                     </div>
-                   @* @if(Model.BlogConfig != null && Model.BlogConfig.Twitter!=null){
+                    @if(ViewBag.Twitter != null){
                     <div class="button twitter-button" title="Twitter">
-                        <a href="https://twitter.com/intent/user?screen_name=@Model.BlogConfig.Twitter">
+                        <a href="https://twitter.com/intent/user?screen_name=@ViewBag.Twitter">
                             <div class="button-filler"></div>
                         </a>
                     </div>
-                    }*@
+                    }
                 </div>
             </div>
         </div>
@@ -60,13 +58,13 @@
                             <div class="button-filler"></div>
                         </a>
                     </div>
-                    @*@if(Model.BlogConfig != null && Model.BlogConfig.Twitter!=null){
+                    @if(ViewBag.Twitter != null){
                     <div class="button twitter-button" title="Twitter">
-                        <a href="https://twitter.com/intent/user?screen_name=@Model.BlogConfig.Twitter">
+                        <a href="https://twitter.com/intent/user?screen_name=@ViewBag.Twitter">
                             <div class="button-filler"></div>
                         </a>
                     </div>
-                    }*@
+                    }
                 </div>
             </div>
         </div>
@@ -86,11 +84,10 @@
             @RenderBody()
         </div>
     </div>
-@*    
-    @if(Model.BlogConfig != null && Model.BlogConfig.Analytics!=null){
+    @if(ViewBag.Analytics!=null){
     <script type="text/javascript">
         var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '@Model.BlogConfig.Analytics']);
+        _gaq.push(['_setAccount', '@ViewBag.Analytics']);
         _gaq.push(['_trackPageview']);
 
         (function () {
@@ -99,7 +96,7 @@
             var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
     </script>
-    }*@
+    }
     @RenderSection("scripts", required: false)
 </body>
 </html>

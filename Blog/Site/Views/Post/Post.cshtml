@@ -1,30 +1,16 @@
 ﻿@model StaticVoid.Blog.Site.Models.PostModel
-<!DOCTYPE html>
-<html lang="en">
-<head>
+
     @{
-        Layout = null;
+        ViewBag.Title = Model.Title;
     }
-    <meta charset="utf-8" />
-    <title>@Model.Title</title>
+@section Head {
     @if(!String.IsNullOrWhiteSpace(Model.Description)){
     <meta name="description" content="@Model.Description" />
     }
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link rel="canonical" href="@Model.CanonicalUrl" />
+}
 
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-icons.min.css" rel="stylesheet">
-    @Styles.Render("~/Content/post")
-    @if(Model.BlogConfig.BlogStyleId.HasValue){
-        <link href="@Url.Action("Css","Style",new{ Area="", Id= @Model.BlogConfig.BlogStyleId.Value  })" rel="stylesheet">
-    }
-    @if(Model.PostStyleId.HasValue){
-        <link href="@Url.Action("Css","Style",new{ Area="", Id= @Model.PostStyleId.Value  })" rel="stylesheet">
-    }
-    
-    @*<meta name="viewport" content="width=device-width" />*@
-    @Scripts.Render("~/bundles/postscripts")
-
+@section Scripts {
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
     <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
 
@@ -33,231 +19,146 @@
             prettyPrint();
         });
     </script>
+}
 
-</head>
-<body>
-    <!--TODO: Work out a DRY-er way of doing the responsive modes-->
-    <div class="blog-header visible-desktop">
-        <div class="titlebar navbar-fixed-top">
-            <div class="container">
-                <div class="button-bar pull-right">
-                    <div class="button atom-button" title="Atom Feed">
-                        <a href="/feed.atom">
-                            <div class="button-filler"></div>
-                        </a>
-                    </div>
-                    @if(Model.BlogConfig != null && Model.BlogConfig.Twitter!=null){
-                    <div class="button twitter-button" title="Twitter">
-                        <a href="https://twitter.com/intent/user?screen_name=@Model.BlogConfig.Twitter">
-                            <div class="button-filler"></div>
-                        </a>
-                    </div>
-                    }
-                </div>
-            </div>
-        </div>
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
-                    @Html.Partial("_LoginPartial")
-                    <ul class="nav pull-right">
-                        <li><a href="https://trello.com/b/NuqDdxdm">Vote for Topics</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+<div class="row">
+    <div class="span2 post-list-container visible-desktop">
+        <ul class="nav nav-list affix post-list span2">
+            <li class="nav-header">Other Posts</li>
+            @foreach (var p in Model.OtherPosts)
+            {
+                <li class='@(p.IsCurrentPost ? "active" : "")'><a href="/@p.Link">@p.Title</a></li>
+                if (Model.OtherPosts.Last() != p)
+                {
+                <li class="divider"></li>
+                }
+            }
+            <li class="divider"></li>
+            <li>@Html.ActionLink("All Posts", "Posts", "Index", new { }, new { @class="all-posts-link" })</li>
+        </ul>
     </div>
-    <div class="blog-header visible-tablet visible-phone">
-        <div class="titlebar">
-            <div class="container">
-                <div class="button-bar pull-right">
-                    <div class="button atom-button" title="Atom Feed">
-                        <a href="/feed.atom">
-                            <div class="button-filler"></div>
-                        </a>
-                    </div>
-                    @if(Model.BlogConfig != null && Model.BlogConfig.Twitter!=null){
-                    <div class="button twitter-button" title="Twitter">
-                        <a href="https://twitter.com/intent/user?screen_name=@Model.BlogConfig.Twitter">
-                            <div class="button-filler"></div>
-                        </a>
-                    </div>
-                    }
-                </div>
-            </div>
-        </div>
-        <div class="navbar">
-            <div class="navbar-inner">
-                <div class="container">
-                    @Html.Partial("_LoginPartial")
-                    <ul class="nav pull-right">
-                        <li><a href="https://trello.com/b/NuqDdxdm">Vote for Topics</a></li>
-                    </ul>
-                    <ul class="nav pull-right">
-                        <li>@Html.ActionLink("All Posts", "Posts", "Index", new { }, new { })</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="span2 post-list-container visible-tablet">
+        <ul class="nav nav-list post-list span2">
+            <li class="nav-header">Other Posts</li>
+            @foreach (var p in Model.OtherPosts)
+            {
+                <li class='@(p.IsCurrentPost ? "active" : "")'><a href="/@p.Link">@p.Title</a></li>
+                if (Model.OtherPosts.Last() != p)
+                {
+                <li class="divider"></li>
+                }
+            }
+            <li class="divider"></li>
+            <li>@Html.ActionLink("All Posts", "Posts", "Index", new { }, new {@class="all-posts-link" })</li>
+        </ul>
     </div>
-    <div class="body-content">
-        <div class="container">
-            <div class="row">
-                <div class="span2 post-list-container visible-desktop">
-                    <ul class="nav nav-list affix post-list span2">
-                        <li class="nav-header">Other Posts</li>
-                        @foreach (var p in Model.OtherPosts)
-                        {
-                            <li class='@(p.IsCurrentPost ? "active" : "")'><a href="/@p.Link">@p.Title</a></li>
-                            if (Model.OtherPosts.Last() != p)
-                            {
-                            <li class="divider"></li>
-                            }
-                        }
-                        <li class="divider"></li>
-                        <li>@Html.ActionLink("All Posts", "Posts", "Index", new { }, new { @class="all-posts-link" })</li>
-                    </ul>
+    <div class="span10">
+        @if (Model.NextPost != null)
+        {
+            <script type="text/javascript">
+                $(function () {
+                    $('.next-post').click(function () {
+                        window.location = '/@Model.NextPost.Link';
+                    });
+                });
+
+            </script>
+            <div class="gradient-container">
+                <div class="next-post post">
+                    @{Html.RenderPartial("PrettyDate", Model.NextPost.Date);}
+                    <div class="post-title">@Model.NextPost.Title</div>
                 </div>
-                <div class="span2 post-list-container visible-tablet">
-                    <ul class="nav nav-list post-list span2">
-                        <li class="nav-header">Other Posts</li>
-                        @foreach (var p in Model.OtherPosts)
-                        {
-                            <li class='@(p.IsCurrentPost ? "active" : "")'><a href="/@p.Link">@p.Title</a></li>
-                            if (Model.OtherPosts.Last() != p)
-                            {
-                            <li class="divider"></li>
-                            }
-                        }
-                        <li class="divider"></li>
-                        <li>@Html.ActionLink("All Posts", "Posts", "Index", new { }, new {@class="all-posts-link" })</li>
-                    </ul>
+                <div class="next-post-gradient"></div>
+                <div class="next-post-cutoff"></div>
+                <div id="top-of-post"></div>
+            </div>
+
+            <div class="post-spacer"></div>
+    
+            <script type="text/javascript">
+                $(function () {
+                    if (window.innerHeight + 200 > $('.body-content').height()) {
+                        $('.body-content').height(window.innerHeight + 200);
+                    }
+                    $.scrollTo('#top-of-post');
+                });
+            </script>
+        }
+
+        <div class="post">
+            @{Html.RenderPartial("PrettyDate", Model.Posted);}
+            <h1 class="post-title">@Model.Title</h1>
+            <div class="author-flair">
+                @if (String.IsNullOrWhiteSpace(Model.Author.GooglePlusProfileUrl))
+                {
+                    <img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" />
+                }
+                else
+                { 
+                    <a href="@(Model.Author.GooglePlusProfileUrl)?rel=author">
+                        <img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" /></a>
+                }
+            </div>
+            <div class="article">
+                @Html.Raw(Model.Body)
+            </div>
+
+            <div class="post-footer">
+                <div class="row">
+                    <div class="span5 offset2">
+                        <span>Say thanks by sharing: </span>
+                        <div class="twitter-share"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a></div>
+                        @*<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>*@
+                        <div class="plus-one">
+                            <div class="g-plusone"></div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            @if(Model.BlogConfig != null && Model.BlogConfig.Disqus!=null){
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                var disqus_shortname = '@Model.BlogConfig.Disqus'; // required: replace example with your forum shortname
+
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function () {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            }
+            <div class="row class copyright">
                 <div class="span10">
-                    @if (Model.NextPost != null)
-                    {
-                        <script type="text/javascript">
-                            $(function () {
-                                $('.next-post').click(function () {
-                                    window.location = '/@Model.NextPost.Link';
-                                });
-                            });
-
-                        </script>
-                        <div class="gradient-container">
-                            <div class="next-post post">
-                                @{Html.RenderPartial("PrettyDate", Model.NextPost.Date);}
-                                <div class="post-title">@Model.NextPost.Title</div>
-                            </div>
-                            <div class="next-post-gradient"></div>
-                            <div class="next-post-cutoff"></div>
-                            <div id="top-of-post"></div>
-                        </div>
-
-                        <div class="post-spacer"></div>
-    
-                        <script type="text/javascript">
-                            $(function () {
-                                if (window.innerHeight + 200 > $('.body-content').height()) {
-                                    $('.body-content').height(window.innerHeight + 200);
-                                }
-                                $.scrollTo('#top-of-post');
-                            });
-                        </script>
-                    }
-
-                    <div class="post">
-                        @{Html.RenderPartial("PrettyDate", Model.Posted);}
-                        <h1 class="post-title">@Model.Title</h1>
-                        <div class="author-flair">
-                            @if (String.IsNullOrWhiteSpace(Model.Author.GooglePlusProfileUrl))
-                            {
-                                <img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" />
-                            }
-                            else
-                            { 
-                                <a href="@(Model.Author.GooglePlusProfileUrl)?rel=author">
-                                    <img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" /></a>
-                            }
-                        </div>
-                        <div class="article">
-                            @Html.Raw(Model.Body)
-                        </div>
-
-                        <div class="post-footer">
-                            <div class="row">
-                                <div class="span5 offset2">
-                                    <span>Say thanks by sharing: </span>
-                                    <div class="twitter-share"><a href="https://twitter.com/share" class="twitter-share-button" data-size="large">Tweet</a></div>
-                                    @*<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>*@
-                                    <div class="plus-one">
-                                        <div class="g-plusone"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @if(Model.BlogConfig != null && Model.BlogConfig.Disqus!=null){
-                        <div id="disqus_thread"></div>
-                        <script type="text/javascript">
-                            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                            var disqus_shortname = '@Model.BlogConfig.Disqus'; // required: replace example with your forum shortname
-
-                            /* * * DON'T EDIT BELOW THIS LINE * * */
-                            (function () {
-                                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                            })();
-                        </script>
-                        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-                        }
-                        <div class="row class copyright">
-                            <div class="span10">
-                                Luke McGregor &copy; 2012, Reproduce only with written consent from the author.
-                            </div>
-                        </div>
-                    </div>
-
-                    @if (Model.PreviousPost != null)
-                    {
-                        <div class="post-spacer"></div>
-                        <script type="text/javascript">
-                            $(function () {
-                                $('.prev-post').click(function () {
-                                    window.location = '/@Model.PreviousPost.Link';
-                                });
-                            });
-
-                        </script>
-                        <div class="gradient-container">
-                            <div class="prev-post post">
-                                @{Html.RenderPartial("PrettyDate", Model.PreviousPost.Date);}
-                                <div class="post-title">@Model.PreviousPost.Title</div>
-                            </div>
-                            <div class="prev-post-gradient"></div>
-                            <div class="prev-post-cutoff"></div>
-                        </div>
-                    }
-
-                    <div id="length-push"></div>
+                    Luke McGregor &copy; 2012, Reproduce only with written consent from the author.
                 </div>
             </div>
         </div>
-    </div>
-    
-    @if(Model.BlogConfig != null && Model.BlogConfig.Analytics!=null){
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', '@Model.BlogConfig.Analytics']);
-        _gaq.push(['_trackPageview']);
 
-        (function () {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-    }
-</body>
-</html>
+        @if (Model.PreviousPost != null)
+        {
+            <div class="post-spacer"></div>
+            <script type="text/javascript">
+                $(function () {
+                    $('.prev-post').click(function () {
+                        window.location = '/@Model.PreviousPost.Link';
+                    });
+                });
+
+            </script>
+            <div class="gradient-container">
+                <div class="prev-post post">
+                    @{Html.RenderPartial("PrettyDate", Model.PreviousPost.Date);}
+                    <div class="post-title">@Model.PreviousPost.Title</div>
+                </div>
+                <div class="prev-post-gradient"></div>
+                <div class="prev-post-cutoff"></div>
+            </div>
+        }
+
+        <div id="length-push"></div>
+    </div>
+</div>

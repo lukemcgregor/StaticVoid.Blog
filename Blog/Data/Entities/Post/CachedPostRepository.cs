@@ -13,7 +13,7 @@ namespace StaticVoid.Blog.Data
     {
         public CachedPostRepositoryStorage(SimpleRepository<Data.Post> baseRepo, IRepository<Data.User> userRepo)
         {
-            CachedPosts = baseRepo.GetAll().AsNoTracking().ToList();
+            CachedPosts = baseRepo.GetAll().AsNoTracking().ToArray();
             CachedPosts.ForEach((p) => { p.Author = userRepo.GetBy(a => a.Id == p.AuthorId); });
         }
 

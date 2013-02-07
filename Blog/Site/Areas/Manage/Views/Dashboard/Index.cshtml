@@ -17,23 +17,52 @@
 
 <div class="row">
     <div class="">
-        <ul class="post-nav nav nav-list span2">
-            @foreach (var post in Model.Posts)
-            {
-                <li><a href="#" class="post-list-item" id="post-@post.Item2">@post.Item1</a></li>
-            }
+        <ul class="post-nav nav nav-list span2" data-bind="foreach: Posts">
+            <li data-bind="attr: { class: cssClass }"><a href="#" class="post-list-item" data-bind="text: Item1, id: Item2, click: $parent.selectPost"></a></li>
         </ul>
     </div>
     <div class="post-detail span6">
         <div class="post-detail-loader" style="display: none;">loading</div>
-        <div class="post-detail-contents" style="display: none;">
-            <div class="">
-                <a class="post-title-link"></a>
+        <div class="post-detail-contents">
+            <div class="post-detail-header">
+                <div class="post-title-link">
+                    <a data-bind="text: SelectedPost.Title, attr: { href: SelectedPost.Url }"></a>
+                </div>
+                <div class="actions span1">
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
+                            <i class="icon-cog"></i>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a data-bind="attr: { href: '@Url.Action("Edit", new { area = "Manage", controller = "PostAuthoring" })'+ '/' + SelectedPost.Id() }"><i class="icon-edit"></i>Edit</a></li>
+                            <!-- ko if: SelectedPost.HasDraftContent() -->
+                            <li><a data-bind="attr: { href: '@Url.Action("Preview", new { area = "", controller = "Post" })' + '/' + SelectedPost.Id() }"><i class="icon-eye-open"></i>Preview</a></li>
+                            <!-- /ko -->
+                            <li><a data-bind="attr: { href: '@Url.Action("EditPostUrl", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="edit-post-url"><i class="icon-globe"></i>Edit Url</a></li>
+                            <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())' || SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())' -->
+                            <li><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish</a></li>
+                            <!-- /ko -->
+                            <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' && SelectedPost.HasDraftContent() -->
+                            <li><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish Update</a></li>
+                            <!-- /ko -->
+                            <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' -->
+                            <li><a data-bind="attr: { href: '@Url.Action("ConfirmUnPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-unpublish"><i class="icon-thumbs-down"></i>UnPublish</a></li>
+                            <!-- /ko -->
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="">
-                <span class="description"></span>
+                <span class="description" data-bind="text: SelectedPost.Description"></span>
             </div>
+
         </div>
+    </div>
+</div>
+
+<div id='edit-post-url-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("EditPostUrl", "PostAuthoring")'>
+    <div id='edit-post-url-container'>
     </div>
 </div>
 
@@ -47,27 +76,74 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $(function () {
-        setupModal('edit-blog-config');
-        setupModal('edit-blog-style', true);
+<div id='confirm-publish-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("ConfirmPublish", "PostAuthoring")'>
+    <div id='confirm-publish-container'>
+    </div>
+</div>
 
-        $('.post-list-item').click(function () {
-            $('.post-list-item').parent('li').removeClass('active');
-            $(this).parent('li').addClass('active');
+<div id='confirm-unpublish-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("ConfirmUnPublish", "PostAuthoring")'>
+    <div id='confirm-unpublish-container'>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    function AppViewModel() {
+        var self;
+
+        var mappingOptions = {
+            'Posts': {
+                create: function (options) {
+                    return (new (function () {
+                        this.cssClass = ko.computed(function () {
+                            if (this.Item2() == self.SelectedPost.Id()) {
+                                return 'active';
+                            }
+                            return '';
+                        }, this);
+
+                        ko.mapping.fromJS(options.data, {}, this);
+                    })());
+                }
+            }
+        };
+
+        self = ko.mapping.fromJS( @(Html.Raw(Json.Encode(Model))), mappingOptions);
+
+        self.selectPost = function () {
             $('.post-detail-contents').hide();
             $('.post-detail-loader').show();
-            $.getJSON('@Url.Action("PostDetail")' + '/' + $(this).attr('id').replace('post-', ''), function (data) {
-                var directive = {
-                    'a': 'Title',
-                    'a@href': 'Url',
-                    '.description': 'Description'
-                }
-                $('.post-detail-contents').render(data, directive);
+
+            $.getJSON('@Url.Action("PostDetail")' + '/' + this.Item2(), function (data) {
+                //TODO: Must be a better way of remapping new data
+                //Have tried ko.mapping.fromJS(data, self.SelectedPost);
+                self.SelectedPost.Id(data.Id);
+                self.SelectedPost.Title(data.Title);
+                self.SelectedPost.Url(data.Url);
+                self.SelectedPost.Description(data.Description);
+                self.SelectedPost.HasDraftContent(data.HasDraftContent);
+                self.SelectedPost.Status(data.Status);
+
+                BindClicks();
                 $('.post-detail-loader').hide();
                 $('.post-detail-contents').show();
             });
-            return false;
-        });
+        };
+        return self;
+    }
+
+    $(function () {
+        ko.applyBindings(new AppViewModel());
+
+        BindClicks();
     });
+
+    function BindClicks()
+    {
+        setupModal('edit-post-url');
+        setupModal('edit-blog-config');
+        setupModal('edit-blog-style', true);
+        setupModal('confirm-publish', true);
+        setupModal('confirm-unpublish', true);
+    }
 </script>

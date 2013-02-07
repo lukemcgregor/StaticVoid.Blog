@@ -64,6 +64,9 @@
     <Compile Include="BlogContext.cs" />
     <Compile Include="Entities\Blog\Blog.cs" />
     <Compile Include="Entities\Blog\CachedBlogRepository.cs" />
+    <Compile Include="Entities\PostModification\PostModification.cs" />
+    <Compile Include="Entities\PostModification\PostModificationExtensions.cs" />
+    <Compile Include="Entities\PostModification\PostModificationRepositoryExtensions.cs" />
     <Compile Include="Entities\Post\CachedPostRepository.cs" />
     <Compile Include="Entities\Post\Post.cs" />
     <Compile Include="Entities\Post\PostExtensions.cs" />
@@ -85,6 +88,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

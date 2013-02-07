@@ -22,8 +22,19 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult Index()
         {
+            var posts = _postRepo.GetAll().OrderByDescending(p => p.Posted).ToArray();
+
             return View(new DashboardModel{
-                Posts = _postRepo.GetAll().Select(p=> new Tuple<string,int>(p.Title, p.Id)).ToList()
+                Posts = posts.Select(p => new Tuple<string, int>(p.GetDraftTitle(), p.Id)).ToList(),
+                SelectedPost = new DashboardPostModel
+                {
+                    Id = posts.First().Id,
+                    Description = posts.First().GetDraftDescription(),
+                    Title = posts.First().GetDraftTitle(),
+                    Url = posts.First().Path,
+                    HasDraftContent = posts.First().HasDraftContent(),
+                    Status = posts.First().Status.ToString()
+                }
             });
         }
 
@@ -33,9 +44,11 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             return Json(new DashboardPostModel
             {
                 Id=id,
-                Description = post.Description,
-                Title =post.Title,
-                Url = post.Path
+                Description = post.GetDraftDescription(),
+                Title = post.GetDraftTitle(),
+                Url = post.Path,
+                HasDraftContent = post.HasDraftContent(),
+                Status = post.Status.ToString()
             }, JsonRequestBehavior.AllowGet);
         }
 

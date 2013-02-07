@@ -22,7 +22,9 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/Prettify/prettify.js",
                         "~/Scripts/Pure/pure.js",
                         "~/Scripts/bootstrap.js",
-                        "~/Scripts/modals.js"));
+                        "~/Scripts/modals.js",
+                        "~/Scripts/knockout-2.2.1.js",
+                        "~/Scripts/knockout.mapping-latest.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/editor").Include(
 						"~/Scripts/MarkdownDeep.js",

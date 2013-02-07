@@ -18,7 +18,8 @@ namespace StaticVoid.Blog.Data
 		}
 
 		public DbSet<User> Users { get; set; }
-		public DbSet<Post> Posts { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<PostModification> PostModifications { get; set; }
 		public DbSet<Visit> Visits { get; set; }
         public DbSet<Redirect> Redirects { get; set; }
         public DbSet<Blog> Blogs { get; set; }
@@ -35,6 +36,7 @@ namespace StaticVoid.Blog.Data
             modelBuilder.Entity<Post>().Property(r => r.Path).IsRequired();
 
             modelBuilder.Entity<Blog>().HasOptional(b => b.Style).WithMany().HasForeignKey(b => b.StyleId);
+            modelBuilder.Entity<PostModification>().HasRequired(b => b.Post).WithMany().HasForeignKey(b => b.PostId);
             modelBuilder.Entity<Style>().Property(s => s.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 		}
 	}

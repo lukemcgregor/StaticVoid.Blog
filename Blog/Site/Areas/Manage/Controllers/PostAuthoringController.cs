@@ -15,17 +15,20 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 	public class PostAuthoringController : Controller
 	{
 		private readonly IRepository<Post> _postRepository;
+        private readonly IRepository<PostModification> _postModificationRepository;
 		private readonly IRepository<User> _userRepository;
         private readonly IRepository<Redirect> _redirectRepository;
         private readonly IRepository<Data.Blog> _blogRepository;
 
         public PostAuthoringController(
             IRepository<Post> postRepository, 
+            IRepository<PostModification> postModificationRepository,
             IRepository<User> userRepository, 
             IRepository<Redirect> redirectRepository,
             IRepository<Data.Blog> blogRepository)
 		{
 			_postRepository = postRepository;
+            _postModificationRepository = postModificationRepository;
 			_userRepository = userRepository;
             _redirectRepository = redirectRepository;
             _blogRepository = blogRepository;
@@ -101,6 +104,38 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 			{
 				var post = _postRepository.GetBy(p => p.Id == id);
 
+                var pm = PostModification.GetUnmodifiedPostModification();
+                pm.PostId = id;
+
+                if (model.Body != post.Body && model.Body != post.DraftBody)
+                {
+                    pm.BodyModified = true;
+                    pm.NewBody = model.Body;
+                }
+
+                if (model.Description != post.Description && model.Description != post.DraftDescription)
+                {
+                    pm.DescriptionModified = true;
+                    pm.NewDescription = model.Description;
+                }
+
+                if (model.CanonicalUrl != post.Canonical)
+                {
+                    pm.CannonicalModified = true;
+                    pm.NewCannonical = model.CanonicalUrl;
+                }
+
+                if (model.Title != post.Title && model.Title != post.DraftTitle)
+                {
+                    pm.TitleModified = true;
+                    pm.NewTitle = model.Title;
+                }
+
+                if (pm.HasModifications())
+                {
+                    _postModificationRepository.Create(pm);
+                }
+
                 post.DraftTitle = model.Title;
                 post.DraftDescription = model.Description;
                 post.DraftBody = model.Body;
@@ -147,6 +182,13 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 post.DraftDescription = null;
                 post.DraftTitle = null;
 
+                var pm = PostModification.GetUnmodifiedPostModification();
+                pm.PostId = id;
+                pm.StatusModified = true;
+                pm.NewStatus = PostStatus.Published;
+
+                _postModificationRepository.Create(pm);
+
                 _postRepository.Update(post);
 
                 return Json(new { success = true });
@@ -186,6 +228,13 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 post.DraftDescription = post.Description;
                 post.DraftBody = post.Body;
                 post.Status = PostStatus.Unpublished;
+
+                var pm = PostModification.GetUnmodifiedPostModification();
+                pm.PostId = id;
+                pm.StatusModified = true;
+                pm.NewStatus = PostStatus.Unpublished;
+
+                _postModificationRepository.Create(pm);
 
                 _postRepository.Update(post);
 

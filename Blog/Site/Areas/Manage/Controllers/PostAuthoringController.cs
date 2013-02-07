@@ -134,14 +134,13 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 if (pm.HasModifications())
                 {
                     _postModificationRepository.Create(pm);
+                    post.DraftTitle = model.Title;
+                    post.DraftDescription = model.Description;
+                    post.DraftBody = model.Body;
+				    post.Canonical = model.Reposted ? model.CanonicalUrl : "/" + post.Path;
+				    _postRepository.Update(post);
                 }
 
-                post.DraftTitle = model.Title;
-                post.DraftDescription = model.Description;
-                post.DraftBody = model.Body;
-				post.Canonical = model.Reposted ? model.CanonicalUrl : "/" + post.Path;
-
-				_postRepository.Update(post);
 				return RedirectToAction("Index");
 			}
 			return View(model);

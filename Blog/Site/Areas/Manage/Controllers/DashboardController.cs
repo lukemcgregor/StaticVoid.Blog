@@ -14,10 +14,12 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
     public class DashboardController : Controller
 	{
         private readonly IRepository<Post> _postRepo;
+        private readonly IRepository<PostModification> _postModRepo;
 
-        public DashboardController(IRepository<Post> postRepo)
+        public DashboardController(IRepository<Post> postRepo, IRepository<PostModification> postModRepo)
         {
             _postRepo = postRepo;
+            _postModRepo = postModRepo;
         }
 
         public ActionResult Index()
@@ -26,30 +28,29 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
             return View(new DashboardModel{
                 Posts = posts.Select(p => new Tuple<string, int>(p.GetDraftTitle(), p.Id)).ToList(),
-                SelectedPost = new DashboardPostModel
-                {
-                    Id = posts.First().Id,
-                    Description = posts.First().GetDraftDescription(),
-                    Title = posts.First().GetDraftTitle(),
-                    Url = posts.First().Path,
-                    HasDraftContent = posts.First().HasDraftContent(),
-                    Status = posts.First().Status.ToString()
-                }
+                SelectedPost = GetDashboardPostModel(posts.First().Id)
             });
         }
 
-        public JsonResult PostDetail(int id)
+        private DashboardPostModel GetDashboardPostModel(int id)
         {
             var post = _postRepo.GetBy(p => p.Id == id);
-            return Json(new DashboardPostModel
+            return new DashboardPostModel
             {
-                Id=id,
+                Id = id,
                 Description = post.GetDraftDescription(),
                 Title = post.GetDraftTitle(),
                 Url = post.Path,
                 HasDraftContent = post.HasDraftContent(),
-                Status = post.Status.ToString()
-            }, JsonRequestBehavior.AllowGet);
+                Status = post.Status.ToString(),
+                PublishedDate = post.Status >= PostStatus.Published ? post.Posted : (DateTime?)null,
+                LastModified = _postModRepo.PostLastModificationDate(post.Id) ?? post.Posted
+            };
+        }
+
+        public JsonResult PostDetail(int id)
+        {
+            return Json(GetDashboardPostModel(id), JsonRequestBehavior.AllowGet);
         }
 
     }

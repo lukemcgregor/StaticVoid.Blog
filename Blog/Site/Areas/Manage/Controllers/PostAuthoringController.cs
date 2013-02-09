@@ -173,6 +173,11 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             }
             if (ModelState.IsValid)
             {
+                //We want to update the published date if we are publishing for the first time
+                if (post.Status == PostStatus.Draft)
+                {
+                    post.Posted = DateTime.Now;
+                }
                 post.Status = PostStatus.Published;
                 post.Title = post.DraftTitle;
                 post.Description = post.DraftDescription;

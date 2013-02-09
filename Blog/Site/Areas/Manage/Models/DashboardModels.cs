@@ -20,5 +20,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Models
         public String Description { get; set; }
         public bool HasDraftContent { get; set; }
         public String Status { get; set; }
+        public DateTime LastModified { get; set; }
+        public DateTime? PublishedDate { get; set; }
     }
 }

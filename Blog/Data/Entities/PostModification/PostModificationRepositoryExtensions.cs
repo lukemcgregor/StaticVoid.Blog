@@ -16,9 +16,9 @@ namespace StaticVoid.Blog.Data
 			return repo.GetAll().Where(p => p.Post.Id == postId);
 		}
 
-        public static DateTime PostLastModificationDate(this IRepository<PostModification> repo, int postId)
+        public static DateTime? PostLastModificationDate(this IRepository<PostModification> repo, int postId)
         {
-            return repo.GetAll().Where(p => p.Post.Id == postId).Max(m=>m.Timestamp);
+            return repo.GetAll().Where(p => p.Post.Id == postId).Select(p => (DateTime?)p.Timestamp).Max(m => m);
         }
 	}
 }

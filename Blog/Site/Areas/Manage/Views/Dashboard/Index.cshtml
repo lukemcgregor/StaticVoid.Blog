@@ -56,7 +56,14 @@
             <div class="">
                 <span class="description" data-bind="text: SelectedPost.Description"></span>
             </div>
-
+            <!-- ko if: SelectedPost.PublishedDate() != null -->
+            <div class="">
+                <span class="published-date" data-bind="text: new Date(parseInt(SelectedPost.PublishedDate().substr(6))).toDateString()"></span>
+            </div>
+                <!-- /ko -->
+            <div class="">
+                <span class="last-modified" data-bind="text: new Date(parseInt(SelectedPost.LastModified().substr(6))).toDateString()"></span>
+            </div>
         </div>
     </div>
 </div>
@@ -123,6 +130,8 @@
                 self.SelectedPost.Description(data.Description);
                 self.SelectedPost.HasDraftContent(data.HasDraftContent);
                 self.SelectedPost.Status(data.Status);
+                self.SelectedPost.PublishedDate(data.PublishedDate);
+                self.SelectedPost.LastModified(data.LastModified);
 
                 BindClicks();
                 $('.post-detail-loader').hide();

@@ -17,7 +17,7 @@
 
 <div class="row">
     <div class="">
-        <ul class="post-nav nav nav-list span2" data-bind="foreach: Posts">
+        <ul class="post-nav nav nav-list span3" data-bind="foreach: Posts">
             <li data-bind="attr: { class: cssClass }"><a href="#" class="post-list-item" data-bind="text: Item1, id: Item2, click: $parent.selectPost"></a></li>
         </ul>
     </div>
@@ -62,6 +62,21 @@
                     <div class="last-modified">
                         <label>Last Modified: </label>
                         <span data-bind="text: new Date(parseInt(SelectedPost.LastModified().substr(6))).toDateString()"></span>
+                    </div>
+                    <div style="clear: both;"></div>
+                    <div class="">
+                        <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())' -->
+                        <span class="label label-info">Draft</span>
+                        <!-- /ko -->
+                        <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' -->
+                        <span class="label label-success">Published</span>
+                        <!-- /ko -->
+                        <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())' -->
+                        <span class="label label-important">Unpublished</span>
+                        <!-- /ko -->
+                        <!-- ko if: SelectedPost.HasDraftContent() && SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' -->
+                        <span class="label label-warning">Drafts Pending</span>
+                        <!-- /ko -->
                     </div>
                 </div>
             </div>

@@ -82,7 +82,5 @@ namespace StaticVoid.Blog.Site
                         "~/Content/mdd_styles.css",
                         "~/Content/blog.css"));
 		}
-
-
 	}
 }

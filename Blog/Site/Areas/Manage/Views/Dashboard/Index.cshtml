@@ -21,7 +21,7 @@
             <li data-bind="attr: { class: cssClass }"><a href="#" class="post-list-item" data-bind="text: Item1, id: Item2, click: $parent.selectPost"></a></li>
         </ul>
     </div>
-    <div class="post-detail span6">
+    <div class="post-detail span8">
         <div class="post-detail-loader" style="display: none;">loading</div>
         <div class="post-detail-contents">
             <div class="post-detail-header">
@@ -52,17 +52,22 @@
                         </ul>
                     </div>
                 </div>
+                <div>
+                    <!-- ko if: SelectedPost.PublishedDate() != null -->
+                    <div class="published-date">
+                        <label>Published: </label>
+                        <span data-bind="text: new Date(parseInt(SelectedPost.PublishedDate().substr(6))).toDateString()"></span>
+                    </div>
+                    <!-- /ko -->
+                    <div class="last-modified">
+                        <label>Last Modified: </label>
+                        <span data-bind="text: new Date(parseInt(SelectedPost.LastModified().substr(6))).toDateString()"></span>
+                    </div>
+                </div>
             </div>
+            <div style="clear: both;"></div>
             <div class="">
                 <span class="description" data-bind="text: SelectedPost.Description"></span>
-            </div>
-            <!-- ko if: SelectedPost.PublishedDate() != null -->
-            <div class="">
-                <span class="published-date" data-bind="text: new Date(parseInt(SelectedPost.PublishedDate().substr(6))).toDateString()"></span>
-            </div>
-                <!-- /ko -->
-            <div class="">
-                <span class="last-modified" data-bind="text: new Date(parseInt(SelectedPost.LastModified().substr(6))).toDateString()"></span>
             </div>
         </div>
     </div>

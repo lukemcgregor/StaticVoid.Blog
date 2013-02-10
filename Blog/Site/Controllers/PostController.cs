@@ -73,7 +73,7 @@ namespace StaticVoid.Blog.Site.Controllers
                 .OrderByDescending(p => p.Posted)
                 .Select(p => new PartialPostForLinkModel { Title = p.Title, IsCurrentPost = false, Link = p.Path }));
             model.OtherPosts.Add(new PartialPostForLinkModel { Link = post.Path, IsCurrentPost = true, Title = post.Title });
-            model.OtherPosts.AddRange(_postRepository.GetAll()
+            model.OtherPosts.AddRange(_postRepository.PublishedPosts()
                 .OrderByDescending(p => p.Posted)
                 .Where(p => p.Posted < post.Posted)
                 .Take(5)

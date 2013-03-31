@@ -12,12 +12,12 @@ using StaticVoid.Blog.Data;
 namespace StaticVoid.Blog.Site.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BlogBaseController
     {
         private readonly OpenIdMembershipService _openIdMembership;
 		private readonly IRepository<User> _userRepository;
 
-        public AccountController(OpenIdMembershipService membershipService, IRepository<User> userRepository)
+        public AccountController(OpenIdMembershipService membershipService, IRepository<User> userRepository, IRepository<Data.Blog> blogRepo): base(blogRepo)
         {
             _openIdMembership = membershipService;
 			_userRepository = userRepository;

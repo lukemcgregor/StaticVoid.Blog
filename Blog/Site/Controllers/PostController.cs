@@ -10,16 +10,16 @@ using StaticVoid.Blog.Site.Gravitar;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
-	public class PostController : Controller
+	public class PostController : BlogBaseController
 	{
 		private IRepository<Post> _postRepository;
         private readonly IRepository<Data.Blog> _blogRepo;
 		private readonly VisitLoggerService _visitLogger;
 
-		public PostController(IRepository<Post> postRepository,IRepository<Data.Blog> blogRepo, VisitLoggerService visitLogger)
+        public PostController(IRepository<Post> postRepository, VisitLoggerService visitLogger, IRepository<Data.Blog> blogRepo)
+            : base(blogRepo)
 		{
 			_postRepository = postRepository;
-            _blogRepo = blogRepo;
 			_visitLogger = visitLogger;
 		}
 
@@ -35,10 +35,6 @@ namespace StaticVoid.Blog.Site.Controllers
             _visitLogger.LogCurrentRequest();
 
 			var post = _postRepository.GetPostAtUrl(path, p=>p.Author);
-            var blog = _blogRepo.CurrentBlog();
-
-            ViewBag.Analytics = blog.AnalyticsKey;
-            ViewBag.Twitter = blog.Twitter;
 
 			var prevPost = _postRepository.GetPostBefore(post);
 			var nextPost = _postRepository.GetPostAfter(post);
@@ -57,11 +53,6 @@ namespace StaticVoid.Blog.Site.Controllers
                     GravatarUrl = post.Author.Email.GravitarUrlFromEmail(),
                     Name = String.Format("{0} {1}", post.Author.FirstName, post.Author.LastName),
                     GooglePlusProfileUrl = post.Author.GooglePlusProfileUrl
-                },
-                BlogConfig = new BlogConfig
-                {
-                    Disqus = blog.DisqusShortname,
-                    BlogStyleId = blog.StyleId
                 }
             };
 

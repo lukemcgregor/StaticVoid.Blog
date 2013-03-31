@@ -5,7 +5,7 @@
         Layout = null;
     }
     <meta charset="utf-8" />
-    <title>@ViewBag.Title - StaticVoid</title>
+    <title>@(ViewBag.Title + (ViewBag.BlogName != null ? " - " + ViewBag.BlogName : ""))</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     @RenderSection("Head", required: false)
     

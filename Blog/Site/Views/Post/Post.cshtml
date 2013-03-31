@@ -115,11 +115,11 @@
                     </div>
                 </div>
             </div>
-            @if(Model.BlogConfig != null && Model.BlogConfig.Disqus!=null){
+            @if(ViewBag.Disqus!=null){
             <div id="disqus_thread"></div>
             <script type="text/javascript">
                 /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                var disqus_shortname = '@Model.BlogConfig.Disqus'; // required: replace example with your forum shortname
+                var disqus_shortname = '@ViewBag.Disqus'; // required: replace example with your forum shortname
 
                 /* * * DON'T EDIT BELOW THIS LINE * * */
                 (function () {
@@ -133,7 +133,7 @@
             }
             <div class="row class copyright">
                 <div class="span10">
-                    Luke McGregor &copy; 2012, Reproduce only with written consent from the author.
+                    @Model.Author.Name &copy; 2012, Reproduce only with written consent from the author.
                 </div>
             </div>
         </div>

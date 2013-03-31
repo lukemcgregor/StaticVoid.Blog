@@ -10,22 +10,19 @@ using StaticVoid.Blog.Site.Gravitar;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
-    public class IndexController : Controller
+    public class IndexController : BlogBaseController
     {
         private readonly IRepository<Post> _postRepo;
         private readonly IRepository<Data.Blog> _blogRepo;
 
         public IndexController(IRepository<Post> postRepo, IRepository<Data.Blog> blogRepo)
+            : base(blogRepo)
         {
             _postRepo = postRepo;
             _blogRepo = blogRepo;
         }
         public ActionResult Posts()
         {
-            var blog = _blogRepo.CurrentBlog();
-            ViewBag.Analytics = blog.AnalyticsKey;
-            ViewBag.Twitter = blog.Twitter;
-
             return View(_postRepo
                 .PublishedPosts(p => p.Author)
                 .OrderByDescending(p=>p.Posted)
@@ -40,7 +37,7 @@ namespace StaticVoid.Blog.Site.Controllers
                     GravatarUrl = p.Author.Email.GravitarUrlFromEmail(),
                     Name = String.Format("{0} {1}", p.Author.FirstName, p.Author.LastName),
                     GooglePlusProfileUrl = p.Author.GooglePlusProfileUrl
-                },
+                }
             }));
         }
     }

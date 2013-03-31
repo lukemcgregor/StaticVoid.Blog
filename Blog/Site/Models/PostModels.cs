@@ -21,8 +21,6 @@ namespace StaticVoid.Blog.Site.Models
         public PostAuthor Author { get; set; }
 
         public List<PartialPostForLinkModel> OtherPosts { get; set; }
-
-        public BlogConfig BlogConfig { get; set; }
 	}
 
     public class PartialPostForLinkModel
@@ -38,12 +36,5 @@ namespace StaticVoid.Blog.Site.Models
         public string Name { get; set; }
         public string GravatarUrl { get; set; }
         public string GooglePlusProfileUrl { get; set; }
-    }
-
-    public class BlogConfig
-    {
-        public string Disqus { get; set; }
-        public Guid? BlogStyleId { get; set; }
-
     }
 }

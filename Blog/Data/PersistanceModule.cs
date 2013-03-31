@@ -27,6 +27,9 @@ namespace StaticVoid.Blog.Data
 
             Bind<ICachedRedirectRepositoryStorage>().To<CachedRedirectRepositoryStorage>().InSingletonScope();
             Rebind<IRepository<Data.Redirect>>().To<CachedRedirectRepository>();
+
+            Bind<ICachedStyleRepositoryStorage>().To<CachedStyleRepositoryStorage>().InSingletonScope();
+            Rebind<IRepository<Data.Style>>().To<CachedStyleRepository>();
 		}
 	}
 }

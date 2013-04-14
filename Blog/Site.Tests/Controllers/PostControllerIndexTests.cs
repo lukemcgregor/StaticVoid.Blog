@@ -1,0 +1,89 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Controllers;
+using StaticVoid.Repository;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
+
+namespace StaticVoid.Blog.Site.Tests.Controllers
+{
+    [TestClass]
+    public class PostControllerIndexTests
+    {
+        [TestMethod]
+        [ExpectedException(typeof(HttpException))]
+        public void RedirectToLatestPostWithNoPostsTest()
+        {
+            IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>());
+            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog{  } }));
+
+            PostController sut = new PostController(postRepo, null, blogRepo);
+            try
+            {
+                sut.Index();
+            }
+            catch(HttpException ex)
+            {
+                Assert.AreEqual((int)HttpStatusCode.NotFound, ex.GetHttpCode());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(HttpException))]
+        public void RedirectToLatestPostWithNoPublishedPostsTest()
+        {
+            IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
+                new Post { Status = PostStatus.Draft }, 
+                new Post { Status = PostStatus.Unpublished } 
+            }));
+            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
+
+            PostController sut = new PostController(postRepo, null, blogRepo);
+            try
+            {
+                sut.Index();
+            }
+            catch (HttpException ex)
+            {
+                Assert.AreEqual((int)HttpStatusCode.NotFound, ex.GetHttpCode());
+                throw;
+            }
+        }
+
+        [TestMethod]
+        public void RedirectToLatestPostWithOnePublishedPostsTest()
+        {
+            IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
+                new Post { Status = PostStatus.Published, Path ="2013/04/14/some-post", Posted = new DateTime(2013,4,14) }
+            }));
+            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
+
+            PostController sut = new PostController(postRepo, null, blogRepo);
+            var result = sut.Index();
+
+            Assert.AreEqual("/2013/04/14/some-post", ((RedirectResult)result).Url);
+        }
+
+        [TestMethod]
+        public void RedirectToLatestPostWithMultiplePublishedPostsTest()
+        {
+            IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
+                new Post { Status = PostStatus.Published, Path ="2013/04/10/some-other-post", Posted = new DateTime(2013,4,10) },
+                new Post { Status = PostStatus.Published, Path ="2013/04/14/some-post", Posted = new DateTime(2013,4,14) }
+            }));
+            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
+
+            PostController sut = new PostController(postRepo, null, blogRepo);
+            var result = sut.Index();
+
+            Assert.AreEqual("/2013/04/14/some-post", ((RedirectResult)result).Url);
+        }
+    }
+}

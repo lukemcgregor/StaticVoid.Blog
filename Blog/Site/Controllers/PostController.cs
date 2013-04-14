@@ -7,6 +7,7 @@ using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Models;
 using StaticVoid.Repository;
 using StaticVoid.Blog.Site.Gravitar;
+using System.Net;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
@@ -26,6 +27,9 @@ namespace StaticVoid.Blog.Site.Controllers
 		public ActionResult Index()
 		{
 			var post = _postRepository.LatestPublishedPost();
+
+            if(post== null)
+                throw new HttpException((int)HttpStatusCode.NotFound, "No posts have been published");
 
 			return Redirect("/" + post.Path);
 		}

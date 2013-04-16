@@ -7,7 +7,7 @@ using StaticVoid.Repository;
 
 namespace StaticVoid.Blog.Site
 {
-	public class VisitLoggerService
+    public class VisitLoggerService : IVisitLoggerService
 	{
 		private readonly IRepository<Visit> _visitRepository;
 		public VisitLoggerService(IRepository<Visit> visitRepository)

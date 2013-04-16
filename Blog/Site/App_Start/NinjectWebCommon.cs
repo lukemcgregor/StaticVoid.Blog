@@ -46,6 +46,7 @@ namespace StaticVoid.Blog.Site
 			var kernel = new StandardKernel();
             kernel.Load(new PersistanceModule());
             kernel.Bind<DbContext>().To<BlogContext>().InRequestScope();
+            kernel.Bind<IVisitLoggerService>().To<VisitLoggerService>();
 			kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
 			kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 			kernel.Bind<OpenIdMembershipService>().ToSelf().InTransientScope();

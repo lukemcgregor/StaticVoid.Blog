@@ -210,6 +210,7 @@
     <Compile Include="Controllers\SitemapController.cs" />
     <Compile Include="ElmahHandleErrorAttribute.cs" />
     <Compile Include="Extensions\BlogRepositoryExtensions.cs" />
+    <Compile Include="IVisitLoggerService.cs" />
     <Compile Include="Models\IndexModels.cs" />
     <Compile Include="Routing\PostRouteConstraint.cs" />
     <Compile Include="Routing\RedirectRouteConstraint.cs" />

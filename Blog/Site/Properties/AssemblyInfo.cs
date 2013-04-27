@@ -22,6 +22,11 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("20c2158c-2d94-466d-8655-557ccce93741")]
 
+// This is required so that the tests can read anon types, needing this is kinda lame
+// dynamic should just jams it in there by itself. I mean heck the debugger can see it, why cant dynamic? 
+// cf http://stackoverflow.com/questions/2630370/c-sharp-dynamic-cannot-access-properties-from-anonymous-types-declared-in-anot
+[assembly: InternalsVisibleTo("StaticVoid.Blog.Site.Tests")]
+
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version

@@ -16,18 +16,20 @@ namespace StaticVoid.Blog.Site.Security
 	//filter
 	public class MyAuthorizeFilter : IAuthorizationFilter
 	{
-		private readonly IRepository<User> _userRepository;
-		public MyAuthorizeFilter(IRepository<User> userRepository)
+        private readonly IRepository<User> _userRepository;
+        private readonly ISecurityHelper _securityHelper;
+        public MyAuthorizeFilter(IRepository<User> userRepository, ISecurityHelper securityHelper)
 		{
-			_userRepository = userRepository;
+            _userRepository = userRepository;
+            _securityHelper = securityHelper;
 		}
 
 		public void OnAuthorization(AuthorizationContext filterContext)
 		{
 			if (!HttpContext.Current.User.Identity.IsAuthenticated || 
-				SecurityHelper.CurrentUser == null || 
-				String.IsNullOrWhiteSpace(SecurityHelper.CurrentUser.ClaimedIdentifier) ||
-                !_userRepository.GetBy(u => u.ClaimedIdentifier == SecurityHelper.CurrentUser.ClaimedIdentifier).IsAuthor)
+				_securityHelper.CurrentUser == null ||
+                String.IsNullOrWhiteSpace(_securityHelper.CurrentUser.ClaimedIdentifier) ||
+                !_userRepository.GetBy(u => u.ClaimedIdentifier == _securityHelper.CurrentUser.ClaimedIdentifier).IsAuthor)
 			{
 				filterContext.Result = new HttpUnauthorizedResult();
 			}

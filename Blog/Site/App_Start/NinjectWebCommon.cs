@@ -14,6 +14,8 @@ namespace StaticVoid.Blog.Site
 	using StaticVoid.Blog.Data;
 	using StaticVoid.Blog.Site.Security;
     using System.Data.Entity;
+    using StaticVoid.Mockable;
+    using StaticVoid.Blog.Site.Wiring;
 
     public static class NinjectWebCommon 
     {
@@ -43,15 +45,9 @@ namespace StaticVoid.Blog.Site
         /// <returns>The created kernel.</returns>
         private static IKernel CreateKernel()
         {
-			var kernel = new StandardKernel();
-            kernel.Load(new PersistanceModule());
-            kernel.Bind<DbContext>().To<BlogContext>().InRequestScope();
-            kernel.Bind<IVisitLoggerService>().To<VisitLoggerService>();
+            var kernel = new StandardKernel();
 			kernel.Bind<Func<IKernel>>().ToMethod(ctx => () => new Bootstrapper().Kernel);
 			kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
-			kernel.Bind<OpenIdMembershipService>().ToSelf().InTransientScope();
-			kernel.BindFilter<MyAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<AuthorAuthorizeAttribute>();
-			kernel.BindFilter<MyAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<AuthorAuthorizeAttribute>();
             
             RegisterServices(kernel);
             return kernel;
@@ -63,6 +59,8 @@ namespace StaticVoid.Blog.Site
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Load(new PersistanceModule());
+            kernel.Load(new BlogModule());
         }        
     }
 }

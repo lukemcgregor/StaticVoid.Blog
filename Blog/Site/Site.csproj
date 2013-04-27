@@ -115,6 +115,9 @@
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.MVC3.3.0.0.6\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="StaticVoid.Mockable">
+      <HintPath>..\packages\StaticVoid.Mockable.0.1.1.0\lib\net45\StaticVoid.Mockable.dll</HintPath>
+    </Reference>
     <Reference Include="StaticVoid.Repository">
       <HintPath>..\packages\StaticVoid.Repository.2.0.0-beta1\lib\net45\StaticVoid.Repository.dll</HintPath>
     </Reference>
@@ -239,11 +242,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthorAuthorizeAttribute.cs" />
     <Compile Include="Security\IOpenIdMembershipService.cs" />
+    <Compile Include="Security\ISecurityHelper.cs" />
     <Compile Include="Security\OpenIdAuthorizeAttribute.cs" />
     <Compile Include="Security\OpenIdIdentity.cs" />
     <Compile Include="Security\OpenIdMembershipService.cs" />
     <Compile Include="Security\SecurityHelper.cs" />
     <Compile Include="VisitLoggerService.cs" />
+    <Compile Include="Wiring\BlogModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

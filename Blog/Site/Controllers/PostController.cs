@@ -14,7 +14,6 @@ namespace StaticVoid.Blog.Site.Controllers
 	public class PostController : BlogBaseController
 	{
 		private IRepository<Post> _postRepository;
-        private readonly IRepository<Data.Blog> _blogRepo;
 		private readonly IVisitLoggerService _visitLogger;
 
         public PostController(IRepository<Post> postRepository, IVisitLoggerService visitLogger, IRepository<Data.Blog> blogRepo)

@@ -25,7 +25,7 @@ namespace StaticVoid.Blog.Data
         public bool CannonicalModified { get; set; }
         public string NewCannonical { get; set; }
 
-        public static PostModification GetUnmodifiedPostModification()
+        public static PostModification GetUnmodifiedPostModification(DateTime? timestamp = null)
         {
             return new PostModification
             { 
@@ -34,7 +34,7 @@ namespace StaticVoid.Blog.Data
                 DescriptionModified = false, 
                 StatusModified = false, 
                 TitleModified = false,
-                Timestamp = DateTime.Now
+                Timestamp = timestamp ?? DateTime.Now
             };
         }
     }

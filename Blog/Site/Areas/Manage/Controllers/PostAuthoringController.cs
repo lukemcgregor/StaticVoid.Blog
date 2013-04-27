@@ -8,6 +8,7 @@ using StaticVoid.Blog.Site.Areas.Manage.Models;
 using StaticVoid.Blog.Site.Security;
 using StaticVoid.Repository;
 using System.Net;
+using StaticVoid.Mockable;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
@@ -19,19 +20,25 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 		private readonly IRepository<User> _userRepository;
         private readonly IRepository<Redirect> _redirectRepository;
         private readonly IRepository<Data.Blog> _blogRepository;
+        private readonly ISecurityHelper _securityHelper;
+        private readonly IProvideDateTime _dateTime;
 
         public PostAuthoringController(
             IRepository<Post> postRepository, 
             IRepository<PostModification> postModificationRepository,
             IRepository<User> userRepository, 
             IRepository<Redirect> redirectRepository,
-            IRepository<Data.Blog> blogRepository)
+            IRepository<Data.Blog> blogRepository,
+            ISecurityHelper securityHelper,
+            IProvideDateTime dateTime)
 		{
 			_postRepository = postRepository;
             _postModificationRepository = postModificationRepository;
 			_userRepository = userRepository;
             _redirectRepository = redirectRepository;
             _blogRepository = blogRepository;
+            _securityHelper = securityHelper;
+            _dateTime = dateTime;
 		}
 
 		public ActionResult Index()
@@ -58,14 +65,14 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 			ViewBag.Title = "Create";
 			if (ModelState.IsValid)
 			{
-				var url = PostHelpers.MakeUrl(DateTime.Today.Year,DateTime.Today.Month,DateTime.Today.Day,model.Title);
+                var url = PostHelpers.MakeUrl(_dateTime.Today.Year, _dateTime.Today.Month, _dateTime.Today.Day, model.Title);
 
 				_postRepository.Create(new Post
 				{
-					AuthorId = _userRepository.GetCurrentUser().Id,
+					AuthorId = _userRepository.GetCurrentUser(_securityHelper).Id,
 					DraftBody = model.Body,
                     DraftDescription = model.Description,
-					Posted = DateTime.Now,
+					Posted = _dateTime.Now,
 					DraftTitle = model.Title,
 					Status = PostStatus.Draft,
 					Path = url,
@@ -74,7 +81,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                     PostGuid = Guid.NewGuid()
 				});
 
-				return RedirectToAction("Index");
+				return RedirectToAction("Index", "Dashboard");
 			}
 			return View("Edit", model);
 
@@ -141,7 +148,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 				    _postRepository.Update(post);
                 }
 
-				return RedirectToAction("Index");
+                return RedirectToAction("Index", "Dashboard");
 			}
 			return View(model);
 		}
@@ -176,7 +183,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 //We want to update the published date if we are publishing for the first time
                 if (post.Status == PostStatus.Draft)
                 {
-                    post.Posted = DateTime.Now;
+                    post.Posted = _dateTime.Now;
                 }
                 post.Status = PostStatus.Published;
                 post.Title = post.DraftTitle;
@@ -186,7 +193,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 post.DraftDescription = null;
                 post.DraftTitle = null;
 
-                var pm = PostModification.GetUnmodifiedPostModification();
+                var pm = PostModification.GetUnmodifiedPostModification(_dateTime.Now);
                 pm.PostId = id;
                 pm.StatusModified = true;
                 pm.NewStatus = PostStatus.Published;
@@ -306,7 +313,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 post.Path = PostHelpers.MakeUrl(post.Posted.Year, post.Posted.Month, post.Posted.Day, post.Title);
                 _postRepository.Update(post);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Dashboard");
         }
 	}
 }

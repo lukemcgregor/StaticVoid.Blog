@@ -19,7 +19,6 @@ namespace StaticVoid.Blog.Site.Models
         public string FullName { get; set; }
         public bool IsSignedByProvider { get; set; }
 		public string ClaimedIdentifier { get; set; }
-		private string _gravatarUrl;
 
 
         public OpenIdUser(string data)

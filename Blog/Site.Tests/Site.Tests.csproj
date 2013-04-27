@@ -44,6 +44,9 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.0.10827\lib\NET40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="StaticVoid.Mockable">
+      <HintPath>..\packages\StaticVoid.Mockable.0.1.1.0\lib\net45\StaticVoid.Mockable.dll</HintPath>
+    </Reference>
     <Reference Include="StaticVoid.Repository, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\StaticVoid.Repository.2.0.0-beta1\lib\net45\StaticVoid.Repository.dll</HintPath>
@@ -107,6 +110,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Admin\PostAuthoringControllerPublishTests.cs" />
+    <Compile Include="Controllers\Admin\PostAuthoringControllerCreateTests.cs" />
     <Compile Include="Controllers\PostControllerPreviewTests.cs" />
     <Compile Include="Controllers\PostControllerDisplayTests.cs" />
     <Compile Include="Controllers\PostControllerIndexTests.cs" />
@@ -128,6 +133,7 @@
       <Name>Site</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

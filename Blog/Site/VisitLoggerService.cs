@@ -10,9 +10,11 @@ namespace StaticVoid.Blog.Site
     public class VisitLoggerService : IVisitLoggerService
 	{
 		private readonly IRepository<Visit> _visitRepository;
-		public VisitLoggerService(IRepository<Visit> visitRepository)
+        private readonly ISecurityHelper _securityHelper;
+		public VisitLoggerService(IRepository<Visit> visitRepository, ISecurityHelper securityHelper)
 		{
 			_visitRepository = visitRepository;
+            _securityHelper = securityHelper;
 		}
 
 
@@ -21,9 +23,9 @@ namespace StaticVoid.Blog.Site
 			try
 			{
                 string currentUser = null;
-                if (SecurityHelper.CurrentUser != null)
+                if (_securityHelper.CurrentUser != null)
                 {
-                    currentUser = SecurityHelper.CurrentUser.ClaimedIdentifier;
+                    currentUser = _securityHelper.CurrentUser.ClaimedIdentifier;
                 }
 				_visitRepository.Create(new Visit
 				{

@@ -9,9 +9,9 @@ namespace StaticVoid.Blog.Site
 {
 	public static class UserRepositoryExtensions
 	{
-		public static User GetCurrentUser(this IRepository<User> repo)
+		public static User GetCurrentUser(this IRepository<User> repo, ISecurityHelper securityHelper)
 		{
-			var currentUser = SecurityHelper.CurrentUser;
+            var currentUser = securityHelper.CurrentUser;
 
 			if (currentUser != null && !String.IsNullOrWhiteSpace(currentUser.ClaimedIdentifier))
 			{

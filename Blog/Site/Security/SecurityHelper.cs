@@ -9,9 +9,9 @@ using StaticVoid.Blog.Site.Models;
 
 namespace StaticVoid.Blog.Site
 {
-	public static class SecurityHelper
+    public class SecurityHelper : ISecurityHelper
 	{
-		public static OpenIdUser CurrentUser
+		public OpenIdUser CurrentUser
 		{
 			get
 			{
@@ -31,5 +31,17 @@ namespace StaticVoid.Blog.Site
 				return null;
 			}
 		}
+
+        /// <summary>
+        /// This is not mockable, please dont use me anywhere you dont have to, this is only there so
+        /// in a non-injectable place like a view with no model this can still be used eg _LoginPartial
+        /// </summary>
+        public static OpenIdUser UnsafeCurrentUser
+        {
+            get
+            {
+                return new SecurityHelper().CurrentUser;
+            }
+        }
 	}
 }

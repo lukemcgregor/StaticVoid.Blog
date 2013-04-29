@@ -228,16 +228,19 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         public ActionResult ConfirmUnPublish(int id, ConfirmPublishModel model)
         {
             var post = _postRepository.GetBy(p => p.Id == id);
-
+            
             if (post == null)
             {
                 throw new HttpException((int)HttpStatusCode.NotFound, "The specified post was not found");
             }
             if (ModelState.IsValid)
             {
-                post.DraftTitle = post.Title;
-                post.DraftDescription = post.Description;
-                post.DraftBody = post.Body;
+                if (!post.HasDraftContent())
+                {
+                    post.DraftTitle = post.Title;
+                    post.DraftDescription = post.Description;
+                    post.DraftBody = post.Body;
+                }
                 post.Status = PostStatus.Unpublished;
 
                 var pm = PostModification.GetUnmodifiedPostModification();

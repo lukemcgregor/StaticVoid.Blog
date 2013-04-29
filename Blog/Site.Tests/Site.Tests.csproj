@@ -110,6 +110,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\Admin\PostAuthoringControllerEditTests.cs" />
+    <Compile Include="Controllers\Admin\PostAuthoringControllerUnPublishTests.cs" />
     <Compile Include="Controllers\Admin\PostAuthoringControllerPublishTests.cs" />
     <Compile Include="Controllers\Admin\PostAuthoringControllerCreateTests.cs" />
     <Compile Include="Controllers\PostControllerPreviewTests.cs" />

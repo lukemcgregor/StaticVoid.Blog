@@ -11,8 +11,17 @@
                 <li>@Html.ActionLink("Dashboard", "Index","Dashboard",new { Area = "Manage" },new{})</li>
                 <li>@Html.ActionLink("Author Posts", "Index","PostAuthoring",new { Area = "Manage" },new{})</li>
                 <li class="divider"></li>
+                <li>@Html.ActionLink("My Profile", "EditMyProfile", "UserProfile", new { Area = "Manage" }, new { @class = "edit-my-profile" })</li>
+                <li class="divider"></li>
                 <li>@Html.ActionLink("Sign out", "LogOff", "Account")</li>
             </ul>
         </li>
     }
 </ul>
+
+<script type="text/javascript">
+    $(function () {
+        $('.body-content').after("<div id='edit-my-profile-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("EditMyProfile", "UserProfile", new { Area = "Manage" })'><div id='edit-my-profile-container'></div></div>");
+        setupModal('edit-my-profile');
+    });
+</script>

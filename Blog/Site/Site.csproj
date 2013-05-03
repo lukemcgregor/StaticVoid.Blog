@@ -205,6 +205,8 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Areas\Manage\Controllers\HacksController.cs" />
     <Compile Include="Areas\Manage\Controllers\StyleEditorController.cs" />
+    <Compile Include="Areas\Manage\Controllers\UserProfileController.cs" />
+    <Compile Include="Areas\Manage\Models\MyProfileModels.cs" />
     <Compile Include="Areas\Manage\Models\StyleEditorModels.cs" />
     <Compile Include="Controllers\BlogBaseController.cs" />
     <Compile Include="Controllers\StyleController.cs" />
@@ -378,6 +380,7 @@
     <Content Include="Areas\Manage\Views\PostAuthoring\ConfirmPublishModal.cshtml" />
     <Content Include="Areas\Manage\Views\PostAuthoring\ConfirmUnPublishModal.cshtml" />
     <Content Include="Areas\Manage\Views\StyleEditor\EditStyleModal.cshtml" />
+    <Content Include="Areas\Manage\Views\UserProfile\EditMyProfileModal.cshtml" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\editor.js" />

@@ -10,8 +10,10 @@ namespace StaticVoid.Blog.Data
     {
         public static Data.Blog CurrentBlog(this IRepository<Data.Blog> repo)
         {
+            var host = HttpContext.Current.Request.Url.Host;
+
             //TODO use current url
-            return repo.GetAll().First();
+            return repo.GetAll().Where(b=> new Uri(b.AuthoritiveUrl).Host == host).First();
         }
     }
 }

@@ -18,5 +18,6 @@ namespace StaticVoid.Blog.Data
         public string DisqusShortname { get; set; }
         public Guid? StyleId { get; set; }
         public Style Style { get; set; }
+        public Securable AuthorSecurable { get; set; }
     }
 }

@@ -43,12 +43,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\StaticVoid.Core.Repository.2.0.0-beta1\lib\net45\StaticVoid.Core.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Repository">
-      <HintPath>..\packages\StaticVoid.Repository.2.0.0-beta1\lib\net45\StaticVoid.Repository.dll</HintPath>
-    </Reference>
-    <Reference Include="StaticVoid.Repository.EntityFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="StaticVoid.Repository, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\StaticVoid.Repository.EntityFramework.1.0.0-beta2\lib\net45\StaticVoid.Repository.EntityFramework.dll</HintPath>
+      <HintPath>..\packages\StaticVoid.Repository.2.1.0\lib\net45\StaticVoid.Repository.dll</HintPath>
+    </Reference>
+    <Reference Include="StaticVoid.Repository.EntityFramework, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\StaticVoid.Repository.EntityFramework.1.1.0\lib\net45\StaticVoid.Repository.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -75,6 +76,7 @@
     <Compile Include="Entities\Redirect\CachedRedirectRepository.cs" />
     <Compile Include="Entities\Redirect\RedirectRepositoryExtensions.cs" />
     <Compile Include="Entities\Redirect\Redirect.cs" />
+    <Compile Include="Entities\Securable\Securable.cs" />
     <Compile Include="Entities\Style\CachedStyleRepository.cs" />
     <Compile Include="Entities\Style\Style.cs" />
     <Compile Include="Entities\User\CachedUserRepository.cs" />
@@ -89,7 +91,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Entities\Permission\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

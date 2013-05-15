@@ -22,6 +22,14 @@ namespace StaticVoid.Blog.Site.Security
 
         public IAuthenticationRequest ValidateAtOpenIdProvider(string openIdIdentifier)
         {
+            // We only want supported providers as unsupported providers could claim a email address
+            // and gain access without the owner of that address ever giving consent. The only way to
+            // get a google OpenID account is with an email address which has been validated.
+            if (openIdIdentifier != "https://www.google.com/accounts/o8/id")
+            {
+                throw new NotSupportedException("Only google is supported for openauth");
+            }
+
             IAuthenticationRequest openIdRequest = openId.CreateRequest(Identifier.Parse(openIdIdentifier));
 			
             var fetch = new FetchRequest();

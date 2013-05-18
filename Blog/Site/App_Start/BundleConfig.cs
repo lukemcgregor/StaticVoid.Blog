@@ -40,6 +40,7 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/jquery-1.8.2.js",
                         "~/Scripts/modernizr-*",
                         "~/Scripts/bootstrap.js",
+                        "~/Scripts/modals.js",
                         "~/Scripts/Prettify/prettify.js",
                         "~/Scripts/jquery.scrollTo.js"));
 

@@ -13,8 +13,9 @@ namespace StaticVoid.Blog.Data
 	{
 		public override void Load()
 		{
-			Bind(typeof(IRepositoryDataSource<>)).To(typeof(DbContextRepositoryDataSource<>));
-			Bind(typeof(IRepository<>)).To(typeof(SimpleRepository<>));
+            Bind(typeof(IRepositoryDataSource<>)).To(typeof(DbContextRepositoryDataSource<>));
+            Bind(typeof(IRepository<>)).To(typeof(SimpleRepository<>));
+            Bind(typeof(IAttacher<>)).To(typeof(EntityFrameworkAttacher<>));
 
             Bind<ICachedBlogRepositoryStorage>().To<CachedBlogRepositoryStorage>().InSingletonScope();
             Rebind<IRepository<Data.Blog>>().To<CachedBlogRepository>();

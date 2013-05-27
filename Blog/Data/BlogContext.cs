@@ -44,6 +44,7 @@ namespace StaticVoid.Blog.Data
             modelBuilder.Entity<PostModification>().HasRequired(b => b.Post).WithMany().HasForeignKey(b => b.PostId);
             modelBuilder.Entity<Style>().Property(s => s.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<Invitation>().HasRequired(i => i.Securable).WithMany().HasForeignKey(i => i.SecurableId);
+            modelBuilder.Entity<Invitation>().HasOptional(i => i.AssignedTo).WithMany().HasForeignKey(i => i.AssignedToId);
 		}
 	}
 }

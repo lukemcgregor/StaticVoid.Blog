@@ -9,6 +9,7 @@ namespace StaticVoid.Blog.Data
     public class Securable
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public ICollection<User> Members { get; set; }
     }
 }

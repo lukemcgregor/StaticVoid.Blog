@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 
 namespace StaticVoid.Blog.Data
 {
@@ -13,7 +14,7 @@ namespace StaticVoid.Blog.Data
             var host = HttpContext.Current.Request.Url.Host;
 
             //TODO use current url
-            return repo.GetAll().Where(b=> new Uri(b.AuthoritiveUrl).Host == host).First();
+            return repo.GetAll().ToArray().Where(b=> new Uri(b.AuthoritiveUrl).Host == host).FirstOrDefault();
         }
     }
 }

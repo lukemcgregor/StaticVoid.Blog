@@ -44,6 +44,7 @@ namespace StaticVoid.Blog.Data
             _baseRepo.Delete(entity);
             InternalRemove(entity);
         }
+
         private void InternalRemove(Blog entity)
         {
             if (_cache.CachedBlogs.Any(b => b.Id == entity.Id))
@@ -52,8 +53,12 @@ namespace StaticVoid.Blog.Data
             }
         }
 
-        public IQueryable<Blog> GetAll()
+        public IQueryable<Blog> GetAll(params System.Linq.Expressions.Expression<Func<Blog, object>>[] includes)
         {
+            if (includes != null)
+            {
+                return _baseRepo.GetAll(includes);
+            }
             return _cache.CachedBlogs.AsQueryable();
         }
 

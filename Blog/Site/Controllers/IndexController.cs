@@ -35,7 +35,7 @@ namespace StaticVoid.Blog.Site.Controllers
                 Author = new PostAuthor
                 {
                     GravatarUrl = p.Author.Email.GravitarUrlFromEmail(),
-                    Name = String.Format("{0} {1}", p.Author.FirstName, p.Author.LastName),
+                    Name = p.Author.FullName(),
                     GooglePlusProfileUrl = p.Author.GooglePlusProfileUrl
                 }
             }));

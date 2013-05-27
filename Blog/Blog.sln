@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E39AD9
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Email", "Email\Email.csproj", "{B3D7E821-0A8B-4BDB-AF2D-DE65AAF30108}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{57F7761E-4371-468B-90EE-518760201C13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57F7761E-4371-468B-90EE-518760201C13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57F7761E-4371-468B-90EE-518760201C13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3D7E821-0A8B-4BDB-AF2D-DE65AAF30108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3D7E821-0A8B-4BDB-AF2D-DE65AAF30108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3D7E821-0A8B-4BDB-AF2D-DE65AAF30108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3D7E821-0A8B-4BDB-AF2D-DE65AAF30108}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,17 @@
+﻿.permission-set-title {
+    font-weight:bold;
+    padding-bottom:15px;
+}
+
+.permission-set-member {
+    float:left;
+}
+
+
+.permission-set-member-row {
+    padding-bottom:10px;
+}
+
+.permission-set-invite-row {
+    height:40px;
+}

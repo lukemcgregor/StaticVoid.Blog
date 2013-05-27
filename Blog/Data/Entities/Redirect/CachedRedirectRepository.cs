@@ -54,8 +54,12 @@ namespace StaticVoid.Blog.Data
             }
         }
 
-        public IQueryable<Data.Redirect> GetAll()
+        public IQueryable<Data.Redirect> GetAll(params Expression<Func<Data.Redirect, object>>[] includes)
         {
+            if (includes != null)
+            {
+                return _baseRepo.GetAll(includes);
+            }
             return _cache.CachedRedirects.AsQueryable();
         }
 

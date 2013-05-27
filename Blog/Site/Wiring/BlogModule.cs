@@ -13,6 +13,7 @@ using Ninject.Web.Mvc;
 using Ninject.Modules;
 using Ninject.Web.Mvc.FilterBindingSyntax;
 using Ninject.Web.Common;
+using StaticVoid.Blog.Email;
 
 namespace StaticVoid.Blog.Site.Wiring
 {
@@ -25,8 +26,9 @@ namespace StaticVoid.Blog.Site.Wiring
             Bind<IVisitLoggerService>().To<VisitLoggerService>();
             Bind<OpenIdMembershipService>().ToSelf().InTransientScope();
             Bind<ISecurityHelper>().To<SecurityHelper>();
-            Kernel.BindFilter<MyAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<AuthorAuthorizeAttribute>();
-            Kernel.BindFilter<MyAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<AuthorAuthorizeAttribute>();
+            Bind<ISendEmail>().To<EmailSender>();
+            Kernel.BindFilter<AuthorAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<AuthorAuthorizeAttribute>();
+            Kernel.BindFilter<AuthorAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<AuthorAuthorizeAttribute>();
         }
     }
 }

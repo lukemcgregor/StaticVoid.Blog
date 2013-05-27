@@ -118,9 +118,9 @@
     <Reference Include="StaticVoid.Mockable">
       <HintPath>..\packages\StaticVoid.Mockable.0.1.1.0\lib\net45\StaticVoid.Mockable.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Repository, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="StaticVoid.Repository, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\StaticVoid.Repository.2.1.0\lib\net45\StaticVoid.Repository.dll</HintPath>
+      <HintPath>..\packages\StaticVoid.Repository.2.2.0\lib\net45\StaticVoid.Repository.dll</HintPath>
     </Reference>
     <Reference Include="StaticVoid.Xml">
       <HintPath>..\packages\StaticVoid.Xml.0.1.0.0\lib\net40\StaticVoid.Xml.dll</HintPath>
@@ -205,9 +205,11 @@
     <Compile Include="App_Start\EntityFrameworkConfiguration.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Areas\Manage\Controllers\HacksController.cs" />
+    <Compile Include="Areas\Manage\Controllers\PermissionsEditorController.cs" />
     <Compile Include="Areas\Manage\Controllers\StyleEditorController.cs" />
     <Compile Include="Areas\Manage\Controllers\UserProfileController.cs" />
     <Compile Include="Areas\Manage\Models\MyProfileModels.cs" />
+    <Compile Include="Areas\Manage\Models\PermissionsModel.cs" />
     <Compile Include="Areas\Manage\Models\StyleEditorModels.cs" />
     <Compile Include="Controllers\BlogBaseController.cs" />
     <Compile Include="Controllers\StyleController.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Controllers\SitemapController.cs" />
     <Compile Include="ElmahHandleErrorAttribute.cs" />
     <Compile Include="Extensions\BlogRepositoryExtensions.cs" />
+    <Compile Include="Extensions\UserExtensions.cs" />
     <Compile Include="IVisitLoggerService.cs" />
     <Compile Include="Models\IndexModels.cs" />
     <Compile Include="Routing\PostRouteConstraint.cs" />
@@ -244,6 +247,7 @@
     <Compile Include="Models\PostModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\AuthorAuthorizeAttribute.cs" />
+    <Compile Include="Security\OauthAuthorizeAttribute.cs" />
     <Compile Include="Security\IOpenIdMembershipService.cs" />
     <Compile Include="Security\ISecurityHelper.cs" />
     <Compile Include="Security\OpenIdAuthorizeAttribute.cs" />
@@ -382,6 +386,8 @@
     <Content Include="Areas\Manage\Views\PostAuthoring\ConfirmUnPublishModal.cshtml" />
     <Content Include="Areas\Manage\Views\StyleEditor\EditStyleModal.cshtml" />
     <Content Include="Areas\Manage\Views\UserProfile\EditMyProfileModal.cshtml" />
+    <Content Include="Areas\Manage\Views\PermissionsEditor\EditPermissionsModal.cshtml" />
+    <Content Include="Content\blog-admin.css" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\editor.js" />
@@ -400,6 +406,8 @@
     <Content Include="Scripts\knockout-2.2.1.js" />
     <Content Include="Scripts\knockout.mapping-latest.debug.js" />
     <Content Include="Scripts\knockout.mapping-latest.js" />
+    <Content Include="Scripts\knockout.validation.debug.js" />
+    <Content Include="Scripts\knockout.validation.js" />
     <Content Include="Scripts\MarkdownDeep License.txt" />
     <Content Include="Scripts\MarkdownDeep Quick Reference.txt" />
     <Content Include="Scripts\MarkdownDeepEditor.js" />
@@ -468,6 +476,10 @@
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{6fa1b37f-0164-4c48-a03d-f7042a3ab2b1}</Project>
       <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Email\Email.csproj">
+      <Project>{b3d7e821-0a8b-4bdb-af2d-de65aaf30108}</Project>
+      <Name>Email</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

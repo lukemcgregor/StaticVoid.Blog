@@ -25,6 +25,7 @@ namespace StaticVoid.Blog.Data
         public DbSet<Blog> Blogs { get; set; }
         public DbSet<Style> Styles { get; set; }
         public DbSet<Securable> Securables { get; set; }
+        public DbSet<Invitation> Invitations { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
@@ -38,10 +39,11 @@ namespace StaticVoid.Blog.Data
 
             modelBuilder.Entity<Blog>().HasOptional(b => b.Style).WithMany().HasForeignKey(b => b.StyleId);
             modelBuilder.Entity<User>().HasMany(u => u.Securables).WithMany(s => s.Members);
-            modelBuilder.Entity<Blog>().HasOptional(b => b.AuthorSecurable).WithMany().Map(b => b.MapKey("AuthorSecurableId"));
-            //modelBuilder.Entity<Blog>().Property(b => b.AuthoritiveUrl).IsRequired();
+            modelBuilder.Entity<Blog>().HasRequired(b => b.AuthorSecurable).WithMany().HasForeignKey(b => b.AuthorSecurableId);
+            modelBuilder.Entity<Blog>().Property(b => b.AuthoritiveUrl).IsRequired();
             modelBuilder.Entity<PostModification>().HasRequired(b => b.Post).WithMany().HasForeignKey(b => b.PostId);
             modelBuilder.Entity<Style>().Property(s => s.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<Invitation>().HasRequired(i => i.Securable).WithMany().HasForeignKey(i => i.SecurableId);
 		}
 	}
 }

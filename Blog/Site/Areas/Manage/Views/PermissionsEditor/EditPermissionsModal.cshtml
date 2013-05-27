@@ -1,0 +1,134 @@
+﻿@model StaticVoid.Blog.Site.Areas.Manage.Models.EditPermissionsModel
+
+@{
+    ViewBag.Title = "Edit Permissions";
+}
+
+<script type="text/javascript">
+    function PermissionsViewModel() {
+        var self;
+
+        var PermissionModel = function(options){
+            var self = this;
+            self.isInviting = ko.observable(false);
+            self.toInvite = ko.observable().extend({ email: true });
+            self.invite = function () {
+                return function(){
+                    self.isInviting(true); 
+                };
+            };
+            self.cancelInvite = function () {
+                return function(){
+                    self.toInvite("");
+                    self.isInviting(false); 
+                };
+            };
+            self.sendInvite = function () {
+                return function(){
+                    if(self.toInvite.isValid){
+                        $.ajax({
+                            url:"@Url.Action("Invite", "PermissionsEditor")",
+                            type: 'POST',
+                            data: JSON.stringify({ Email: self.toInvite(), SecurableId: self.SecurableId(), PermissionName: self.PermissionName() }),
+                            contentType: "application/json"
+                        }).done(function (data){
+                            self.Members.push(new Member( {data: { Email: self.toInvite(), UserId: 0, CanChange: true }, parent: self } ));
+
+                            self.toInvite("");
+                            self.isInviting(false); 
+                        });
+                    }
+                };
+            };
+            ko.mapping.fromJS(options.data, permissionMemberMappingOptions, this);
+        };
+
+        var permissionMappingOptions = {
+            'PermissionModels': {
+                create: function (options) {
+                    return new PermissionModel(options);
+                }
+            }
+        };
+
+        var Member = function(options){
+            var self = this;
+            ko.mapping.fromJS(options.data, {}, self);
+            var parent = options.parent;
+            self.isRevoking = ko.observable(false);
+            self.revoke = function (){ 
+                return function(){
+                    self.isRevoking(true); 
+                }};
+            self.confirmRevoke = function () {
+                return function(){
+                    self.isRevoking(false); 
+                    $.ajax({
+                        url:"@Url.Action("Revoke", "PermissionsEditor")",
+                        type: 'POST',
+                        data: JSON.stringify({ Email: self.Email(), UserId: self.UserId(), SecurableId: parent.SecurableId() }),
+                        contentType: "application/json"
+                    }).done(function (data){
+                        if(data){
+                            parent.Members.remove(self);
+                        }
+                    });
+                }};
+            self.displayName = ko.computed(function() {
+                if(self.Name && self.Name()){
+                    return self.Name() + " (" + self.Email() + ")";
+                }
+                return self.Email();
+            });
+            self.cancelRevoke = function () { 
+                return function(){
+                    self.isRevoking(false); 
+                }};
+        };
+
+        var permissionMemberMappingOptions = {
+            'Members': {
+                create: function (options) {
+                    return new Member(options);
+                }
+            }
+        };
+
+        self = ko.mapping.fromJS( @(Html.Raw(Json.Encode(Model))), permissionMappingOptions);
+        
+        return self;
+    }
+    $(function () {
+        ko.applyBindings(new PermissionsViewModel(), $('.permissions-modal')[0]);
+    });
+</script>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Edit Permissions</h3>
+</div>
+
+
+<div class="modal-body permissions-modal">
+    <div data-bind="foreach: PermissionModels">
+        <div class="permission-set">
+                <div class="permission-set-title" data-bind="text: PermissionName"></div>
+                <div class="permission-set-members" data-bind="foreach: Members" >
+                    <div class="permission-set-member-row clearfix">
+                        <div class="permission-set-member" data-bind="text: displayName()"></div>
+                        <a href="#" class="btn btn-small pull-right" data-bind="click: revoke(), visible: !isRevoking() && CanChange">Revoke</a>
+                        <a href="#" class="btn btn-small pull-right" data-bind="click: cancelRevoke(), visible: isRevoking()">Cancel</a>
+                        <a href="#" class="btn btn-small btn-danger pull-right" data-bind="click: confirmRevoke(), visible: isRevoking()">Confirm Revoke</a>
+                    </div>
+                </div>
+                <div class="permission-set-invite-row">
+                    <a href="#" class="btn btn-small pull-right" data-bind="click: invite(), visible: !isInviting()">Invite</a>
+                    <!-- ko if: isInviting() -->
+                    Email: <input type="email" required data-bind="value: toInvite" />
+                    <a href="#" class="btn btn-small pull-right" data-bind="click: cancelInvite()">Cancel</a>
+                    <a href="#" class="btn btn-small btn-success pull-right" data-bind="click: sendInvite(), css:{  }">Send Invitation</a>
+                    <!-- /ko -->
+                </div>
+            </div>
+    </div>
+</div>

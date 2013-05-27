@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;DISABLE_SEED</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -43,13 +43,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\StaticVoid.Core.Repository.2.0.0-beta1\lib\net45\StaticVoid.Core.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Repository, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="StaticVoid.Repository, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\StaticVoid.Repository.2.1.0\lib\net45\StaticVoid.Repository.dll</HintPath>
+      <HintPath>..\packages\StaticVoid.Repository.2.2.0\lib\net45\StaticVoid.Repository.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Repository.EntityFramework, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="StaticVoid.Repository.EntityFramework, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\StaticVoid.Repository.EntityFramework.1.1.0\lib\net45\StaticVoid.Repository.EntityFramework.dll</HintPath>
+      <HintPath>..\packages\StaticVoid.Repository.EntityFramework.1.2.0\lib\net45\StaticVoid.Repository.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -65,6 +65,8 @@
     <Compile Include="BlogContext.cs" />
     <Compile Include="Entities\Blog\Blog.cs" />
     <Compile Include="Entities\Blog\CachedBlogRepository.cs" />
+    <Compile Include="Entities\Invitation\Invitation.cs" />
+    <Compile Include="Entities\Invitation\InvitationRepositoryExtensions.cs" />
     <Compile Include="Entities\PostModification\PostModification.cs" />
     <Compile Include="Entities\PostModification\PostModificationExtensions.cs" />
     <Compile Include="Entities\PostModification\PostModificationRepositoryExtensions.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Entities\Redirect\RedirectRepositoryExtensions.cs" />
     <Compile Include="Entities\Redirect\Redirect.cs" />
     <Compile Include="Entities\Securable\Securable.cs" />
+    <Compile Include="Entities\Securable\SecurableRepositoryExtensions.cs" />
     <Compile Include="Entities\Style\CachedStyleRepository.cs" />
     <Compile Include="Entities\Style\Style.cs" />
     <Compile Include="Entities\User\CachedUserRepository.cs" />

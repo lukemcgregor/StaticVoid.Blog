@@ -59,8 +59,12 @@ namespace StaticVoid.Blog.Data
             }
         }
 
-        public IQueryable<Data.Post> GetAll()
+        public IQueryable<Data.Post> GetAll(params Expression<Func<Data.Post, object>>[] includes)
         {
+            if (includes != null)
+            {
+                return _baseRepo.GetAll(includes);
+            }
             return _cache.CachedPosts.AsQueryable();
         }
 

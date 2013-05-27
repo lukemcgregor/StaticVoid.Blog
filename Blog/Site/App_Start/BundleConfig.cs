@@ -24,6 +24,7 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/modals.js",
                         "~/Scripts/knockout-2.2.1.js",
+                        "~/Scripts/knockout.validation.js",
                         "~/Scripts/knockout.mapping-latest.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/editor").Include(
@@ -81,7 +82,8 @@ namespace StaticVoid.Blog.Site
                         "~/Content/bootstrap.css",
                         "~/Content/bootstrap-responsive.css",
                         "~/Content/mdd_styles.css",
-                        "~/Content/blog.css"));
+                        "~/Content/blog.css",
+                        "~/Content/blog-admin.css"));
 		}
 	}
 }

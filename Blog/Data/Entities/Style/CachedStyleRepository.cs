@@ -52,8 +52,12 @@ namespace StaticVoid.Blog.Data
             }
         }
 
-        public IQueryable<Style> GetAll()
+        public IQueryable<Style> GetAll(params System.Linq.Expressions.Expression<Func<Style, object>>[] includes)
         {
+            if (includes != null)
+            {
+                return _baseRepo.GetAll(includes);
+            }
             return _cache.CachedStyles.AsQueryable();
         }
 

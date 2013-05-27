@@ -1,6 +1,7 @@
 namespace StaticVoid.Blog.Data.Migrations
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -10,15 +11,33 @@ namespace StaticVoid.Blog.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(StaticVoid.Blog.Data.BlogContext context)
         {
 #if DEBUG
+#if !DISABLE_SEED
             //  This method will be called after migrating to the latest version.
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+
+            var admin = new User
+            {
+                Id = 1,
+                ClaimedIdentifier = "https://www.google.com/accounts/o8/id?id=AItOawkczLfuxJhI-txNzlg53wsgWu2gdSALgVU",
+                Email = "luke.mcgregor@gmail.com",
+                FirstName = "Luke",
+                LastName = "McGregor",
+                IsAuthor = true
+            };
+
+            context.Users.AddOrUpdate(admin);
+
+            var blogCreatorSecurable = new Securable { Name = "Blog Creator", Members = new List<User> { admin } };
+            context.Securables.AddOrUpdate(blogCreatorSecurable);
+
             if (!context.Blogs.Any())
             {
                 var blog = new Data.Blog
@@ -34,22 +53,12 @@ namespace StaticVoid.Blog.Data.Migrations
                         Css =
 @".test{
 }"
-                    }
+                    },
+                    AuthorSecurable = new Securable { Name = "Author : StaticVoid - Test" }
                 };
 
                 context.Blogs.AddOrUpdate(blog);
             }
-            var admin = new User
-            {
-                Id = 1,
-                ClaimedIdentifier = "https://www.google.com/accounts/o8/id?id=AItOawkczLfuxJhI-txNzlg53wsgWu2gdSALgVU",
-                Email = "luke.mcgregor@gmail.com",
-                FirstName = "Luke",
-                LastName = "McGregor",
-                IsAuthor = true
-            };
-
-            context.Users.AddOrUpdate(admin);
 
             var postDate = new DateTime(2012, 10, 7, 12, 0, 0);
 
@@ -79,6 +88,7 @@ namespace StaticVoid.Blog.Data.Migrations
                     Path = PostHelpers.MakeUrl(postDate.Year, postDate.Month, postDate.Day, "Second Post"),
                     Canonical = "/" + PostHelpers.MakeUrl(postDate.Year, postDate.Month, postDate.Day, "Second Post")
                 });
+#endif
 #endif
         }
     }

@@ -10,25 +10,44 @@ using StaticVoid.Blog.Data;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-	[AuthorAuthorize]
+	[CurrentBlogAuthorAuthorize]
     public class DashboardController : Controller
 	{
         private readonly IRepository<Post> _postRepo;
         private readonly IRepository<PostModification> _postModRepo;
+        private readonly IRepository<User> _userRepo;
+        private readonly IRepository<Securable> _securableRepo;
+        private readonly IRepository<Data.Blog> _blogRepo;
+        private readonly ISecurityHelper _securityHelper;
 
-        public DashboardController(IRepository<Post> postRepo, IRepository<PostModification> postModRepo)
+        public DashboardController(
+            IRepository<Post> postRepo,
+            IRepository<PostModification> postModRepo,
+            IRepository<User> userRepo,
+            IRepository<Securable> securableRepo,
+            IRepository<Data.Blog> blogRepo,
+            ISecurityHelper securityHelper)
         {
             _postRepo = postRepo;
             _postModRepo = postModRepo;
+            _userRepo = userRepo;
+            _blogRepo = blogRepo;
+            _securableRepo = securableRepo;
+            _securityHelper = securityHelper;
         }
 
         public ActionResult Index()
         {
+            var currentUser = _userRepo.GetCurrentUser(_securityHelper);
+            var currentBlog = _blogRepo.GetCurrentBlog();
+
+
             var posts = _postRepo.GetAll().OrderByDescending(p => p.Posted).ToArray();
 
             return View(new DashboardModel{
                 Posts = posts.Select(p => new Tuple<string, int>(p.GetDraftTitle(), p.Id)).ToList(),
-                SelectedPost = GetDashboardPostModel(posts.First().Id)
+                SelectedPost = GetDashboardPostModel(posts.First().Id),
+                IsAdmin = currentUser.IsAdminOfBlog(currentBlog, _securableRepo)
             });
         }
 

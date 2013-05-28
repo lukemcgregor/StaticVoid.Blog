@@ -45,7 +45,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult EditBlogStyle()
         {
-            var currentBlog = _blogRepo.CurrentBlog();
+            var currentBlog = _blogRepo.GetCurrentBlog();
             if (!currentBlog.StyleId.HasValue)
             {
                 var blogStyle = new Style();

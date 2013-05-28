@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-    [AuthorAuthorize]
+    [CurrentBlogAuthorAuthorize]
     public class HacksController : Controller
     {
         private readonly IRepository<Data.User> _userRepo;

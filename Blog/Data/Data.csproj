@@ -89,6 +89,10 @@
     <Compile Include="Migrations\201305280453075_AdminSecurable.Designer.cs">
       <DependentUpon>201305280453075_AdminSecurable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201305280623005_Remove_IsAuthor.cs" />
+    <Compile Include="Migrations\201305280623005_Remove_IsAuthor.Designer.cs">
+      <DependentUpon>201305280623005_Remove_IsAuthor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PersistanceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +105,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201305280453075_AdminSecurable.resx">
       <DependentUpon>201305280453075_AdminSecurable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201305280623005_Remove_IsAuthor.resx">
+      <DependentUpon>201305280623005_Remove_IsAuthor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

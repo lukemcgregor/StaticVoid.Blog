@@ -37,9 +37,12 @@ namespace StaticVoid.Blog.Site.Security
                 !String.IsNullOrWhiteSpace(_securityHelper.CurrentUser.ClaimedIdentifier))
             {
                 var currentUser = _userRepository.GetCurrentUser(_securityHelper);
-                if(currentUser.IsAuthorOfBlog(currentBlog, _securableRepository) ||currentUser.IsAdminOfBlog(currentBlog, _securableRepository))
+                if (currentUser != null)
                 {
-                    return; //no unauthorized
+                    if (currentUser.IsAuthorOfBlog(currentBlog, _securableRepository) || currentUser.IsAdminOfBlog(currentBlog, _securableRepository))
+                    {
+                        return; //no unauthorized
+                    }
                 }
             }
 			filterContext.Result = new HttpUnauthorizedResult();

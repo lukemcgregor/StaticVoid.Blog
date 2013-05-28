@@ -23,5 +23,11 @@ namespace StaticVoid.Blog.Site
         {
             return securableRepo.IsMemberOfSecurable(blog.AdminSecurableId, user.Id);
         }
+
+        public static bool IsPlatformAdmin(this User user, IRepository<Securable> securableRepo)
+        {
+            //TODO no magic number here would be nice. Find somewhere to put the platform admin securable id
+            return securableRepo.IsMemberOfSecurable(1, user.Id);
+        }
     }
 }

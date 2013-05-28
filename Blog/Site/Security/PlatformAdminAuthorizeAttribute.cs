@@ -11,17 +11,17 @@ using StaticVoid.Repository;
 
 namespace StaticVoid.Blog.Site.Security
 {
-	public class CurrentBlogAdminAuthorizeAttribute : FilterAttribute { }
+    public class PlatformAdminAuthorizeAttribute : FilterAttribute { }
 
 	//filter
-	public class CurrentBlogAdminAuthorizeFilter : IAuthorizationFilter
+	public class PlatformAdminAuthorizeFilter : IAuthorizationFilter
     {
         private readonly IRepository<User> _userRepository;
         private readonly IRepository<Data.Blog> _blogRepository;
         private readonly IRepository<Securable> _securableRepository;
         private readonly ISecurityHelper _securityHelper;
 
-        public CurrentBlogAdminAuthorizeFilter(IRepository<User> userRepository, IRepository<Data.Blog> blogRepository, IRepository<Securable> securableRepository, ISecurityHelper securityHelper)
+        public PlatformAdminAuthorizeFilter(IRepository<User> userRepository, IRepository<Data.Blog> blogRepository, IRepository<Securable> securableRepository, ISecurityHelper securityHelper)
 		{
             _userRepository = userRepository;
             _blogRepository = blogRepository;
@@ -31,21 +31,20 @@ namespace StaticVoid.Blog.Site.Security
 
 		public void OnAuthorization(AuthorizationContext filterContext)
 		{
-            var currentBlog = _blogRepository.GetCurrentBlog();
-            if (HttpContext.Current.User.Identity.IsAuthenticated &&
-                _securityHelper.CurrentUser != null &&
+            if (HttpContext.Current.User.Identity.IsAuthenticated && 
+				_securityHelper.CurrentUser != null &&
                 !String.IsNullOrWhiteSpace(_securityHelper.CurrentUser.ClaimedIdentifier))
             {
                 var currentUser = _userRepository.GetCurrentUser(_securityHelper);
                 if (currentUser != null)
                 {
-                    if (currentUser.IsAdminOfBlog(currentBlog, _securableRepository))
+                    if (currentUser.IsPlatformAdmin(_securableRepository))
                     {
                         return; //no unauthorized
                     }
                 }
             }
-            filterContext.Result = new HttpUnauthorizedResult();
+			filterContext.Result = new HttpUnauthorizedResult();
 		}
 	}
 }

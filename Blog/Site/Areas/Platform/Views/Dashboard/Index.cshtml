@@ -1,0 +1,22 @@
+﻿@model StaticVoid.Blog.Site.Areas.Platform.Models.PlatformDashboardModel
+
+@{
+    ViewBag.Title = "Platform Dashboard";
+}
+
+<h2>Platform Dashboard</h2>
+
+<ul data-bind="foreach: Blogs">
+    <li data-bind="text: Name"></li>
+</ul>
+
+
+<script type="text/javascript">
+    var PlatformDashboardViewModel = function (options) {
+        var self = ko.mapping.fromJS( @(Html.Raw(Json.Encode(Model))));
+        return self;
+    };
+    $(function () {
+        ko.applyBindings(new PlatformDashboardViewModel());
+    });
+</script>

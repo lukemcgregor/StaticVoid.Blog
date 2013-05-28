@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-    [AuthorAuthorize]
+    [CurrentBlogAdminAuthorize]
     public class PermissionsEditorController : Controller
     {
         private readonly IRepository<User> _userRepo;
@@ -47,14 +47,14 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         {
             var currentUser = _userRepo.GetCurrentUser(_securityHelper);
 
-            var ownedBlogs = _securableRepo.BlogsUserIsAuthorOf(_blogRepo, currentUser.Id);
+            var ownedBlogs = _securableRepo.BlogsUserIsAdminOf(_blogRepo, currentUser.Id);
 
             var model = new EditPermissionsModel{ PermissionModels = new List<PermissionModel>()};
 
             foreach(var blog in ownedBlogs)
             {
                 //TODO make this not O(n) this only really matters for performance of superusers
-                var members = _securableRepo.GetBy(s => s.Id == blog.AuthorSecurableId, s => s.Members).Members.Select(m => new PermissionMemberModel
+                var authors = _securableRepo.GetBy(s => s.Id == blog.AuthorSecurableId, s => s.Members).Members.Select(m => new PermissionMemberModel
                 {
                     CanChange = m.Id != currentUser.Id,
                     UserId = m.Id,
@@ -64,7 +64,27 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
                 foreach (var invitation in _invitationRepo.GetActiveBySecurable(blog.AuthorSecurableId))
                 {
-                    members.Add(new PermissionMemberModel{
+                    authors.Add(new PermissionMemberModel{
+                        Email = invitation.Email,
+                        UserId = 0,
+                        CanChange = true
+                    });
+                }
+
+                
+
+                var admins = _securableRepo.GetBy(s => s.Id == blog.AdminSecurableId, s => s.Members).Members.Select(m => new PermissionMemberModel
+                {
+                    CanChange = m.Id != currentUser.Id,
+                    UserId = m.Id,
+                    Name = m.FullName(),
+                    Email = m.Email
+                }).ToList();
+
+                foreach (var invitation in _invitationRepo.GetActiveBySecurable(blog.AdminSecurableId))
+                {
+                    authors.Add(new PermissionMemberModel
+                    {
                         Email = invitation.Email,
                         UserId = 0,
                         CanChange = true
@@ -73,9 +93,16 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
                 model.PermissionModels.Add(new PermissionModel
                 {
-                    PermissionName = String.Format("Blog: {0}",blog.Name),
+                    PermissionName = String.Format("Blog Admins: {0}", blog.Name),
+                    SecurableId = blog.AdminSecurableId,
+                    Members = admins
+                });
+                
+                model.PermissionModels.Add(new PermissionModel
+                {
+                    PermissionName = String.Format("Blog Authors: {0}", blog.Name),
                     SecurableId = blog.AuthorSecurableId,
-                    Members = members
+                    Members = authors
                 });
             }
 
@@ -86,7 +113,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         public JsonResult Invite(InviteModel model)
         {
             var currentUser = _userRepo.GetCurrentUser(_securityHelper);
-            if (!_securableRepo.BlogsUserIsAuthorOf(_blogRepo, currentUser.Id).Any(b => b.AuthorSecurableId == model.SecurableId))
+            if (!_securableRepo.BlogsUserIsAdminOf(_blogRepo, currentUser.Id).Any(b => b.AuthorSecurableId == model.SecurableId))
             {
                 throw new HttpException(403, "Not Authorised");
             }
@@ -110,7 +137,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         public JsonResult Revoke(RevokeModel model)
         {
             var currentUser = _userRepo.GetCurrentUser(_securityHelper);
-            if (!_securableRepo.BlogsUserIsAuthorOf(_blogRepo, currentUser.Id).Any(b => b.AuthorSecurableId == model.SecurableId))
+            if (!_securableRepo.BlogsUserIsAdminOf(_blogRepo, currentUser.Id).Any(b => b.AuthorSecurableId == model.SecurableId))
             {
                 throw new HttpException(403, "Not Authorised");
             }

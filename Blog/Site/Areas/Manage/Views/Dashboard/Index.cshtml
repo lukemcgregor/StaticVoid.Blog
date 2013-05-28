@@ -13,7 +13,9 @@
     <li>@Html.ActionLink("Configure Redirects", "Index", "Redirects")</li>
     <li>@Html.ActionLink("Modify Blog Config", "Edit", "BlogConfiguration", new { }, new { @class = "edit-blog-config" })</li>
     <li>@Html.ActionLink("Modify Blog Style", "EditBlogStyle", "StyleEditor", new { }, new { @class = "edit-blog-style" })</li>
+    @if(Model.IsAdmin){
     <li>@Html.ActionLink("Modify Permissions", "EditPermissions", "PermissionsEditor", new { }, new { @class = "permissions-editor" })</li>
+    }
 </ul>
 
 <div class="row">

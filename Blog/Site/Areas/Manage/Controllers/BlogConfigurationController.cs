@@ -10,7 +10,7 @@ using StaticVoid.Blog.Data;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-    [AuthorAuthorize]
+    [CurrentBlogAuthorAuthorize]
     public class BlogConfigurationController : Controller
     {
         private readonly IRepository<Data.Blog> _blogRepo;
@@ -22,7 +22,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult Edit()
         {
-            var blog = _blogRepo.CurrentBlog();
+            var blog = _blogRepo.GetCurrentBlog();
             return PartialView("EditModal", new BlogConfigModel
                 {
                     AnalyticsKey = blog.AnalyticsKey,
@@ -40,7 +40,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         {
             if (ModelState.IsValid)
             {
-                var blog = _blogRepo.CurrentBlog();
+                var blog = _blogRepo.GetCurrentBlog();
                 blog.AnalyticsKey = model.AnalyticsKey;
                 blog.AuthoritiveUrl = model.AuthoritiveUrl;
                 blog.Description = model.Description;

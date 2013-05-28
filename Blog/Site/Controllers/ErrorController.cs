@@ -29,7 +29,7 @@ namespace StaticVoid.Blog.Site.Controllers
             return View("Error");
         }
 
-        [AuthorAuthorize]
+        [CurrentBlogAuthorAuthorize]
         public ActionResult Test(int statusCode)
         {
             throw new HttpException(statusCode, "");

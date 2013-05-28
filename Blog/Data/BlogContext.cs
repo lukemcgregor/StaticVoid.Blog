@@ -39,7 +39,8 @@ namespace StaticVoid.Blog.Data
 
             modelBuilder.Entity<Blog>().HasOptional(b => b.Style).WithMany().HasForeignKey(b => b.StyleId);
             modelBuilder.Entity<User>().HasMany(u => u.Securables).WithMany(s => s.Members);
-            modelBuilder.Entity<Blog>().HasRequired(b => b.AuthorSecurable).WithMany().HasForeignKey(b => b.AuthorSecurableId);
+            modelBuilder.Entity<Blog>().HasRequired(b => b.AuthorSecurable).WithMany().HasForeignKey(b => b.AuthorSecurableId).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Blog>().HasRequired(b => b.AdminSecurable).WithMany().HasForeignKey(b => b.AdminSecurableId).WillCascadeOnDelete(false);
             modelBuilder.Entity<Blog>().Property(b => b.AuthoritiveUrl).IsRequired();
             modelBuilder.Entity<PostModification>().HasRequired(b => b.Post).WithMany().HasForeignKey(b => b.PostId);
             modelBuilder.Entity<Style>().Property(s => s.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);

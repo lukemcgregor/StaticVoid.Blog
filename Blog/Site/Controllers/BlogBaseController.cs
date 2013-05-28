@@ -12,7 +12,7 @@ namespace StaticVoid.Blog.Site.Controllers
     {
         public BlogBaseController(IRepository<Data.Blog> blogRepo)
         {
-            var blog = blogRepo.CurrentBlog();
+            var blog = blogRepo.GetCurrentBlog();
             
             ViewBag.BlogName = blog.Name;
             ViewBag.BlogDescription = blog.Description;

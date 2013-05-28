@@ -8,8 +8,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Models
     public class DashboardModel
     {
         public List<Tuple<string,int>> Posts { get; set; }
-
         public DashboardPostModel SelectedPost { get; set; }
+        public bool IsAdmin { get; set; }
     }
 
     public class DashboardPostModel

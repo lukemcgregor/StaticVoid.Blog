@@ -4,12 +4,13 @@ using System.Linq;
 using System.Web;
 using StaticVoid.Blog.Data;
 using StaticVoid.Repository;
+using System.Linq.Expressions;
 
 namespace StaticVoid.Blog.Site
 {
 	public static class UserRepositoryExtensions
 	{
-		public static User GetCurrentUser(this IRepository<User> repo, ISecurityHelper securityHelper)
+        public static User GetCurrentUser(this IRepository<User> repo, ISecurityHelper securityHelper)
 		{
             var currentUser = securityHelper.CurrentUser;
 

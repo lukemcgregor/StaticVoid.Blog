@@ -10,7 +10,8 @@ namespace StaticVoid.Blog.Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(StaticVoid.Blog.Data.BlogContext context)

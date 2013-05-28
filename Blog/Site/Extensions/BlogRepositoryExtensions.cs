@@ -9,7 +9,7 @@ namespace StaticVoid.Blog.Data
 {
     public static class BlogRepositoryExtensions
     {
-        public static Data.Blog CurrentBlog(this IRepository<Data.Blog> repo)
+        public static Data.Blog GetCurrentBlog(this IRepository<Data.Blog> repo)
         {
             var host = HttpContext.Current.Request.Url.Host;
 

@@ -9,10 +9,10 @@ namespace StaticVoid.Blog.Data
 {
     public static class SecurableRepositoryExtensions
 	{
-		public static IEnumerable<Blog> BlogsUserIsAuthorOf(this IRepository<Securable> repository, IRepository<Blog> blogRepo, int userId)
+		public static IEnumerable<Blog> BlogsUserIsAdminOf(this IRepository<Securable> repository, IRepository<Blog> blogRepo, int userId)
 		{
             var securableIds = repository.GetAll().Where(s => s.Members.Any(u=>u.Id == userId)).Select(s=>s.Id);
-            return blogRepo.GetAll().Where(b => securableIds.Contains(b.AuthorSecurableId)).ToArray();
+            return blogRepo.GetAll().Where(b => securableIds.Contains(b.AdminSecurableId)).ToArray();
 		}
 
         public static void RemoveMember(this IRepository<Securable> repository, IAttacher<Securable> attacher, int userId, int securableId)
@@ -28,12 +28,9 @@ namespace StaticVoid.Blog.Data
             repository.Update(securable);
         }
 
-        public static void InviteMember(this IRepository<Securable> repository, IRepository<User> userRepo,  string email, int securableId)
+        public static bool IsMemberOfSecurable(this IRepository<Securable> repository, int securableId, int userId)
         {
-            //var securable = repository.GetBy(s => s.Id == securableId);
-            //securable.Members.Where(m => m.Id == userId).ToList().ForEach(u => securable.Members.Remove(u));
-
-            //repository.Update(securable);
+            return repository.GetAll().Any(s => s.Id == securableId && s.Members.Any(m => m.Id == userId));
         }
 	}
 }

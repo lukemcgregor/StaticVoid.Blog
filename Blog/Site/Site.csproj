@@ -246,8 +246,8 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\PostModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Security\AuthorAuthorizeAttribute.cs" />
-    <Compile Include="Security\OauthAuthorizeAttribute.cs" />
+    <Compile Include="Security\CurrentBlogAuthorAuthorizeAttribute.cs" />
+    <Compile Include="Security\CurrentBlogAdminAuthorizeAttribute.cs" />
     <Compile Include="Security\IOpenIdMembershipService.cs" />
     <Compile Include="Security\ISecurityHelper.cs" />
     <Compile Include="Security\OpenIdAuthorizeAttribute.cs" />

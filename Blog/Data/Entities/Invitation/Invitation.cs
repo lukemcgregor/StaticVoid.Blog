@@ -14,5 +14,7 @@ namespace StaticVoid.Blog.Data
         public string Token { get; set; }
         public string Email { get; set; }
         public DateTime InviteDate { get; set; }
+        public int? AssignedToId { get; set; }
+        public User AssignedTo { get; set; }
     }
 }

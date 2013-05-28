@@ -18,7 +18,7 @@ namespace StaticVoid.Blog.Site.Controllers
         public SitemapController(IRepository<Post> postRepository, IRepository<Data.Blog> blogRepo)
         {
             _postRepository = postRepository;
-            _siteUrl = blogRepo.CurrentBlog().AuthoritiveUrl.TrimEnd('/');
+            _siteUrl = blogRepo.GetCurrentBlog().AuthoritiveUrl.TrimEnd('/');
         }
 
         public ActionResult Sitemap()

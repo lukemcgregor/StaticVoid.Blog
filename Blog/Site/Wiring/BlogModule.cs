@@ -27,8 +27,10 @@ namespace StaticVoid.Blog.Site.Wiring
             Bind<OpenIdMembershipService>().ToSelf().InTransientScope();
             Bind<ISecurityHelper>().To<SecurityHelper>();
             Bind<ISendEmail>().To<EmailSender>();
-            Kernel.BindFilter<AuthorAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<AuthorAuthorizeAttribute>();
-            Kernel.BindFilter<AuthorAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<AuthorAuthorizeAttribute>();
+            Kernel.BindFilter<CurrentBlogAuthorAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<CurrentBlogAuthorAuthorizeAttribute>();
+            Kernel.BindFilter<CurrentBlogAuthorAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<CurrentBlogAuthorAuthorizeAttribute>();
+            Kernel.BindFilter<CurrentBlogAdminAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<CurrentBlogAdminAuthorizeAttribute>();
+            Kernel.BindFilter<CurrentBlogAdminAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<CurrentBlogAdminAuthorizeAttribute>();
         }
     }
 }

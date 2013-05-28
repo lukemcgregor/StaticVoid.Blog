@@ -62,7 +62,7 @@ namespace StaticVoid.Blog.Site.Controllers
         [OpenIdAuthorize]
         public ActionResult Register(string token)
         {
-            var invitation = _invitationRepository.GetActiveByToken(token, i=>i.Securable);
+            var invitation = _invitationRepository.GetActiveByToken(token, i=>i.Securable, i=>i.Securable.Members);
 
             if(invitation == null)
             {
@@ -73,12 +73,22 @@ namespace StaticVoid.Blog.Site.Controllers
 
             var securable = invitation.Securable;
 
-            _securableAttacher.EnsureAttached(securable);
-            _userAttacher.EnsureAttached(user);
+            if (!securable.Members.Any(u => u.Id == user.Id))
+            {
+                _securableAttacher.EnsureAttached(securable);
+                _userAttacher.EnsureAttached(user);
 
-            user.Securables = new List<Securable>{securable};
+                if (user.Securables == null)
+                {
+                    user.Securables = new List<Securable>();
+                }
+                user.Securables.Add(securable);
 
-            _userRepository.Update(user);
+                _userRepository.Update(user);
+            }
+            invitation.AssignedToId = user.Id;
+
+            _invitationRepository.Update(invitation);
 
             return RedirectToAction("Index", "Dashboard", new { Area="Manage" });
         }

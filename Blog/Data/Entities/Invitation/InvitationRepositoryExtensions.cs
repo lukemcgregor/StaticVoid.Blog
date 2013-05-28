@@ -18,7 +18,7 @@ namespace StaticVoid.Blog.Data
             {
                 set = set.Include(include);
             }
-            return set;
+            return set.Where(i=>i.AssignedToId == null);
         }
 
         public static void RevokeInvitation(this IRepository<Invitation> repo, string email, int securableId)

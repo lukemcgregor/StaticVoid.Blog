@@ -18,8 +18,8 @@ namespace StaticVoid.Blog.Site.Controllers
         public FeedController(IRepository<Post> postRepository, IRepository<Data.Blog> blogRepository)
 		{
 			_postRepository = postRepository;
-            _siteUrl = blogRepository.CurrentBlog().AuthoritiveUrl;
-            _blogGuid = blogRepository.CurrentBlog().BlogGuid;
+            _siteUrl = blogRepository.GetCurrentBlog().AuthoritiveUrl;
+            _blogGuid = blogRepository.GetCurrentBlog().BlogGuid;
 		}
 
 		private SyndicationFeed GenerateFeed()        {

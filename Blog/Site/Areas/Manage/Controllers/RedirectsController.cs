@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-    [AuthorAuthorize]
+    [CurrentBlogAuthorAuthorize]
     public class RedirectsController : Controller
     {
         private readonly IRepository<Redirect> _redirectRepository;

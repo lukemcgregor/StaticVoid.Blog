@@ -12,7 +12,7 @@ using StaticVoid.Mockable;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-	[AuthorAuthorize]
+	[CurrentBlogAuthorAuthorize]
 	public class PostAuthoringController : Controller
 	{
 		private readonly IRepository<Post> _postRepository;
@@ -56,7 +56,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 		public ActionResult Create()
 		{
 			ViewBag.Title = "Create";
-            return View("Edit", new PostEditModel { BlogStyleId = _blogRepository.CurrentBlog().StyleId });
+            return View("Edit", new PostEditModel { BlogStyleId = _blogRepository.GetCurrentBlog().StyleId });
 		}
 
 		[HttpPost,ValidateInput(false)]
@@ -99,7 +99,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 Description = post.GetDraftDescription(),
 				CanonicalUrl = post.Canonical,
 				Reposted = !String.IsNullOrWhiteSpace(post.Canonical) && post.Canonical != "/"+post.Path,
-                BlogStyleId = _blogRepository.CurrentBlog().StyleId
+                BlogStyleId = _blogRepository.GetCurrentBlog().StyleId
 			});
 		}
 

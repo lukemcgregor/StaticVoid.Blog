@@ -13,7 +13,7 @@
                 <li class="divider"></li>
                 <li>@Html.ActionLink("My Profile", "EditMyProfile", "UserProfile", new { Area = "Manage" }, new { @class = "edit-my-profile" })</li>
                 <li class="divider"></li>
-                <li>@Html.ActionLink("Sign out", "LogOff", "Account")</li>
+                <li>@Html.ActionLink("Sign out", "LogOff", "Account", new { Area = "" }, new { })</li>
             </ul>
         </li>
     }

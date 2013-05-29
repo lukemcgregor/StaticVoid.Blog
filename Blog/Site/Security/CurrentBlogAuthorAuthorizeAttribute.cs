@@ -39,7 +39,7 @@ namespace StaticVoid.Blog.Site.Security
                 var currentUser = _userRepository.GetCurrentUser(_securityHelper);
                 if (currentUser != null)
                 {
-                    if (currentUser.IsAuthorOfBlog(currentBlog, _securableRepository) || currentUser.IsAdminOfBlog(currentBlog, _securableRepository))
+                    if (currentUser.IsAuthorOfBlog(currentBlog, _securableRepository))
                     {
                         return; //no unauthorized
                     }

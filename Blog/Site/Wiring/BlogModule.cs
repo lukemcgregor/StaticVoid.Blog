@@ -31,6 +31,8 @@ namespace StaticVoid.Blog.Site.Wiring
             Kernel.BindFilter<CurrentBlogAuthorAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<CurrentBlogAuthorAuthorizeAttribute>();
             Kernel.BindFilter<CurrentBlogAdminAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<CurrentBlogAdminAuthorizeAttribute>();
             Kernel.BindFilter<CurrentBlogAdminAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<CurrentBlogAdminAuthorizeAttribute>();
+            Kernel.BindFilter<PlatformAdminAuthorizeFilter>(FilterScope.Action, 0).WhenActionMethodHas<PlatformAdminAuthorizeAttribute>();
+            Kernel.BindFilter<PlatformAdminAuthorizeFilter>(FilterScope.Controller, 0).WhenControllerHas<PlatformAdminAuthorizeAttribute>();
         }
     }
 }

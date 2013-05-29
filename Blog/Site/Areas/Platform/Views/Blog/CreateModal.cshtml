@@ -1,0 +1,23 @@
+﻿@model StaticVoid.Blog.Site.Areas.Manage.Models.BlogConfigModel
+
+@{
+    ViewBag.Title = "Create Blog";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Create Blog</h3>
+</div>
+
+
+@using (Html.BeginForm("Create", "Blog", FormMethod.Post, new { @class = "modal-form" }))
+{
+    <div class="modal-body">
+        @Html.ValidationSummary(true)
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-success" type="submit">Create</button>
+    </div>
+}

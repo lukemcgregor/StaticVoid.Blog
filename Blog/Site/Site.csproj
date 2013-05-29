@@ -211,6 +211,7 @@
     <Compile Include="Areas\Manage\Models\MyProfileModels.cs" />
     <Compile Include="Areas\Manage\Models\PermissionsModel.cs" />
     <Compile Include="Areas\Manage\Models\StyleEditorModels.cs" />
+    <Compile Include="Areas\Platform\Controllers\BlogController.cs" />
     <Compile Include="Areas\Platform\Controllers\DashboardController.cs" />
     <Compile Include="Areas\Platform\Models\DashboardModels.cs" />
     <Compile Include="Areas\Platform\PlatformAreaRegistration.cs" />
@@ -272,6 +273,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dashboard.less" />
+    <Content Include="Content\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\trendy-date.less">
       <Compile>False</Compile>
       <Minify>False</Minify>
@@ -282,8 +285,6 @@
     <Content Include="Content\Prettify\Themes\sons-of-obsidian.css" />
     <Content Include="Content\Prettify\Themes\sunburst.css" />
     <Content Include="Content\sticky.css" />
-    <Content Include="Content\images\glyphicons-halflings-white.png" />
-    <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\openid-shadow.css" />
     <Content Include="Content\openid.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -395,14 +396,17 @@
     <Content Include="Areas\Platform\Views\Web.config" />
     <Content Include="Areas\Platform\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Platform\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Platform\Views\Blog\CreateModal.cshtml" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
-    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\editor.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
     <Content Include="Scripts\jquery.scrollTo.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.ba-resize.js" />
     <Content Include="Scripts\jquery.validate.js" />

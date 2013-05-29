@@ -43,11 +43,11 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             _emailSender = emailSender;
         }
 
-        public ActionResult EditPermissions()
+        public ActionResult EditPermissions(int? blogId = null)
         {
             var currentUser = _userRepo.GetCurrentUser(_securityHelper);
 
-            var ownedBlogs = _securableRepo.BlogsUserIsAdminOf(_blogRepo, currentUser.Id);
+            var ownedBlogs = _securableRepo.BlogsUserIsAdminOf(_blogRepo, currentUser.Id).Where(b=> !blogId.HasValue || b.Id== blogId.Value);
 
             var model = new EditPermissionsModel{ PermissionModels = new List<PermissionModel>()};
 

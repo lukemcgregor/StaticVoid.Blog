@@ -16,12 +16,12 @@ namespace StaticVoid.Blog.Site
 
         public static bool IsAuthorOfBlog(this User user, Data.Blog blog, IRepository<Securable> securableRepo)
         {
-            return securableRepo.IsMemberOfSecurable(blog.AuthorSecurableId, user.Id);
+            return securableRepo.IsMemberOfSecurable(blog.AuthorSecurableId, user.Id) || user.IsAdminOfBlog(blog,securableRepo);
         }
 
         public static bool IsAdminOfBlog(this User user, Data.Blog blog, IRepository<Securable> securableRepo)
         {
-            return securableRepo.IsMemberOfSecurable(blog.AdminSecurableId, user.Id);
+            return securableRepo.IsMemberOfSecurable(blog.AdminSecurableId, user.Id) || user.IsPlatformAdmin(securableRepo);
         }
 
         public static bool IsPlatformAdmin(this User user, IRepository<Securable> securableRepo)

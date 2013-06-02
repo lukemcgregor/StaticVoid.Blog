@@ -1,4 +1,5 @@
 ﻿using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Services;
 using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,19 @@ using System.Web.Mvc;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
-    public class RedirectController : Controller
+    public class RedirectController : BlogBaseController
     {       
         private readonly IRepository<Redirect> _redirectRepository;
 
-        public RedirectController(IRepository<Redirect> redirectRepository)
+        public RedirectController(IRepository<Redirect> redirectRepository, IRepository<Data.Blog> blogRepo, IHttpContextService httpContext)
+            : base(blogRepo, httpContext)
         {
             _redirectRepository = redirectRepository;
         }
 
         public ActionResult ProcessRedirect(string path)
         {
-            var redirect = _redirectRepository.GetRedirectFor(path);
+            var redirect = _redirectRepository.GetRedirectFor(path,CurrentBlog.Id);
 
             if (redirect == null)
             {

@@ -7,11 +7,13 @@ using StaticVoid.Blog.Site.Security;
 using StaticVoid.Blog.Site.Areas.Manage.Models;
 using StaticVoid.Repository;
 using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Controllers;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
 	[CurrentBlogAuthorAuthorize]
-    public class DashboardController : Controller
+    public class DashboardController : BlogBaseController
 	{
         private readonly IRepository<Post> _postRepo;
         private readonly IRepository<PostModification> _postModRepo;
@@ -26,7 +28,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             IRepository<User> userRepo,
             IRepository<Securable> securableRepo,
             IRepository<Data.Blog> blogRepo,
-            ISecurityHelper securityHelper)
+            ISecurityHelper securityHelper,
+            IHttpContextService httpContext) : base(blogRepo, httpContext)
         {
             _postRepo = postRepo;
             _postModRepo = postModRepo;
@@ -39,21 +42,20 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         public ActionResult Index()
         {
             var currentUser = _userRepo.GetCurrentUser(_securityHelper);
-            var currentBlog = _blogRepo.GetCurrentBlog();
+            var currentBlog = CurrentBlog;
 
-
-            var posts = _postRepo.GetAll().OrderByDescending(p => p.Posted).ToArray();
+            var posts = _postRepo.PostsForBlog(currentBlog.Id).OrderByDescending(p => p.Posted).ToArray();
 
             return View(new DashboardModel{
                 Posts = posts.Select(p => new Tuple<string, int>(p.GetDraftTitle(), p.Id)).ToList(),
-                SelectedPost = GetDashboardPostModel(posts.First().Id),
+                SelectedPost = posts.Any() ? GetDashboardPostModel( posts.First().Id): null,
                 IsAdmin = currentUser.IsAdminOfBlog(currentBlog, _securableRepo)
             });
         }
 
         private DashboardPostModel GetDashboardPostModel(int id)
         {
-            var post = _postRepo.GetBy(p => p.Id == id);
+            var post = _postRepo.PostsForBlog(CurrentBlog.Id).Single(p => p.Id == id);
             return new DashboardPostModel
             {
                 Id = id,

@@ -9,11 +9,13 @@ using StaticVoid.Blog.Site.Security;
 using StaticVoid.Repository;
 using System.Net;
 using StaticVoid.Mockable;
+using StaticVoid.Blog.Site.Controllers;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
 	[CurrentBlogAuthorAuthorize]
-	public class PostAuthoringController : Controller
+	public class PostAuthoringController : BlogBaseController
 	{
 		private readonly IRepository<Post> _postRepository;
         private readonly IRepository<PostModification> _postModificationRepository;
@@ -30,7 +32,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             IRepository<Redirect> redirectRepository,
             IRepository<Data.Blog> blogRepository,
             ISecurityHelper securityHelper,
-            IProvideDateTime dateTime)
+            IProvideDateTime dateTime,
+            IHttpContextService httpContext)
+            : base(blogRepository, httpContext)
 		{
 			_postRepository = postRepository;
             _postModificationRepository = postModificationRepository;
@@ -43,7 +47,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
 		public ActionResult Index()
 		{
-			return View(_postRepository.GetAll().AsEnumerable().OrderByDescending(p=>p.Posted).Select(p => new PostModel
+            return View(_postRepository.PostsForBlog(CurrentBlog.Id).OrderByDescending(p => p.Posted).AsEnumerable().Select(p => new PostModel
 					{
 						Id = p.Id,
 						Title = p.GetDraftTitle(),
@@ -56,7 +60,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 		public ActionResult Create()
 		{
 			ViewBag.Title = "Create";
-            return View("Edit", new PostEditModel { BlogStyleId = _blogRepository.GetCurrentBlog().StyleId });
+            return View("Edit", new PostEditModel { BlogStyleId = CurrentBlog.StyleId });
 		}
 
 		[HttpPost,ValidateInput(false)]
@@ -78,7 +82,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 					Path = url,
 					Canonical = model.Reposted ? model.CanonicalUrl : "/" + url,
                     ExcludeFromFeed = false,
-                    PostGuid = Guid.NewGuid()
+                    PostGuid = Guid.NewGuid(),
+                    BlogId = CurrentBlog.Id
 				});
 
 				return RedirectToAction("Index", "Dashboard");
@@ -89,8 +94,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
 		public ActionResult Edit(int id)
 		{
+            var currentBlog = CurrentBlog;
 			ViewBag.Title = "Edit";
-			var post = _postRepository.GetBy(p => p.Id == id);
+            var post = _postRepository.PostsForBlog(currentBlog.Id).Single(p => p.Id == id);
 
 			return View(new PostEditModel
 			{
@@ -99,7 +105,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 Description = post.GetDraftDescription(),
 				CanonicalUrl = post.Canonical,
 				Reposted = !String.IsNullOrWhiteSpace(post.Canonical) && post.Canonical != "/"+post.Path,
-                BlogStyleId = _blogRepository.GetCurrentBlog().StyleId
+                BlogStyleId = currentBlog.StyleId
 			});
 		}
 
@@ -109,7 +115,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 			ViewBag.Title = "Edit";
 			if (ModelState.IsValid)
 			{
-				var post = _postRepository.GetBy(p => p.Id == id);
+                var post = _postRepository.PostsForBlog(CurrentBlog.Id).Single(p => p.Id == id);
 
                 var pm = PostModification.GetUnmodifiedPostModification();
                 pm.PostId = id;
@@ -155,7 +161,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult ConfirmPublish(int id)
         {
-            var post = _postRepository.GetBy(p => p.Id == id);
+            var post = _postRepository.PostsForBlog(CurrentBlog.Id).Single(p => p.Id == id);
 
             if (post == null)
             {
@@ -172,7 +178,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         [HttpPost]
         public ActionResult ConfirmPublish(int id, ConfirmPublishModel model)
         {
-            var post = _postRepository.GetBy(p => p.Id == id);
+            var post = _postRepository.PostsForBlog(CurrentBlog.Id).Single(p => p.Id == id);
 
             if (post == null)
             {
@@ -210,7 +216,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult ConfirmUnPublish(int id)
         {
-            var post = _postRepository.GetBy(p => p.Id == id);
+            var post = _postRepository.PostsForBlog(CurrentBlog.Id).Single(p => p.Id == id);
 
             if (post == null)
             {
@@ -227,7 +233,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         [HttpPost]
         public ActionResult ConfirmUnPublish(int id, ConfirmPublishModel model)
         {
-            var post = _postRepository.GetBy(p => p.Id == id);
+            var post = _postRepository.PostsForBlog(CurrentBlog.Id).Single(p => p.Id == id);
             
             if (post == null)
             {
@@ -260,7 +266,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult EditPostUrl(int id)
         {
-            var post = _postRepository.GetBy(p => p.Id == id);
+            var post = _postRepository.PostsForBlog(CurrentBlog.Id).Single(p => p.Id == id);
             
             if (post == null)
             {
@@ -278,19 +284,21 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         [HttpPost]
         public ActionResult EditPostUrl(int id, PostUrlEditModel model)
         {
-            var post = _postRepository.GetBy(p => p.Id == id);
+            var currentBlog = CurrentBlog;
+            var post = _postRepository.PostsForBlog(currentBlog.Id).Single(p => p.Id == id);
 
             if (post == null)
             {
                 throw new HttpException((int)HttpStatusCode.NotFound, "The specified post was not found");
             }
             if (ModelState.IsValid)
-            {                
+            {
                 _redirectRepository.Create(new Redirect
                 {
                     IsPermanent = false,//TODO when im more confident in this functionality make this permanant
                     NewRoute= model.Url,
-                    OldRoute = post.Path
+                    OldRoute = post.Path,
+                    BlogId = currentBlog.Id
                 });
 
                 //Change the cannonical URL if the current URL was set to canonical
@@ -310,7 +318,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult RebuildAllUrls()
         {
-            var posts = _postRepository.GetAll().ToList();
+            var posts = _postRepository.PostsForBlog(CurrentBlog.Id).ToList();
             foreach (var post in posts)
             {
                 post.Path = PostHelpers.MakeUrl(post.Posted.Year, post.Posted.Month, post.Posted.Day, post.Title);

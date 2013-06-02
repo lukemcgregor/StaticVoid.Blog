@@ -24,6 +24,7 @@
             <li data-bind="attr: { class: cssClass }"><a href="#" class="post-list-item" data-bind="text: Item1, id: Item2, click: $parent.selectPost"></a></li>
         </ul>
     </div>
+    @if(Model.SelectedPost !=null){
     <div class="post-detail span8">
         <div class="post-detail-loader" style="display: none;">loading</div>
         <div class="post-detail-contents">
@@ -89,34 +90,35 @@
             </div>
         </div>
     </div>
+    }
 </div>
 
-<div id='edit-post-url-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("EditPostUrl", "PostAuthoring")'>
+<div id='edit-post-url-modal' class='modal hide fade in modal-editor'>
     <div id='edit-post-url-container'>
     </div>
 </div>
 
-<div id='edit-blog-config-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("Edit", "BlogConfiguration")'>
+<div id='edit-blog-config-modal' class='modal hide fade in modal-editor'>
     <div id='edit-blog-config-container'>
     </div>
 </div>
 
-<div id='edit-blog-style-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("EditBlogStyle", "StyleEditor")'>
+<div id='edit-blog-style-modal' class='modal hide fade in modal-editor'>
     <div id='edit-blog-style-container'>
     </div>
 </div>
 
-<div id='confirm-publish-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("ConfirmPublish", "PostAuthoring")'>
+<div id='confirm-publish-modal' class='modal hide fade in modal-editor'>
     <div id='confirm-publish-container'>
     </div>
 </div>
 
-<div id='confirm-unpublish-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("ConfirmUnPublish", "PostAuthoring")'>
+<div id='confirm-unpublish-modal' class='modal hide fade in modal-editor'>
     <div id='confirm-unpublish-container'>
     </div>
 </div>
 
-<div id='permissions-editor-modal' class='modal hide fade in modal-editor' data-url='@Url.Action("EditPermissions", "PermissionsEditor")'>
+<div id='permissions-editor-modal' class='modal hide fade in modal-editor'>
     <div id='permissions-editor-container'>
     </div>
 </div>
@@ -182,6 +184,6 @@
         setupModal('edit-blog-style', true);
         setupModal('confirm-publish', true);
         setupModal('confirm-unpublish', true);
-        setupModal('permissions-editor', true);
+        setupModal('permissions-editor');
     }
 </script>

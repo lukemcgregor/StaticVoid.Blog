@@ -8,24 +8,31 @@ using StaticVoid.Blog.Site.Models;
 using StaticVoid.Repository;
 using StaticVoid.Blog.Site.Gravitar;
 using System.Net;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
 	public class PostController : BlogBaseController
 	{
-		private IRepository<Post> _postRepository;
+		private readonly IRepository<Post> _postRepository;
 		private readonly IVisitLoggerService _visitLogger;
+        private readonly IRepository<Data.Blog> _blogRepo;
 
-        public PostController(IRepository<Post> postRepository, IVisitLoggerService visitLogger, IRepository<Data.Blog> blogRepo)
-            : base(blogRepo)
+        public PostController(
+            IRepository<Post> postRepository, 
+            IVisitLoggerService visitLogger, 
+            IRepository<Data.Blog> blogRepo,
+            IHttpContextService httpContext)
+            : base(blogRepo, httpContext)
 		{
 			_postRepository = postRepository;
 			_visitLogger = visitLogger;
+            _blogRepo = blogRepo;
 		}
 
 		public ActionResult Index()
 		{
-			var post = _postRepository.LatestPublishedPost();
+			var post = _postRepository.LatestPublishedPost(CurrentBlog.Id);
 
             if(post== null)
                 throw new HttpException((int)HttpStatusCode.NotFound, "No posts have been published");
@@ -35,9 +42,10 @@ namespace StaticVoid.Blog.Site.Controllers
 
 		public ActionResult Display(string path)
 		{
+            var currentBlog = CurrentBlog;
             _visitLogger.LogCurrentRequest();
 
-			var post = _postRepository.GetPostAtUrl(path, p=>p.Author);
+            var post = _postRepository.GetPostAtUrl(currentBlog.Id, path, p => p.Author);
 
 			var prevPost = _postRepository.GetPostBefore(post);
 			var nextPost = _postRepository.GetPostAfter(post);
@@ -60,14 +68,14 @@ namespace StaticVoid.Blog.Site.Controllers
             };
 
             model.OtherPosts = new List<PartialPostForLinkModel>();
-            model.OtherPosts.AddRange(_postRepository.PublishedPosts()
+            model.OtherPosts.AddRange(_postRepository.PublishedPosts(currentBlog.Id)
                 .OrderBy(p => p.Posted)
                 .Where(p => p.Posted > post.Posted)
                 .Take(5)
                 .OrderByDescending(p => p.Posted)
                 .Select(p => new PartialPostForLinkModel { Title = p.Title, IsCurrentPost = false, Link = p.Path }));
             model.OtherPosts.Add(new PartialPostForLinkModel { Link = post.Path, IsCurrentPost = true, Title = post.Title });
-            model.OtherPosts.AddRange(_postRepository.PublishedPosts()
+            model.OtherPosts.AddRange(_postRepository.PublishedPosts(currentBlog.Id)
                 .OrderByDescending(p => p.Posted)
                 .Where(p => p.Posted < post.Posted)
                 .Take(5)
@@ -97,8 +105,16 @@ namespace StaticVoid.Blog.Site.Controllers
 		}
 
 		public ActionResult Preview(int id)
-		{
-            var post = _postRepository.GetBy(p => p.Id == id, p => p.Author);
+        {
+            var currentBlog = CurrentBlog;
+            int blogId = currentBlog.Id;
+
+            var post = _postRepository.PostsForBlog(currentBlog.Id, p => p.Author).FirstOrDefault(p => p.Id == id);
+
+            if (post == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            }
 
 			var md = new MarkdownDeep.Markdown();
 

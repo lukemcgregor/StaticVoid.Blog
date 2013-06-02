@@ -7,22 +7,48 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Controllers;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
     [CurrentBlogAuthorAuthorize]
-    public class BlogConfigurationController : Controller
+    public class BlogConfigurationController : BlogBaseController
     {
         private readonly IRepository<Data.Blog> _blogRepo;
+        private readonly IRepository<Data.Securable> _securableRepository;
+        private readonly IRepository<Data.User> _userRepository;
+        private readonly ISecurityHelper _securityHelper;
 
-        public BlogConfigurationController(IRepository<Data.Blog> blogRepo)
+        public BlogConfigurationController(
+            IRepository<Data.Blog> blogRepo, 
+            IRepository<Securable> securableRepository, 
+            IRepository<Data.User> userRepository, 
+            ISecurityHelper securityHelper,
+            IHttpContextService httpContext) : base(blogRepo, httpContext)
         {
             _blogRepo = blogRepo;
+            _securableRepository = securableRepository;
+            _userRepository = userRepository;
+            _securityHelper = securityHelper;
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int? blogId)
         {
-            var blog = _blogRepo.GetCurrentBlog();
+            Data.Blog blog = null;
+            if(blogId.HasValue)
+            {
+                blog = _blogRepo.GetBy(b => b.Id == blogId.Value);
+
+                if(!_userRepository.GetCurrentUser(_securityHelper).IsAdminOfBlog(blog,_securableRepository))
+                {
+                    throw new HttpException(403, "Not Authorized");
+                }
+            }
+            else
+            {
+                blog = CurrentBlog;
+            }
             return PartialView("EditModal", new BlogConfigModel
                 {
                     AnalyticsKey = blog.AnalyticsKey,
@@ -36,11 +62,25 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(BlogConfigModel model)
+        public ActionResult Edit(int? blogId, BlogConfigModel model)
         {
             if (ModelState.IsValid)
             {
-                var blog = _blogRepo.GetCurrentBlog();
+                Data.Blog blog = null;
+                if (blogId.HasValue)
+                {
+                    blog = _blogRepo.GetBy(b => b.Id == blogId.Value);
+
+                    if (!_userRepository.GetCurrentUser(_securityHelper).IsAdminOfBlog(blog, _securableRepository))
+                    {
+                        throw new HttpException(403, "Not Authorized");
+                    }
+                }
+                else
+                {
+                    blog = CurrentBlog;
+                }
+
                 blog.AnalyticsKey = model.AnalyticsKey;
                 blog.AuthoritiveUrl = model.AuthoritiveUrl;
                 blog.Description = model.Description;

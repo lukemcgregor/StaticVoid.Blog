@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using StaticVoid.Blog.Site.Gravitar;
 using StaticVoid.Blog.Site.Areas.Manage.Controllers;
 using StaticVoid.Mockable;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Tests.Controllers
 {
@@ -24,6 +25,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
         private Mock<ISecurityHelper> _mockSecurityHelper;
         private IRepository<Data.User> _userRepo;
         private IRepository<Data.Redirect> _redirectRepo;
+        private Mock<IHttpContextService> _mockHttpContext;
         
         [TestInitialize]
         public void Initialise()
@@ -31,7 +33,9 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
             _postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
                 new Post { Id=1, Status = PostStatus.Published, Title = "some-other-post", Path ="2013/04/9/some-other-post", Posted = new DateTime(2013,4,9), Author = new User{ Email = "" } }
             }));
-            _blogRepo  = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
+            _blogRepo  = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { 
+                new Data.Blog { Id =1, AuthoritiveUrl = "http://anotherblog.test.con" }, 
+                new Data.Blog { Id =2, AuthoritiveUrl = "http://blog.test.con" } }));
             _postModificationRepo = new SimpleRepository<Data.PostModification>(
                 new InMemoryRepositoryDataSource<Data.PostModification>(new List<Data.PostModification> { 
                     new Data.PostModification { } 
@@ -43,7 +47,9 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 ClaimedIdentifier = "zzz", 
                 Email = "joe@bloggs.com"
             }}));
-           _redirectRepo = new SimpleRepository<Data.Redirect>(new InMemoryRepositoryDataSource<Data.Redirect>(new List<Data.Redirect> { new Data.Redirect { } }));
+            _redirectRepo = new SimpleRepository<Data.Redirect>(new InMemoryRepositoryDataSource<Data.Redirect>(new List<Data.Redirect> { new Data.Redirect { } }));
+            _mockHttpContext = new Mock<IHttpContextService>();
+            _mockHttpContext.Setup(h => h.RequestUrl).Returns(new Uri("http://blog.test.con/blah"));
 
         }
 
@@ -57,7 +63,8 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 _redirectRepo, 
                 _blogRepo,
                 _mockSecurityHelper.Object,
-                new DateTimeProvider());
+                new DateTimeProvider(),
+                _mockHttpContext.Object);
 
             var result = sut.Create(new Areas.Manage.Models.PostEditModel { 
                 Title = "Test Title", 
@@ -80,6 +87,36 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
         }
 
         [TestMethod]
+        public void CreatePostAttachedToCurrentBlog()
+        {
+            PostAuthoringController sut = new PostAuthoringController(
+                _postRepo,
+                _postModificationRepo,
+                _userRepo,
+                _redirectRepo,
+                _blogRepo,
+                _mockSecurityHelper.Object,
+                new DateTimeProvider(),
+                _mockHttpContext.Object);
+
+            var result = sut.Create(new Areas.Manage.Models.PostEditModel
+            {
+                Title = "Test Title",
+                Body = "Test Body",
+                Description = "Test Description",
+                Reposted = false
+            }) as RedirectToRouteResult;
+
+            Assert.IsNotNull(result);
+
+            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("Dashboard", result.RouteValues["controller"]);
+
+            Assert.AreEqual(2, _postRepo.GetAll().Count());
+            Assert.AreEqual(2, _postRepo.GetAll().Last().BlogId);
+        }
+
+        [TestMethod]
         public void CreatePostAuthorTest()
         {
             var userRepo = new SimpleRepository<Data.User>(new InMemoryRepositoryDataSource<Data.User>(new List<Data.User> { new Data.User { 
@@ -95,7 +132,8 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 _redirectRepo,
                 _blogRepo,
                 _mockSecurityHelper.Object,
-                new MockDateTimeProvider(new DateTime(2013, 1, 2)));
+                new MockDateTimeProvider(new DateTime(2013, 1, 2)),
+                _mockHttpContext.Object);
 
             var result = sut.Create(new Areas.Manage.Models.PostEditModel
             {
@@ -125,7 +163,8 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 _redirectRepo,
                 _blogRepo,
                 _mockSecurityHelper.Object,
-                new MockDateTimeProvider(new DateTime(2013,1,2)));
+                new MockDateTimeProvider(new DateTime(2013, 1, 2)),
+                _mockHttpContext.Object);
 
             var result = sut.Create(new Areas.Manage.Models.PostEditModel
             {
@@ -156,7 +195,8 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 _redirectRepo,
                 _blogRepo,
                 _mockSecurityHelper.Object,
-                new MockDateTimeProvider(new DateTime(2013, 1, 2)));
+                new MockDateTimeProvider(new DateTime(2013, 1, 2)),
+                _mockHttpContext.Object);
 
             var result = sut.Create(new Areas.Manage.Models.PostEditModel
             {

@@ -1,6 +1,8 @@
 ﻿using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Areas.Manage.Models;
+using StaticVoid.Blog.Site.Controllers;
 using StaticVoid.Blog.Site.Security;
+using StaticVoid.Blog.Site.Services;
 using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
@@ -12,17 +14,18 @@ using System.Web.Mvc;
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
     [CurrentBlogAuthorAuthorize]
-    public class RedirectsController : Controller
+    public class RedirectsController : BlogBaseController
     {
         private readonly IRepository<Redirect> _redirectRepository;
-        public RedirectsController(IRepository<Redirect> redirectRepository) 
+        public RedirectsController(IRepository<Redirect> redirectRepository, IRepository<Data.Blog> blogRepo, IHttpContextService httpContext)
+            : base(blogRepo, httpContext) 
         {
             _redirectRepository = redirectRepository;
         }
 
         public ActionResult Index()
         {
-            return View(_redirectRepository.GetRedirects().Select(r=>new RedirectModel{
+            return View(_redirectRepository.GetRedirects(CurrentBlog.Id).Select(r=>new RedirectModel{
                 From = r.OldRoute,
                 To = r.NewRoute,
                 Temporary = !r.IsPermanent,
@@ -86,7 +89,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 {
                     IsPermanent = !model.Temporary,
                     OldRoute = model.From.TrimStart('/'),
-                    NewRoute = "/" + model.To.TrimStart('/')
+                    NewRoute = "/" + model.To.TrimStart('/'),
+                    BlogId = CurrentBlog.Id
                 });
                 return Json(new { success = true });
             }

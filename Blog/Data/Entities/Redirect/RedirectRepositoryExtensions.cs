@@ -10,14 +10,14 @@ namespace StaticVoid.Blog.Data
 {
 	public static class RedirectRepositoryExtensions
 	{
-        public static IEnumerable<Redirect> GetRedirects(this IRepository<Redirect> repo)
+        public static IEnumerable<Redirect> GetRedirects(this IRepository<Redirect> repo, int blogId)
 		{
-			return repo.GetAll().AsNoTracking().AsEnumerable();
+			return repo.GetAll().Where(r=>r.BlogId == blogId).AsNoTracking().AsEnumerable();
 		}
 
-        public static Redirect GetRedirectFor(this IRepository<Redirect> repo, string url)
+        public static Redirect GetRedirectFor(this IRepository<Redirect> repo, string url, int blogId)
         {
-            return repo.GetBy(r => r.OldRoute == url);
+            return repo.GetRedirects(blogId).FirstOrDefault(r => r.OldRoute == url);
         }
 	}
 }

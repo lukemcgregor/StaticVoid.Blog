@@ -1,0 +1,93 @@
+﻿@model StaticVoid.Blog.Site.Areas.Platform.Models.PlatformDashboardModel
+
+@{
+    ViewBag.Title = "Platform Dashboard";
+}
+
+<h1>Platform Dashboard</h1>
+
+<div class="rounded-border">
+    <div>
+        <h3 class="no-margin pull-left">Blogs</h3>
+        @Html.ActionLink("Create Blog", "Create", "Blog", new { }, new { @class = "btn pull-right create-blog" })
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Authorative Url</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: Blogs">
+            <tr>
+                <td><a data-bind="attr: { href: Url }, text: Name"></a></td>
+                <td><a data-bind="attr: { href: Url }, text: Url"></a></td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
+                            <i class="icon-cog"></i>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a data-bind="attr: { href: editConfigurationUrl }" class="edit-blog-config"><i class="icon-edit"></i> Configuration</a></li>
+                            <li><a data-bind="attr: { href: editPermissionsUrl }" class="permissions-editor"><i class="icon-lock"></i> Permissions</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<div id='create-blog-modal' class='modal hide fade in modal-editor'>
+    <div id='create-blog-container'>
+    </div>
+</div>
+
+<div id='permissions-editor-modal' class='modal hide fade in modal-editor'>
+    <div id='permissions-editor-container'>
+    </div>
+</div>
+
+<div id='edit-blog-config-modal' class='modal hide fade in modal-editor'>
+    <div id='edit-blog-config-container'>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var Blog = function (options) {
+        var self = this;
+        ko.mapping.fromJS(options.data, {}, self);
+        var parent = options.parent;
+        self.editPermissionsUrl = ko.computed(function() {
+            return '@Url.Action("EditPermissions", "PermissionsEditor", new { Area = "Manage" })' + '?blogid='  + self.Id();
+        });
+
+        self.editConfigurationUrl = ko.computed(function() {
+            return '@Url.Action("Edit", "BlogConfiguration", new { Area = "Manage" })' + '?blogid='  + self.Id();
+        });
+    };
+
+    var blogMappingOptions = {
+        'Blogs': {
+            create: function (options) {
+                return new Blog(options);
+            }
+        }
+    };
+
+    var PlatformDashboardViewModel = function (options) {
+        var self = ko.mapping.fromJS( @(Html.Raw(Json.Encode(Model))),blogMappingOptions);
+        return self;
+    };
+    $(function () {
+        ko.applyBindings(new PlatformDashboardViewModel());
+        setupModal('create-blog', true);
+        setupModal('permissions-editor');
+        setupModal('edit-blog-config',true);
+    });
+</script>

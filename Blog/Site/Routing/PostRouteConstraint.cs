@@ -1,4 +1,5 @@
 ﻿using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Services;
 using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,11 @@ namespace StaticVoid.Blog.Site.Routing
     {
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            return DependencyResolver.Current.GetService<IRepository<Post>>().IsUrlAPost(httpContext.Request.Url.LocalPath.TrimStart('/'));
+            var postRepo = DependencyResolver.Current.GetService<IRepository<Post>>();
+            var blogRepo = DependencyResolver.Current.GetService<IRepository<Data.Blog>>();
+            var httpContextService = DependencyResolver.Current.GetService<IHttpContextService>();
+
+            return postRepo.IsUrlAPost(blogRepo.GetCurrentBlog(httpContextService).Id, httpContext.Request.Url.LocalPath.TrimStart('/'));
         }
     }
 }

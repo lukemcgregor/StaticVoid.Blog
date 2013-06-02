@@ -10,14 +10,14 @@ namespace StaticVoid.Blog.Site
 		public static void RegisterBundles(BundleCollection bundles)
 		{
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-						"~/Scripts/jquery-1.8.2.js"));
+						"~/Scripts/jquery-1.9.1.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/openid").Include(
 						"~/Scripts/openid-jquery.js",
 						"~/Scripts/openid-en.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/blog-admin").Include(
-                        "~/Scripts/jquery-1.8.2.js",
+                        "~/Scripts/jquery-1.9.1.js",
                         "~/Scripts/modernizr-*",
                         "~/Scripts/Prettify/prettify.js",
                         "~/Scripts/Pure/pure.js",
@@ -25,6 +25,7 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/modals.js",
                         "~/Scripts/knockout-2.2.1.js",
                         "~/Scripts/knockout.validation.js",
+                        "~/Scripts/validation-rules.js",
                         "~/Scripts/knockout.mapping-latest.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/editor").Include(
@@ -38,7 +39,7 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/jquery.validate.unobtrusive.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/blog").Include(
-                        "~/Scripts/jquery-1.8.2.js",
+                        "~/Scripts/jquery-1.9.1.js",
                         "~/Scripts/modernizr-*",
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/modals.js",

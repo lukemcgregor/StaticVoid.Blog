@@ -12,7 +12,6 @@ namespace StaticVoid.Blog.Data
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Email { get; set; }
-		public bool IsAuthor { get; set; }
         public string CreatedVia { get; set; }
         public string GooglePlusProfileUrl { get; set; }
         public ICollection<Securable> Securables { get; set; }

@@ -11,44 +11,50 @@ namespace StaticVoid.Blog.Data
 {
 	public static class PostRepositoryExtensions
 	{
-        public static IQueryable<Post> PublishedPosts(this IRepository<Post> repo, params Expression<Func<Post, object>>[] includes)
-		{
+
+        public static IQueryable<Post> PostsForBlog(this IRepository<Post> repo, int blogId, params Expression<Func<Post, object>>[] includes)
+        {
             var set = repo.GetAll();
             foreach (var include in includes)
             {
                 set = set.Include(include);
             }
-			return set.Where(p => p.Status == PostStatus.Published);
-		}
-
-        public static IQueryable<Post> FeedPosts(this IRepository<Post> repo, params Expression<Func<Post, object>>[] includes)
-        {
-            return repo.PublishedPosts(includes).Where(p => !p.ExcludeFromFeed);
+            return set.Where(p => p.BlogId == blogId);
         }
 
-		public static Post LatestPublishedPost(this IRepository<Post> repo)
+        public static IQueryable<Post> PublishedPosts(this IRepository<Post> repo, int blogId, params Expression<Func<Post, object>>[] includes)
 		{
-			return repo.PublishedPosts().OrderByDescending(p=>p.Posted).FirstOrDefault();
+            return repo.PostsForBlog(blogId, includes).Where(p => p.Status == PostStatus.Published);
+		}
+
+        public static IQueryable<Post> FeedPosts(this IRepository<Post> repo, int blogId, params Expression<Func<Post, object>>[] includes)
+        {
+            return repo.PublishedPosts(blogId, includes).Where(p => !p.ExcludeFromFeed);
+        }
+
+        public static Post LatestPublishedPost(this IRepository<Post> repo, int blogId)
+		{
+			return repo.PublishedPosts(blogId).OrderByDescending(p=>p.Posted).FirstOrDefault();
 		}
 
 		public static Post GetPostBefore(this IRepository<Post> repo, Post currentPost)
 		{
-			return repo.PublishedPosts().Where(p => p.Posted < currentPost.Posted).OrderByDescending(p => p.Posted).FirstOrDefault();
+			return repo.PublishedPosts(currentPost.BlogId).Where(p => p.Posted < currentPost.Posted).OrderByDescending(p => p.Posted).FirstOrDefault();
 		}
 
 		public static Post GetPostAfter(this IRepository<Post> repo, Post currentPost)
 		{
-			return repo.PublishedPosts().Where(p => p.Posted > currentPost.Posted).OrderBy(p => p.Posted).FirstOrDefault();
+            return repo.PublishedPosts(currentPost.BlogId).Where(p => p.Posted > currentPost.Posted).OrderBy(p => p.Posted).FirstOrDefault();
 		}
 
-        public static Post GetPostAtUrl(this IRepository<Post> repo, string url, params Expression<Func<Post, object>>[] includes)
+        public static Post GetPostAtUrl(this IRepository<Post> repo, int blogId, string url, params Expression<Func<Post, object>>[] includes)
         {
-            return repo.PublishedPosts(includes).SingleOrDefault(p => p.Path.ToLower() == url.ToLower());
+            return repo.PublishedPosts(blogId, includes).SingleOrDefault(p => p.Path.ToLower() == url.ToLower());
         }
 
-        public static bool IsUrlAPost(this IRepository<Post> repo, string url)
+        public static bool IsUrlAPost(this IRepository<Post> repo, int blogId, string url)
         {
-            return repo.PublishedPosts().Any(p => p.Path.ToLower() == url.ToLower());
+            return repo.PublishedPosts(blogId).Any(p => p.Path.ToLower() == url.ToLower());
         }
 	}
 }

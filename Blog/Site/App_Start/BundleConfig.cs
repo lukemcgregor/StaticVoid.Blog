@@ -25,6 +25,7 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/modals.js",
                         "~/Scripts/knockout-2.2.1.js",
                         "~/Scripts/knockout.validation.js",
+                        "~/Scripts/validation-rules.js",
                         "~/Scripts/knockout.mapping-latest.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/editor").Include(

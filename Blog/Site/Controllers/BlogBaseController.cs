@@ -5,14 +5,29 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
     public abstract class BlogBaseController : Controller
     {
-        public BlogBaseController(IRepository<Data.Blog> blogRepo)
+        private readonly IRepository<Data.Blog> _blogRepo;
+        private readonly IHttpContextService _httpContext;
+
+        public Data.Blog CurrentBlog
         {
-            var blog = blogRepo.GetCurrentBlog();
+            get
+            {
+                return _blogRepo.GetCurrentBlog(_httpContext);
+            }
+        }
+
+        public BlogBaseController(IRepository<Data.Blog> blogRepo, IHttpContextService httpContext)
+        {
+            _blogRepo = blogRepo;
+            _httpContext = httpContext;
+
+            var blog = CurrentBlog;
             
             ViewBag.BlogName = blog.Name;
             ViewBag.BlogDescription = blog.Description;

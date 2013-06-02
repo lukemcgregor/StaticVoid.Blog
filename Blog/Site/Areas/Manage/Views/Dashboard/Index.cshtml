@@ -24,6 +24,7 @@
             <li data-bind="attr: { class: cssClass }"><a href="#" class="post-list-item" data-bind="text: Item1, id: Item2, click: $parent.selectPost"></a></li>
         </ul>
     </div>
+    @if(Model.SelectedPost !=null){
     <div class="post-detail span8">
         <div class="post-detail-loader" style="display: none;">loading</div>
         <div class="post-detail-contents">
@@ -89,6 +90,7 @@
             </div>
         </div>
     </div>
+    }
 </div>
 
 <div id='edit-post-url-modal' class='modal hide fade in modal-editor'>

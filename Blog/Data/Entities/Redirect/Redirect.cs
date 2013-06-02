@@ -12,5 +12,7 @@ namespace StaticVoid.Blog.Data
         public bool IsPermanent { get; set; }
         public string OldRoute { get; set; }
         public string NewRoute { get; set; }
+        public int BlogId { get; set; }
+        public Data.Blog Blog { get; set; }
     }
 }

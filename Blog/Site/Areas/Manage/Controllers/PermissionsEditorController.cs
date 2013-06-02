@@ -2,6 +2,7 @@
 using StaticVoid.Blog.Email;
 using StaticVoid.Blog.Site.Areas.Manage.Models;
 using StaticVoid.Blog.Site.Security;
+using StaticVoid.Blog.Site.Services;
 using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         private readonly ISecurityHelper _securityHelper;
         private readonly IAttacher<Securable> _securableAttacher;
         private readonly IAttacher<Data.Blog> _blogAttacher;
-        private readonly ISendEmail _emailSender;
+        private readonly IInvitationService _invitationService;
 
         public PermissionsEditorController(
             IRepository<User> userRepo,
@@ -29,7 +30,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             IRepository<Securable> securableRepo,
             IRepository<Invitation> invitationRepo,
             ISecurityHelper securityHelper,
-            ISendEmail emailSender,
+            IInvitationService invitationService,
             IAttacher<Securable> securableAttacher,
             IAttacher<Data.Blog> blogAttacher)
         {
@@ -38,9 +39,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             _securableRepo = securableRepo;
             _invitationRepo = invitationRepo;
             _securityHelper = securityHelper;
+            _invitationService = invitationService;
             _blogAttacher = blogAttacher;
             _securableAttacher = securableAttacher;
-            _emailSender = emailSender;
         }
 
         public ActionResult EditPermissions(int? blogId = null)
@@ -117,18 +118,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             {
                 throw new HttpException(403, "Not Authorised");
             }
-            var invitation = new Invitation
-            {
-                SecurableId = model.SecurableId,
-                Email = model.Email,
-                Token = Guid.NewGuid().ToString(),
-                InviteDate = DateTime.Now
-            };
-
-            _invitationRepo.Create(invitation);
-
-            _emailSender.Send(new PermissionOfferedEmail(model.Email, currentUser.FullName(), model.PermissionName, 
-                this.Url.Action("Register", "Account",new { Token = invitation.Token, Area = "" }, this.Request.Url.Scheme)));
+            _invitationService.Invite(model.SecurableId, model.Email, currentUser.FullName());
 
             return Json(true);
         }

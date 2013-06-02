@@ -3,6 +3,7 @@ using Moq;
 using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Controllers;
 using StaticVoid.Blog.Site.Models;
+using StaticVoid.Blog.Site.Services;
 using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,22 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
     [TestClass]
     public class PostControllerPreviewTests
     {
+        private IRepository<Data.Blog> _blogRepo;
+        private Mock<IHttpContextService> _mockHttpContext;
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            _blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { Id = 1, AuthoritiveUrl = "http://blog.test.con" } }));
+            _mockHttpContext = new Mock<IHttpContextService>();
+            _mockHttpContext.Setup(h => h.RequestUrl).Returns(new Uri("http://blog.test.con/blah"));
+        }
+
         [TestMethod]
         public void PreviewForUnpublishedPostTest()
         {
             IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
-                new Post { Status = PostStatus.Published, Path ="2013/04/10/some-other-post", Posted = new DateTime(2013,4,10), Author = new User{ Email = "" } },
+                new Post { Status = PostStatus.Published, Path ="2013/04/10/some-other-post", Posted = new DateTime(2013,4,10), Author = new User{ Email = "" }, BlogId = 1 },
                 new Post { 
                     Id = 1,
                     Status = PostStatus.Unpublished, 
@@ -30,13 +42,12 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                     Posted = new DateTime(2013,4,14), 
                     Author = new User{ Email = "", FirstName = "Joe", LastName = "Bloggs" },
                     DraftBody = "asdf",
-                    DraftTitle = "qwerty"
+                    DraftTitle = "qwerty", 
+                    BlogId = 1
                 }
             }));
-            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
 
-
-            PostController sut = new PostController(postRepo, null, blogRepo);
+            PostController sut = new PostController(postRepo, null, _blogRepo, _mockHttpContext.Object);
             var result = (ViewResult)sut.Preview(1);
 
             Assert.IsNotNull(result);
@@ -53,7 +64,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
         public void PreviewForDraftPostTest()
         {
             IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
-                new Post { Status = PostStatus.Published, Path ="2013/04/10/some-other-post", Posted = new DateTime(2013,4,10), Author = new User{ Email = "" } },
+                new Post { Status = PostStatus.Published, Path ="2013/04/10/some-other-post", Posted = new DateTime(2013,4,10), Author = new User{ Email = "" }, BlogId = 1 },
                 new Post { 
                     Id = 1,
                     Status = PostStatus.Draft, 
@@ -61,13 +72,12 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                     Posted = new DateTime(2013,4,14), 
                     Author = new User{ Email = "", FirstName = "Joe", LastName = "Bloggs" },
                     DraftBody = "asdf",
-                    DraftTitle = "qwerty"
+                    DraftTitle = "qwerty", 
+                    BlogId = 1
                 }
             }));
-            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
 
-
-            PostController sut = new PostController(postRepo, null, blogRepo);
+            PostController sut = new PostController(postRepo, null, _blogRepo, _mockHttpContext.Object);
             var result = (ViewResult)sut.Preview(1);
 
             Assert.IsNotNull(result);
@@ -78,6 +88,30 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
             Assert.AreEqual("Joe Bloggs", model.Author.Name);
             Assert.AreEqual(md.Transform("asdf"), model.Body);
             Assert.AreEqual("qwerty", model.Title);
+        }
+
+        [TestMethod]
+        public void CantPreviewPostFromAnotherBlog()
+        {
+            IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
+                new Post { Status = PostStatus.Published, Path ="2013/04/10/some-other-post", Posted = new DateTime(2013,4,10), Author = new User{ Email = "" }, BlogId = 1 },
+                new Post { 
+                    Id = 1,
+                    Status = PostStatus.Draft, 
+                    Path ="2013/04/14/some-post", 
+                    Posted = new DateTime(2013,4,14), 
+                    Author = new User{ Email = "", FirstName = "Joe", LastName = "Bloggs" },
+                    DraftBody = "asdf",
+                    DraftTitle = "qwerty", 
+                    BlogId = 2
+                }
+            }));
+
+            PostController sut = new PostController(postRepo, null, _blogRepo, _mockHttpContext.Object);
+            var result = sut.Preview(1);
+
+            Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));
+            Assert.AreEqual((int)HttpStatusCode.NotFound,((HttpStatusCodeResult)result).StatusCode);
         }
     }
 }

@@ -11,29 +11,47 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using StaticVoid.Blog.Site.Gravitar;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Tests.Controllers
 {
     [TestClass]
     public class PostControllerDisplayTests
     {
+        private IRepository<Data.Blog> _blogRepo;
+        private Mock<IHttpContextService> _mockHttpContext;
+
+        [TestInitialize]
+        public void Initialise()
+        {
+            _blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { Id=1, AuthoritiveUrl = "http://blog.test.con" } }));
+            _mockHttpContext = new Mock<IHttpContextService>();
+            _mockHttpContext.Setup(h => h.RequestUrl).Returns(new Uri("http://blog.test.con/blah"));
+        }
+
         [TestMethod]
         public void DisplayPostTest()
         {
             IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
-                new Post { Status = PostStatus.Published, Path ="2013/04/10/some-other-post", Posted = new DateTime(2013,4,10), Author = new User{ Email = "" } },
+                new Post { 
+                    Status = PostStatus.Published, 
+                    Path ="2013/04/10/some-other-post", 
+                    Posted = new DateTime(2013,4,10), 
+                    Author = new User{ Email = "" },
+                    BlogId = 1
+                },
                 new Post { 
                     Status = PostStatus.Published, 
                     Path ="2013/04/14/some-post", 
                     Posted = new DateTime(2013,4,14), 
-                    Author = new User{ Email = "" } 
+                    Author = new User{ Email = "" },
+                    BlogId = 1
                 }
             }));
-            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
 
             var mockVisitLoggerService = new Mock<IVisitLoggerService>();
 
-            PostController sut = new PostController(postRepo, mockVisitLoggerService.Object, blogRepo);
+            PostController sut = new PostController(postRepo, mockVisitLoggerService.Object, _blogRepo, _mockHttpContext.Object);
             var result = (ViewResult)sut.Display("2013/04/14/some-post");
 
             Assert.IsNotNull(result);
@@ -47,7 +65,13 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
         public void DisplayPostAuthorDetailsTest()
         {
             IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
-                new Post { Status = PostStatus.Published, Path ="2013/04/10/some-other-post", Posted = new DateTime(2013,4,10), Author = new User{ Email = "" } },
+                new Post { 
+                    Status = PostStatus.Published, 
+                    Path ="2013/04/10/some-other-post", 
+                    Posted = new DateTime(2013,4,10), 
+                    Author = new User{ Email = "" },
+                    BlogId = 1 
+                },
                 new Post { 
                     Status = PostStatus.Published, 
                     Path ="2013/04/14/some-post", 
@@ -58,14 +82,14 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                         Email = "joe@bloggs.con",
                         FirstName = "Joe",
                         LastName = "Bloggs"
-                    } 
+                    },
+                    BlogId = 1
                 }
             }));
-            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
 
             var mockVisitLoggerService = new Mock<IVisitLoggerService>();
 
-            PostController sut = new PostController(postRepo, mockVisitLoggerService.Object, blogRepo);
+            PostController sut = new PostController(postRepo, mockVisitLoggerService.Object, _blogRepo, _mockHttpContext.Object);
             var result = (ViewResult)sut.Display("2013/04/14/some-post");
 
             Assert.IsNotNull(result);
@@ -81,7 +105,13 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
         public void DisplayPostContentTest()
         {
             IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
-                new Post { Status = PostStatus.Published, Path ="2013/04/10/some-other-post", Posted = new DateTime(2013,4,10), Author = new User{ Email = "" } },
+                new Post { 
+                    Status = PostStatus.Published, 
+                    Path ="2013/04/10/some-other-post", 
+                    Posted = new DateTime(2013,4,10), 
+                    Author = new User{ Email = "" },
+                    BlogId = 1
+                },
                 new Post { 
                     Title = "Test Title",
                     DraftTitle = "Draft Title",
@@ -92,14 +122,14 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                     Status = PostStatus.Published, 
                     Path ="2013/04/14/some-post", 
                     Posted = new DateTime(2013,4,14), 
-                    Author = new User{ Email = "joe@bloggs.con" } 
+                    Author = new User{ Email = "joe@bloggs.con" },
+                    BlogId = 1
                 }
             }));
-            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
 
             var mockVisitLoggerService = new Mock<IVisitLoggerService>();
 
-            PostController sut = new PostController(postRepo, mockVisitLoggerService.Object, blogRepo);
+            PostController sut = new PostController(postRepo, mockVisitLoggerService.Object, _blogRepo, _mockHttpContext.Object);
             var result = (ViewResult)sut.Display("2013/04/14/some-post");
 
             Assert.IsNotNull(result);
@@ -115,23 +145,44 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
         public void DisplayPostNavigationTest()
         {
             IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
-                new Post { Status = PostStatus.Published, Title = "some-other-post", Path ="2013/04/9/some-other-post", Posted = new DateTime(2013,4,9), Author = new User{ Email = "" } },
-                new Post { Status = PostStatus.Published, Title = "some-other-post2", Path ="2013/04/10/some-other-post2", Posted = new DateTime(2013,4,10), Author = new User{ Email = "" } },
+                new Post { 
+                    Status = PostStatus.Published, 
+                    Title = "some-other-post", 
+                    Path ="2013/04/9/some-other-post", 
+                    Posted = new DateTime(2013,4,9), 
+                    Author = new User{ Email = "" },
+                    BlogId = 1
+                },
+                new Post { 
+                    Status = PostStatus.Published, 
+                    Title = "some-other-post2", 
+                    Path ="2013/04/10/some-other-post2", 
+                    Posted = new DateTime(2013,4,10), 
+                    Author = new User{ Email = "" },
+                    BlogId = 1 
+                },
                 new Post { 
                     Canonical = "http://blog.con/2013/04/14/canonical",
                     Status = PostStatus.Published, 
                     Title = "some-post",
                     Path ="2013/04/14/some-post", 
                     Posted = new DateTime(2013,4,14), 
-                    Author = new User{ Email = "joe@bloggs.con" } 
+                    Author = new User{ Email = "joe@bloggs.con" } ,
+                    BlogId = 1
                 },
-                new Post { Status = PostStatus.Published, Title = "some-other-post3", Path ="2013/04/15/some-other-post3", Posted = new DateTime(2013,4,15), Author = new User{ Email = "" } },
+                new Post { 
+                    Status = PostStatus.Published, 
+                    Title = "some-other-post3", 
+                    Path ="2013/04/15/some-other-post3", 
+                    Posted = new DateTime(2013,4,15), 
+                    Author = new User{ Email = "" },
+                    BlogId = 1
+                },
             }));
-            IRepository<Data.Blog> blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { } }));
 
             var mockVisitLoggerService = new Mock<IVisitLoggerService>();
 
-            PostController sut = new PostController(postRepo, mockVisitLoggerService.Object, blogRepo);
+            PostController sut = new PostController(postRepo, mockVisitLoggerService.Object, _blogRepo, _mockHttpContext.Object);
             var result = (ViewResult)sut.Display("2013/04/14/some-post");
 
             Assert.IsNotNull(result);

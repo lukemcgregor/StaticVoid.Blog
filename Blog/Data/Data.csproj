@@ -93,6 +93,14 @@
     <Compile Include="Migrations\201305280623005_Remove_IsAuthor.Designer.cs">
       <DependentUpon>201305280623005_Remove_IsAuthor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306011341392_PostsToBlogs.cs" />
+    <Compile Include="Migrations\201306011341392_PostsToBlogs.Designer.cs">
+      <DependentUpon>201306011341392_PostsToBlogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201306020702503_RedirectsToBlogs.cs" />
+    <Compile Include="Migrations\201306020702503_RedirectsToBlogs.Designer.cs">
+      <DependentUpon>201306020702503_RedirectsToBlogs.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PersistanceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -108,6 +116,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201305280623005_Remove_IsAuthor.resx">
       <DependentUpon>201305280623005_Remove_IsAuthor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306011341392_PostsToBlogs.resx">
+      <DependentUpon>201306011341392_PostsToBlogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306020702503_RedirectsToBlogs.resx">
+      <DependentUpon>201306020702503_RedirectsToBlogs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

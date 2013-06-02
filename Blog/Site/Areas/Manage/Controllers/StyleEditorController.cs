@@ -1,5 +1,7 @@
 ﻿using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Areas.Manage.Models;
+using StaticVoid.Blog.Site.Controllers;
+using StaticVoid.Blog.Site.Services;
 using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,12 +11,15 @@ using System.Web.Mvc;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-    public class StyleEditorController : Controller
+    public class StyleEditorController : BlogBaseController
     {
         private readonly IRepository<Style> _styleRepo;
         private readonly IRepository<Data.Blog> _blogRepo;
 
-        public StyleEditorController(IRepository<Style> styleRepo, IRepository<Data.Blog> blogRepo)
+        public StyleEditorController(
+            IRepository<Style> styleRepo, 
+            IRepository<Data.Blog> blogRepo,
+            IHttpContextService httpContext) : base(blogRepo, httpContext)
         {
             _styleRepo = styleRepo;
             _blogRepo = blogRepo;
@@ -45,7 +50,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult EditBlogStyle()
         {
-            var currentBlog = _blogRepo.GetCurrentBlog();
+            var currentBlog = CurrentBlog;
             if (!currentBlog.StyleId.HasValue)
             {
                 var blogStyle = new Style();

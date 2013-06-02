@@ -213,6 +213,7 @@
     <Compile Include="Areas\Manage\Models\StyleEditorModels.cs" />
     <Compile Include="Areas\Platform\Controllers\BlogController.cs" />
     <Compile Include="Areas\Platform\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Platform\Models\BlogModels.cs" />
     <Compile Include="Areas\Platform\Models\DashboardModels.cs" />
     <Compile Include="Areas\Platform\PlatformAreaRegistration.cs" />
     <Compile Include="Controllers\BlogBaseController.cs" />
@@ -259,6 +260,8 @@
     <Compile Include="Security\OpenIdIdentity.cs" />
     <Compile Include="Security\OpenIdMembershipService.cs" />
     <Compile Include="Security\SecurityHelper.cs" />
+    <Compile Include="Services\HttpContextService.cs" />
+    <Compile Include="Services\InvitationService.cs" />
     <Compile Include="VisitLoggerService.cs" />
     <Compile Include="Wiring\BlogModule.cs" />
   </ItemGroup>
@@ -455,6 +458,7 @@
     <Content Include="Scripts\Prettify\lang-yaml.js" />
     <Content Include="Scripts\Prettify\prettify.js" />
     <Content Include="Scripts\Pure\pure.js" />
+    <Content Include="Scripts\validation-rules.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

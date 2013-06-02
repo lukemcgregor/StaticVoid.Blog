@@ -8,6 +8,7 @@ using DotNetOpenAuth.Messaging;
 using StaticVoid.Repository;
 using StaticVoid.Blog.Site.Security;
 using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
@@ -27,7 +28,9 @@ namespace StaticVoid.Blog.Site.Controllers
             IRepository<Invitation> invitationRepository,
             IAttacher<User> userAttacher,
             IAttacher<Securable> securableAttacher,
-            ISecurityHelper securityHelper): base(blogRepo)
+            ISecurityHelper securityHelper,
+            IHttpContextService httpContext)
+            : base(blogRepo, httpContext)
         {
             _openIdMembership = membershipService;
 			_userRepository = userRepository;

@@ -1,4 +1,4 @@
-﻿@model StaticVoid.Blog.Site.Areas.Manage.Models.BlogConfigModel
+﻿@model StaticVoid.Blog.Site.Areas.Platform.Models.CreateBlogModel
 
 @{
     ViewBag.Title = "Create Blog";
@@ -9,15 +9,71 @@
     <h3 id="myModalLabel">Create Blog</h3>
 </div>
 
+<div class="modal-body form-horizontal" data-bind="validationOptions: { insertMessages: false }">
+    <div class="control-group" data-bind="css: { success: Name.isModified() && Name.isValid(), error: Name.isModified() && !Name.isValid() }">
+        <label for="inputName" class="control-label">Name</label>
+        <div class="controls">
+            <input type="text" id="inputName" placeholder="Your blog name" data-bind="value: Name, valueUpdate: 'afterkeydown'">
+            <span class="help-inline" data-bind="validationMessage: Name, visible: Name.isModified() && !Name.isValid()"></span>
+        </div>
+    </div>
 
-@using (Html.BeginForm("Create", "Blog", FormMethod.Post, new { @class = "modal-form" }))
-{
-    <div class="modal-body">
-        @Html.ValidationSummary(true)
+    <div class="control-group"  data-bind="css: { success: Url.isModified() && Url.isValid(), error: Url.isModified() && !Url.isValid() }">
+        <label for="" class="control-label">Blog Url</label>
+        <div class="controls">
+            <input type="text" id="inputUrl" placeholder="http://blog.yourdomain.com" data-bind="value: Url, valueUpdate: 'afterkeydown'">
+            <span class="help-inline" data-bind="validationMessage: Url, visible: Url.isModified() && !Url.isValid()"></span>
+        </div>
     </div>
+
+    <div class="control-group" data-bind="css: { success: AdminEmail.isModified() && AdminEmail.isValid(), error: AdminEmail.isModified() && !AdminEmail.isValid() }">
+        <label for="" class="control-label">Admin Email</label>
+        <div class="controls">
+            <input type="text" id="inputAdminEmail" placeholder="joe@bloggs.com" data-bind="value: AdminEmail, valueUpdate: 'afterkeydown'">
+            <span class="help-inline" data-bind="validationMessage: AdminEmail, visible: AdminEmail.isModified() && !AdminEmail.isValid()"></span>
+        </div>
+    </div>
+</div>
     
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-        <button class="btn btn-success" type="submit">Create</button>
-    </div>
-}
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-success" data-bind="enable: isValid(), click: create">Create</button>
+</div>
+
+<script type="text/javascript">
+    function BlogViewModel() {
+        var self = this;
+        self.Name = ko.observable()
+            .extend({ required: {message: 'Blogs must have a title.'} });
+
+        self.Url = ko.observable()
+            .extend({
+                required: { message: 'Blogs must have a URL.' }, url: true
+            });
+
+        self.AdminEmail = ko.observable()
+            .extend({ required: { message: 'An admin must be specified' }, email: true });
+
+        self.errors = ko.validation.group(self);
+
+        self.create = function () {
+                debugger;
+                if (self.isValid()) {
+                    $.ajax({
+                        url: "@Url.Action("Create", "Blog")",
+                            type: 'POST',
+                            data: JSON.stringify({ Name: self.Name(), Url: self.Url(), AdminEmail: self.AdminEmail() }),
+                            contentType: "application/json"
+                    }).done(function (data) {
+                        if (data.success) {
+                            alert('done');
+                        }
+                    });
+                }
+        };
+    };
+
+    $(function () {
+        ko.applyBindings(new BlogViewModel(), $('#create-blog-modal')[0]);
+    });
+</script>

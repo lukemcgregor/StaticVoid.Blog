@@ -7,25 +7,25 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StaticVoid.Blog.Site.Gravitar;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
     public class IndexController : BlogBaseController
     {
         private readonly IRepository<Post> _postRepo;
-        private readonly IRepository<Data.Blog> _blogRepo;
 
-        public IndexController(IRepository<Post> postRepo, IRepository<Data.Blog> blogRepo)
-            : base(blogRepo)
+        public IndexController(IRepository<Post> postRepo, IRepository<Data.Blog> blogRepo, IHttpContextService httpContext)
+            : base(blogRepo, httpContext)
         {
             _postRepo = postRepo;
-            _blogRepo = blogRepo;
         }
         public ActionResult Posts()
         {
             return View(_postRepo
-                .PublishedPosts(p => p.Author)
+                .PublishedPosts(CurrentBlog.Id, p => p.Author)
                 .OrderByDescending(p=>p.Posted)
+                .AsEnumerable()
                 .Select(p => new PostRowIndexModel
             {
                 Title = p.Title,

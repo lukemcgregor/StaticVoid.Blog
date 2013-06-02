@@ -7,18 +7,25 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Controllers;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
     [CurrentBlogAuthorAuthorize]
-    public class BlogConfigurationController : Controller
+    public class BlogConfigurationController : BlogBaseController
     {
         private readonly IRepository<Data.Blog> _blogRepo;
         private readonly IRepository<Data.Securable> _securableRepository;
         private readonly IRepository<Data.User> _userRepository;
         private readonly ISecurityHelper _securityHelper;
 
-        public BlogConfigurationController(IRepository<Data.Blog> blogRepo, IRepository<Securable> securableRepository, IRepository<Data.User> userRepository, ISecurityHelper securityHelper)
+        public BlogConfigurationController(
+            IRepository<Data.Blog> blogRepo, 
+            IRepository<Securable> securableRepository, 
+            IRepository<Data.User> userRepository, 
+            ISecurityHelper securityHelper,
+            IHttpContextService httpContext) : base(blogRepo, httpContext)
         {
             _blogRepo = blogRepo;
             _securableRepository = securableRepository;
@@ -40,7 +47,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             }
             else
             {
-                blog = _blogRepo.GetCurrentBlog();
+                blog = CurrentBlog;
             }
             return PartialView("EditModal", new BlogConfigModel
                 {
@@ -71,7 +78,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 }
                 else
                 {
-                    blog = _blogRepo.GetCurrentBlog();
+                    blog = CurrentBlog;
                 }
 
                 blog.AnalyticsKey = model.AnalyticsKey;

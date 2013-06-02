@@ -7,30 +7,32 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Serialization;
 using StaticVoid.Xml.XmlSerialiser;
+using StaticVoid.Blog.Site.Services;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
-    public class SitemapController : Controller
+    public class SitemapController : BlogBaseController
     {
         private readonly IRepository<Post> _postRepository;
-        private readonly string _siteUrl;
 
-        public SitemapController(IRepository<Post> postRepository, IRepository<Data.Blog> blogRepo)
+        public SitemapController(
+            IRepository<Post> postRepository, 
+            IRepository<Data.Blog> blogRepo, 
+            IHttpContextService httpContext) : base(blogRepo,httpContext)
         {
             _postRepository = postRepository;
-            _siteUrl = blogRepo.GetCurrentBlog().AuthoritiveUrl.TrimEnd('/');
         }
 
         public ActionResult Sitemap()
         {
             GoogleSiteMap sitemap = new GoogleSiteMap
             {
-                Urls = _postRepository.PublishedPosts().Select(p => new SiteUrl { Location = string.Format("{0}/{1}",_siteUrl, p.Path.TrimStart('/')) }).ToList()
+                Urls = _postRepository.PublishedPosts(CurrentBlog.Id).Select(p => new SiteUrl { Location = string.Format("{0}/{1}", CurrentBlog.AuthoritiveUrl, p.Path.TrimStart('/')) }).ToList()
             };
 
             sitemap.Urls.Insert(0, new SiteUrl
             {
-                Location = String.Format("{0}/Index/Posts",_siteUrl),
+                Location = String.Format("{0}/Index/Posts", CurrentBlog.AuthoritiveUrl),
                 ChangeFrequency = "Daily"
             });
 

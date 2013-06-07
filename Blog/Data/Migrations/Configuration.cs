@@ -27,7 +27,7 @@ namespace StaticVoid.Blog.Data.Migrations
             {
                 Id = 1,
                 ClaimedIdentifier = "",
-                Email = "luke.mcgregor@gmail.com",
+                Email = "test@gmail.com",
                 FirstName = "Luke",
                 LastName = "McGregor",
                 IsAuthor = true

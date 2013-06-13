@@ -39,10 +39,6 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Core.Repository, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\StaticVoid.Core.Repository.2.0.0-beta1\lib\net45\StaticVoid.Core.Repository.dll</HintPath>
-    </Reference>
     <Reference Include="StaticVoid.Repository, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\StaticVoid.Repository.2.2.0\lib\net45\StaticVoid.Repository.dll</HintPath>

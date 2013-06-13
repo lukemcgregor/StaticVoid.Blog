@@ -44,7 +44,10 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/bootstrap.js",
                         "~/Scripts/modals.js",
                         "~/Scripts/Prettify/prettify.js",
-                        "~/Scripts/jquery.scrollTo.js"));
+                        "~/Scripts/knockout-2.2.1.js",
+                        "~/Scripts/knockout.mapping-latest.js",
+                        "~/Scripts/jquery.scrollTo.js",
+                        "~/Scripts/date.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css/openid").Include(
 						"~/Content/openid-shadow.css",

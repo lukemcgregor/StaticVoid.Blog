@@ -40,9 +40,15 @@ namespace StaticVoid.Blog.Site.Controllers
 			return Redirect("/" + post.Path);
 		}
 
-		public ActionResult Display(string path)
-		{
-            var currentBlog = CurrentBlog;
+        //public ActionResult Script(string path)
+        //{
+        //    Response.ContentType = "text/javascript";
+        //    return View(PostModel(path.Substring(0,path.Length -3)));
+        //}
+
+        private PostModel PostModel(string path)
+        {
+             var currentBlog = CurrentBlog;
             _visitLogger.LogCurrentRequest();
 
             var post = _postRepository.GetPostAtUrl(currentBlog.Id, path, p => p.Author);
@@ -100,8 +106,13 @@ namespace StaticVoid.Blog.Site.Controllers
                     Title = nextPost.Title
                 };
 			}
+            return model;
+        }
 
-			return View("Post", model);
+
+		public ActionResult Display(string path)
+		{
+			return View("Post", PostModel(path));
 		}
 
 		public ActionResult Preview(int id)

@@ -77,6 +77,7 @@
     <Compile Include="Entities\Securable\Securable.cs" />
     <Compile Include="Entities\Securable\SecurableRepositoryExtensions.cs" />
     <Compile Include="Entities\Style\CachedStyleRepository.cs" />
+    <Compile Include="Entities\Style\StyleRepositoryExtensions.cs" />
     <Compile Include="Entities\Style\Style.cs" />
     <Compile Include="Entities\User\CachedUserRepository.cs" />
     <Compile Include="Entities\User\User.cs" />

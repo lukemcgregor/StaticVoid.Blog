@@ -16,7 +16,9 @@ namespace StaticVoid.Blog.Site
             bundles.Add(new ScriptBundle("~/bundles/blog-admin").Include(
                         "~/Scripts/Pure/pure.js",
                         "~/Scripts/modals.js",
-                        "~/Scripts/validation-rules.js"));
+                        "~/Scripts/validation-rules.js",
+                        "~/Scripts/guid.js",
+                        "~/Scripts/jquery.fileupload.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/editor").Include(
 						"~/Scripts/MarkdownDeep.js",

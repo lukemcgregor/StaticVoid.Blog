@@ -40,6 +40,17 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             return PartialView("Recovery");
         }
 
+        public ActionResult Restore()
+        {
+            return PartialView("Restore");
+        }
+
+        [HttpPost]
+        public ActionResult Restore(string correlationToken, HttpPostedFileBase file)
+        {
+            return Json(new { test="sffasaffas" });
+        }
+
         public FileResult Backup()
         {
             var backup = new BlogBackup
@@ -58,11 +69,6 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             return File(System.Text.Encoding.UTF8.GetBytes(xml), System.Net.Mime.MediaTypeNames.Application.Octet, "test.xml");
         }
 
-        [HttpPost]
-        public ActionResult Restore(HttpPostedFileBase file)
-        {
-            throw new NotImplementedException();
-        }
 
         class BlogBackup
         {

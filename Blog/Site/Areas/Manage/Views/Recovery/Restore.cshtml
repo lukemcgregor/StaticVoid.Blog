@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Restore";
+}
+
+<script type="text/javascript">
+    var restoreViewModel = function () {
+        var self = {};
+
+        self.upload = function () {
+            $('.drop-zone').find('input').click();
+        };
+        self.correlationToken = ko.observable('');
+
+        self.dataLoaded = ko.observable(0);
+        self.dataTotal = ko.observable(0);
+        self.percentageLoaded = ko.computed(function () {
+            return parseInt(self.dataLoaded() / self.dataTotal() * 100);
+        });
+
+        self.loading = ko.computed(function () {
+            return self.dataLoaded() != self.dataTotal();
+        });
+
+        self.initialise = function () {
+            $('.drop-upload').fileupload({
+                dropZone: $('.drop-zone'),
+                add: function (e, data) {
+                    self.correlationToken(newGuid());
+                    self.dataLoaded(data.loaded);
+                    self.dataTotal(data.total);
+                    var jqXHR = data.submit();
+                },
+                progress: function (e, data) {
+                    debugger;
+                    self.dataLoaded(data.loaded);
+                    self.dataTotal(data.total);
+                },
+
+                fail: function (e, data) {
+                    // Something has gone wrong!
+                    debugger;
+                    data.context.addClass('error');
+                },
+                dataType: 'json',
+                done: function (e, data) {
+                    debugger;
+                }
+            });
+
+            // Prevent the default action when a file is dropped on the window
+            $(document).on('drop dragover', function (e) {
+                e.preventDefault();
+            });
+        };
+
+        self.initialise();//kickoff
+
+        return self;
+    };
+
+    $(function () {
+        ko.applyBindings(new restoreViewModel(), $('.restore-modal')[0]);
+    });
+</script>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Restore Blog</h3>
+</div>
+
+<div class="modal-body restore-modal">
+    <div class="upload-section">
+        <form class="drop-upload" data-bind="visible: !loading(), attr:{action: '@Url.Action("Restore")/' + correlationToken()}" method="post" enctype="multipart/form-data">
+		    <div class="drop-zone">
+                <div >
+			        <div>Drop Backup Here</div>
+			        <a data-bind="click: upload">Browse</a>
+			        <input type="file" name="upl" multiple />
+                </div>
+		    </div>
+        </form>
+        <div data-bind="visible: loading">
+            <div class="progress progress-striped active" >
+                <div class="bar" data-bind='style: { width: percentageLoaded() + "%" }' ></div>
+            </div>
+            <div style="color:white" data-bind="text: dataLoaded() + '/' + dataTotal() + ' (' + percentageLoaded() + '%)'"></div>
+        </div>
+    </div>
+</div>

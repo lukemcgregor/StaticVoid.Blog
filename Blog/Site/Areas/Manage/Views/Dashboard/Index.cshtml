@@ -16,6 +16,7 @@
     @if(Model.IsAdmin){
     <li>@Html.ActionLink("Modify Permissions", "EditPermissions", "PermissionsEditor", new { }, new { @class = "permissions-editor" })</li>
     <li>@Html.ActionLink("Blog Recovery", "Recovery", "Recovery", new { }, new { @class = "blog-recovery" })</li>
+    <li>@Html.ActionLink("Restore Content", "Restore", "Recovery", new { }, new { @class = "blog-recovery-restore" })</li>
     }
 </ul>
 
@@ -129,6 +130,11 @@
     </div>
 </div>
 
+<div id='blog-recovery-restore-modal' class='modal hide fade in modal-editor'>
+    <div id='blog-recovery-restore-container'>
+    </div>
+</div>
+
 
 <script type="text/javascript">
     function AppViewModel() {
@@ -192,5 +198,6 @@
         setupModal('confirm-unpublish', true);
         setupModal('permissions-editor');
         setupModal('blog-recovery');
+        setupModal('blog-recovery-restore');
     }
 </script>

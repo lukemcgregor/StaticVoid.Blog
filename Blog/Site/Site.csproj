@@ -284,6 +284,7 @@
     <Content Include="Content\openid.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\dropzone-border-image.png" />
     <Content Include="Images\feed-icon-28x28.png" />
     <Content Include="Images\glyphicons-halflings-white.png" />
     <Content Include="Images\glyphicons-halflings.png" />
@@ -319,9 +320,12 @@
     <Content Include="Areas\Platform\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Platform\Views\Blog\CreateModal.cshtml" />
     <Content Include="Areas\Manage\Views\Recovery\Recovery.cshtml" />
+    <Content Include="Areas\Manage\Views\Recovery\Restore.cshtml" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <Content Include="Scripts\dropzone.js" />
     <Content Include="Scripts\editor.js" />
+    <Content Include="Scripts\jquery.fileupload.js" />
+    <Content Include="Scripts\guid.js" />
     <Content Include="Scripts\MarkdownDeep License.txt" />
     <Content Include="Scripts\MarkdownDeep Quick Reference.txt" />
     <Content Include="Scripts\MarkdownDeepEditor.js" />

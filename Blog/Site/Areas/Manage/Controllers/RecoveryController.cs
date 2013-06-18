@@ -7,7 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
 using System.Web.Mvc;
+using System.Text;
+using System.Net.Mime;
+using System.Runtime.Serialization;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
@@ -48,15 +52,19 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         [HttpPost]
         public ActionResult Restore(string correlationToken, HttpPostedFileBase file)
         {
-            return Json(new { test="sffasaffas" });
+            var xml = Encoding.UTF8.GetString(file.InputStream.ToBytes());
+
+            var backup = xml.Deserialise<BlogBackup>();
+
+            return Json(new { posts = backup.Posts.Select(p=> new{ p.Title }) });
         }
 
         public FileResult Backup()
         {
             var backup = new BlogBackup
             {
-                Posts = _postRepository.PostsForBlog(CurrentBlog.Id).AsEnumerable(),
-                Redirects = _redirectRepository.GetRedirects(CurrentBlog.Id).AsEnumerable()                
+                Posts = _postRepository.PostsForBlog(CurrentBlog.Id).ToList(),
+                Redirects = _redirectRepository.GetRedirects(CurrentBlog.Id).ToList()                
             };
 
             if (CurrentBlog.StyleId.HasValue)
@@ -66,15 +74,16 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
             var xml = backup.Serialise();
 
-            return File(System.Text.Encoding.UTF8.GetBytes(xml), System.Net.Mime.MediaTypeNames.Application.Octet, "test.xml");
+            return File(Encoding.UTF8.GetBytes(xml), MediaTypeNames.Application.Octet, "test.xml");
         }
 
 
-        class BlogBackup
+        
+    }
+    public class BlogBackup
         {
-            public IEnumerable<Post> Posts { get; set; }
-            public IEnumerable<Redirect> Redirects { get; set; }
+            public List<Post> Posts { get; set; }
+            public List<Redirect> Redirects { get; set; }
             public Style BlogStyle { get; set; }
         }
-    }
 }

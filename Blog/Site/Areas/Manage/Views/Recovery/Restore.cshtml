@@ -21,21 +21,24 @@
             return self.dataLoaded() != self.dataTotal();
         });
 
+        self.loadComplete = ko.observable(false);
+
+        self.posts = ko.observableArray();
+
         self.initialise = function () {
             $('.drop-upload').fileupload({
                 dropZone: $('.drop-zone'),
                 add: function (e, data) {
+                    debugger;
                     self.correlationToken(newGuid());
                     self.dataLoaded(data.loaded);
                     self.dataTotal(data.total);
                     var jqXHR = data.submit();
                 },
                 progress: function (e, data) {
-                    debugger;
                     self.dataLoaded(data.loaded);
                     self.dataTotal(data.total);
                 },
-
                 fail: function (e, data) {
                     // Something has gone wrong!
                     debugger;
@@ -44,6 +47,10 @@
                 dataType: 'json',
                 done: function (e, data) {
                     debugger;
+                    $.each(data.result.posts, function (index, post) {
+                        self.posts.push(new postViewModel({data: post}));
+                    });
+                    self.loadComplete(true);
                 }
             });
 
@@ -54,6 +61,12 @@
         };
 
         self.initialise();//kickoff
+
+        return self;
+    };
+
+    var postViewModel = function (options) {
+        var self = ko.mapping.fromJS(options.data, {}, this);
 
         return self;
     };
@@ -69,13 +82,13 @@
 </div>
 
 <div class="modal-body restore-modal">
-    <div class="upload-section">
+    <div class="upload-section" data-bind="visible: !loadComplete()">
         <form class="drop-upload" data-bind="visible: !loading(), attr:{action: '@Url.Action("Restore")/' + correlationToken()}" method="post" enctype="multipart/form-data">
 		    <div class="drop-zone">
                 <div >
 			        <div>Drop Backup Here</div>
 			        <a data-bind="click: upload">Browse</a>
-			        <input type="file" name="upl" multiple />
+			        <input type="file" name="file" />
                 </div>
 		    </div>
         </form>
@@ -85,5 +98,10 @@
             </div>
             <div style="color:white" data-bind="text: dataLoaded() + '/' + dataTotal() + ' (' + percentageLoaded() + '%)'"></div>
         </div>
+    </div>
+    <div class="recovery-selection" data-bind="visible: loadComplete()">
+        <ul data-bind="foreach: posts">
+            <li data-bind="text: Title"></li>
+        </ul>
     </div>
 </div>

@@ -56,7 +56,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
             var backup = xml.Deserialise<BlogBackup>();
 
-            return Json(new { posts = backup.Posts.Select(p=> new{ p.Title }) });
+            var currentPosts = _postRepository.PostsForBlog(CurrentBlog.Id).ToList();
+
+            return Json(new { posts = backup.Posts.Select(p=> new{ p.Title, p.Id }) });
         }
 
         public FileResult Backup()

@@ -292,6 +292,12 @@
     <Content Include="Images\feed-icon-28x28.png" />
     <Content Include="Images\glyphicons-halflings-white.png" />
     <Content Include="Images\glyphicons-halflings.png" />
+    <Content Include="Images\grey_wash_wall.png" />
+    <Content Include="Images\icons\drive-upload.png" />
+    <Content Include="Images\icons\gears.png" />
+    <Content Include="Images\icons\key.png" />
+    <Content Include="Images\icons\shuffle.png" />
+    <Content Include="Images\icons\quill.png" />
     <Content Include="Images\NuGetGallery.png" />
     <Content Include="Images\openid-inputicon.gif" />
     <Content Include="Images\openid-providers-en.png" />
@@ -318,13 +324,13 @@
     <Content Include="Areas\Manage\Views\StyleEditor\EditStyleModal.cshtml" />
     <Content Include="Areas\Manage\Views\UserProfile\EditMyProfileModal.cshtml" />
     <Content Include="Areas\Manage\Views\PermissionsEditor\EditPermissionsModal.cshtml" />
-    <Content Include="Content\blog-admin.css" />
     <Content Include="Areas\Platform\Views\Web.config" />
     <Content Include="Areas\Platform\Views\Dashboard\Index.cshtml" />
     <Content Include="Areas\Platform\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Platform\Views\Blog\CreateModal.cshtml" />
     <Content Include="Areas\Manage\Views\Recovery\Recovery.cshtml" />
     <Content Include="Areas\Manage\Views\Recovery\Restore.cshtml" />
+    <Content Include="Content\blog-admin.less" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <Content Include="Scripts\dropzone.js" />
     <Content Include="Scripts\editor.js" />

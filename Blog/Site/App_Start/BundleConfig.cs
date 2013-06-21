@@ -56,10 +56,15 @@ namespace StaticVoid.Blog.Site
             dashboard.Transforms.Add(new CssMinify());
             bundles.Add(dashboard);
 
-            bundles.Add(new StyleBundle("~/Content/blog-admin").Include(
+            var admin = new StyleBundle("~/Content/blog-admin").Include(
                         "~/Content/mdd_styles.css",
                         "~/Content/blog.css",
-                        "~/Content/blog-admin.css"));
+                        "~/Content/blog-admin.less");
+
+            admin.Transforms.Clear();
+            admin.Transforms.Add(new LessTransform());
+            admin.Transforms.Add(new CssMinify());
+            bundles.Add(admin);
 		}
 	}
 }

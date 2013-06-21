@@ -9,14 +9,14 @@
     <title>StaticVoid - @ViewBag.Title </title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="robots" content="noindex,nofollow">
-    
+
     <link href="//cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
     @Styles.Render("~/Content/blog-admin")
     @RenderSection("Styles", false)
 
     @*<meta name="viewport" content="width=device-width" />*@
-    
+
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
@@ -27,7 +27,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/knockout-validation/1.0.2/knockout.validation.min.js" type="text/javascript"></script>
 
     @Scripts.Render("~/bundles/blog-admin")
-    
+
     <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
     <script type="text/javascript">
@@ -38,7 +38,7 @@
     @RenderSection("AdditionalHead", false)
 
 </head>
-<body  onload="prettyPrint()">
+<body onload="prettyPrint()">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
@@ -53,18 +53,90 @@
     </div>
     @RenderSection("masthead", false)
     <div class="body-content">
-        @if (ViewBag.Fluid)
-        {
-            <div class="container-fluid">
+        <div class="global-nav">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active">
+                    <a href="#">
+                        <img src="~/Images/icons/dashboard.png" class="menu-icon" />
+                        <div class="menu-title">Dashboard</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Images/icons/format-quote.png" class="menu-icon" />
+                        <div class="menu-title">Author</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Images/icons/shuffle.png" class="menu-icon" />
+                        <div class="menu-title">Redirects</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Images/icons/quill.png" class="menu-icon" />
+                        <div class="menu-title">Style</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Images/icons/key.png" class="menu-icon" />
+                        <div class="menu-title">Permissions</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Images/icons/drive-upload.png" class="menu-icon" />
+                        <div class="menu-title">Recovery</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <img src="~/Images/icons/gears.png" class="menu-icon" />
+                        <div class="menu-title">Config</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="admin-content-wrapper">
+@*            <div class="local-nav">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="header">
+                        <img src="~/Images/icons/format-quote.png" class="menu-icon" />
+                        <span>Author Posts</span>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="~/Images/icons/shuffle.png" class="menu-icon" />
+                            <span class="menu-title">Redirects</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="~/Images/icons/gears.png" class="menu-icon" />
+                            <span class="menu-title">Blog Config</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="~/Images/icons/key.png" class="menu-icon" />
+                            <span class="menu-title">Permissions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <img src="~/Images/icons/drive-upload.png" class="menu-icon" />
+                            <span class="menu-title">Recovery</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>*@
+            <div class="admin-content">
                 @RenderBody()
             </div>
-        }
-        else
-        {
-            <div class="container">
-                @RenderBody()
-            </div>
-        }
+        </div>
     </div>
     @RenderSection("scripts", required: false)
 </body>

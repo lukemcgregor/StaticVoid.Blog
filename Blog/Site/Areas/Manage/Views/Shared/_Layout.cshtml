@@ -33,7 +33,19 @@
     <script type="text/javascript">
         $(function () {
             prettyPrint();
+            BindClicks();
         });
+
+        function BindClicks() {
+            setupModal('edit-post-url');
+            setupModal('edit-blog-config');
+            setupModal('edit-blog-style', true);
+            setupModal('confirm-publish', true);
+            setupModal('confirm-unpublish', true);
+            setupModal('permissions-editor');
+            setupModal('blog-recovery');
+            //setupModal('blog-recovery-restore');
+        }
     </script>
     @RenderSection("AdditionalHead", false)
 
@@ -56,43 +68,43 @@
         <div class="global-nav">
             <ul class="nav nav-pills nav-stacked">
                 <li class="active">
-                    <a href="#">
+                    <a href="@Url.Action("Index", "Dashboard")">
                         <img src="~/Images/icons/dashboard.png" class="menu-icon" />
                         <div class="menu-title">Dashboard</div>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="@Url.Action("Index", "PostAuthoring")">
                         <img src="~/Images/icons/format-quote.png" class="menu-icon" />
                         <div class="menu-title">Author</div>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="@Url.Action("Index", "Redirects")">
                         <img src="~/Images/icons/shuffle.png" class="menu-icon" />
                         <div class="menu-title">Redirects</div>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="@Url.Action("EditBlogStyle", "StyleEditor")" class="edit-blog-style">
                         <img src="~/Images/icons/quill.png" class="menu-icon" />
                         <div class="menu-title">Style</div>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="@Url.Action("EditPermissions", "PermissionsEditor")" class="permissions-editor">
                         <img src="~/Images/icons/key.png" class="menu-icon" />
                         <div class="menu-title">Permissions</div>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="@Url.Action("Recovery", "Recovery")" class="blog-recovery">
                         <img src="~/Images/icons/drive-upload.png" class="menu-icon" />
                         <div class="menu-title">Recovery</div>
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="@Url.Action("Edit", "BlogConfiguration")" class="edit-blog-config">
                         <img src="~/Images/icons/gears.png" class="menu-icon" />
                         <div class="menu-title">Config</div>
                     </a>
@@ -101,41 +113,46 @@
         </div>
 
         <div class="admin-content-wrapper">
-@*            <div class="local-nav">
-                <ul class="nav nav-pills nav-stacked">
-                    <li class="header">
-                        <img src="~/Images/icons/format-quote.png" class="menu-icon" />
-                        <span>Author Posts</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="~/Images/icons/shuffle.png" class="menu-icon" />
-                            <span class="menu-title">Redirects</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="~/Images/icons/gears.png" class="menu-icon" />
-                            <span class="menu-title">Blog Config</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="~/Images/icons/key.png" class="menu-icon" />
-                            <span class="menu-title">Permissions</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <img src="~/Images/icons/drive-upload.png" class="menu-icon" />
-                            <span class="menu-title">Recovery</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>*@
-            <div class="admin-content">
-                @RenderBody()
-            </div>
+            @RenderBody()
+        </div>
+    </div>
+    <div id='edit-post-url-modal' class='modal hide fade in modal-editor'>
+        <div id='edit-post-url-container'>
+        </div>
+    </div>
+
+    <div id='edit-blog-config-modal' class='modal hide fade in modal-editor'>
+        <div id='edit-blog-config-container'>
+        </div>
+    </div>
+
+    <div id='edit-blog-style-modal' class='modal hide fade in modal-editor'>
+        <div id='edit-blog-style-container'>
+        </div>
+    </div>
+
+    <div id='confirm-publish-modal' class='modal hide fade in modal-editor'>
+        <div id='confirm-publish-container'>
+        </div>
+    </div>
+
+    <div id='confirm-unpublish-modal' class='modal hide fade in modal-editor'>
+        <div id='confirm-unpublish-container'>
+        </div>
+    </div>
+
+    <div id='permissions-editor-modal' class='modal hide fade in modal-editor'>
+        <div id='permissions-editor-container'>
+        </div>
+    </div>
+
+    <div id='blog-recovery-modal' class='modal hide fade in modal-editor'>
+        <div id='blog-recovery-container'>
+        </div>
+    </div>
+
+    <div id='blog-recovery-restore-modal' class='modal hide fade in modal-editor'>
+        <div id='blog-recovery-restore-container'>
         </div>
     </div>
     @RenderSection("scripts", required: false)

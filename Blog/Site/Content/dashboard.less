@@ -1,5 +1,4 @@
 ﻿.post-title-link {
-	width: 670px;
 	font-size: 1.8em;
 	margin:0px;
 	float: left;
@@ -7,6 +6,14 @@
 
 .post-detail-header{
     margin-bottom:5px;
+}
+
+.post-detail-loader{
+	width:100%;
+	height:600px;
+	background-image: url('../Images/ajax-loader.gif');
+	background-repeat:no-repeat;
+	background-position: center; 
 }
 
 .post-nav {
@@ -17,10 +24,21 @@
     margin:0px;
 }
 
+.post-badges{
+	float:right;
+	height:26px;
+	span{
+		margin-top: 4px;
+	}
+}
+
 .post-detail-contents {
     padding:10px;
-    border:solid;
     min-height:150px;
+
+	.actions {
+		float: right;
+	}
 }
 
 .post-detail-contents .description {
@@ -33,6 +51,11 @@
 .actions {
 	width: 45px;
 	margin-left:25px;
+
+	.dropdown-menu{
+		right:0;
+		left: auto;
+	}
 }
 
 .last-modified,

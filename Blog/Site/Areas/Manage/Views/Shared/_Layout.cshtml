@@ -48,7 +48,6 @@
         }
     </script>
     @RenderSection("AdditionalHead", false)
-
 </head>
 <body onload="prettyPrint()">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -65,48 +64,12 @@
     </div>
     @RenderSection("masthead", false)
     <div class="body-content">
-        <div class="global-nav">
-            <ul class="nav nav-pills nav-stacked">
-                <li class="active">
-                    <a href="@Url.Action("Index", "Dashboard")">
-                        <img src="~/Images/icons/dashboard.png" class="menu-icon" />
-                        <div class="menu-title">Dashboard</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Index", "PostAuthoring")">
-                        <img src="~/Images/icons/format-quote.png" class="menu-icon" />
-                        <div class="menu-title">Author</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Index", "Redirects")">
-                        <img src="~/Images/icons/shuffle.png" class="menu-icon" />
-                        <div class="menu-title">Redirects</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action("EditBlogStyle", "StyleEditor")" class="edit-blog-style">
-                        <img src="~/Images/icons/quill.png" class="menu-icon" />
-                        <div class="menu-title">Style</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action("EditPermissions", "PermissionsEditor")" class="permissions-editor">
-                        <img src="~/Images/icons/key.png" class="menu-icon" />
-                        <div class="menu-title">Permissions</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Recovery", "Recovery")" class="blog-recovery">
-                        <img src="~/Images/icons/drive-upload.png" class="menu-icon" />
-                        <div class="menu-title">Recovery</div>
-                    </a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Edit", "BlogConfiguration")" class="edit-blog-config">
-                        <img src="~/Images/icons/gears.png" class="menu-icon" />
-                        <div class="menu-title">Config</div>
+        <div id="global-nav">
+            <ul class="nav nav-pills nav-stacked" data-bind="foreach: menuItems">
+                <li class="active" data-bind="css:{ active: selected}">
+                    <a data-bind="attr:{ href: url, 'class': cssClass}">
+                        <img src="#" data-bind="attr:{ src: iconUrl }" class="menu-icon" />
+                        <div class="menu-title" data-bind="text: title"></div>
                     </a>
                 </li>
             </ul>

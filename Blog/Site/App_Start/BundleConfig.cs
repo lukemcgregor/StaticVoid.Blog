@@ -18,7 +18,8 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/modals.js",
                         "~/Scripts/validation-rules.js",
                         "~/Scripts/guid.js",
-                        "~/Scripts/jquery.fileupload.js"));
+                        "~/Scripts/jquery.fileupload.js",
+                        "~/Scripts/admin-layout.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/editor").Include(
 						"~/Scripts/MarkdownDeep.js",
@@ -28,6 +29,9 @@ namespace StaticVoid.Blog.Site
 
             bundles.Add(new ScriptBundle("~/bundles/blog").Include(
                         "~/Scripts/modals.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
+            "~/Scripts/dashboard.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css/openid").Include(
 						"~/Content/openid-shadow.css",

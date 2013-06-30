@@ -24,7 +24,7 @@ namespace StaticVoid.Blog.Site
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
-            System.Web.Optimization.BundleTable.EnableOptimizations = true;
+            System.Web.Optimization.BundleTable.EnableOptimizations = false;
 		}
 	}
 }

@@ -9,6 +9,8 @@ using StaticVoid.Repository;
 using StaticVoid.Blog.Site.Gravitar;
 using System.Net;
 using StaticVoid.Blog.Site.Services;
+using System.Reflection;
+using System.IO;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
@@ -58,8 +60,16 @@ namespace StaticVoid.Blog.Site.Controllers
 
 			var md = new MarkdownDeep.Markdown();
 
+            var defaultTemplate ="";
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("StaticVoid.Blog.Site.Defaults.DefaultTemplate.html"))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                defaultTemplate = reader.ReadToEnd();
+            }
+
             var model = new PostModel
             {
+                Template = defaultTemplate,
                 Body = md.Transform(post.Body),
                 Description = post.Description,
                 Title = post.Title,
@@ -112,7 +122,7 @@ namespace StaticVoid.Blog.Site.Controllers
 
 		public ActionResult Display(string path)
 		{
-			return View("Post", PostModel(path));
+			return View("PostNoJs", PostModel(path));
 		}
 
 		public ActionResult Preview(int id)

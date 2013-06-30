@@ -286,6 +286,7 @@
     <Content Include="Content\sticky.css" />
     <Content Include="Content\openid-shadow.css" />
     <Content Include="Content\openid.css" />
+    <EmbeddedResource Include="Defaults\DefaultTemplate.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\ajax-loader.gif" />
@@ -372,7 +373,6 @@
     <Content Include="Scripts\modals.js" />
     <Content Include="Scripts\openid-en.js" />
     <Content Include="Scripts\openid-jquery.js" />
-    <Content Include="Scripts\Pure\pure.js" />
     <Content Include="Scripts\trendy_date.js" />
     <Content Include="Scripts\validation-rules.js" />
     <Content Include="Web.config">
@@ -391,6 +391,8 @@
     <Content Include="Views\Index\Posts.cshtml" />
     <Content Include="Views\Shared\PrettyDate.cshtml" />
     <Content Include="Views\Post\Script.cshtml" />
+    <Content Include="Views\Post\PostNoJs.cshtml" />
+    <Content Include="Views\Shared\_LayoutNoJs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Platform\Views\Shared\" />

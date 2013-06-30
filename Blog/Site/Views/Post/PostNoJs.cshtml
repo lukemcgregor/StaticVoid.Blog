@@ -1,0 +1,160 @@
+﻿@model StaticVoid.Blog.Site.Models.PostModel
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_LayoutNoJs.cshtml";
+}
+@section Head {
+    @if (!String.IsNullOrWhiteSpace(Model.Description))
+    {
+        <meta name="description" content="@Model.Description" />
+    }
+    <link rel="canonical" href="@Model.CanonicalUrl" />
+<script type="text/javascript">
+    var model = @(Html.Raw(Json.Encode(Model)));
+    document.documentElement.innerHTML = model.Template;
+    
+    function runScripts(element) {
+        var list, scripts, index;
+
+        // Get the scripts
+        list = element.getElementsByTagName("script");
+        scripts = [];
+        for (index = 0; index < list.length; ++index) {
+            scripts[index] = list[index];
+        }
+        list = undefined;
+
+        // Run them in sequence
+        continueLoading();
+
+        function continueLoading() {
+            var script, newscript;
+
+            // While we have a script to load...
+            while (scripts.length) {
+                // Get it and remove it from the DOM
+                script = scripts[0];
+                script.parentNode.removeChild(script);
+                scripts.splice(0, 1);
+
+                // Create a replacement for it
+                newscript = document.createElement('script');
+
+                // External?
+                if (script.src) {
+                    // Yes, we'll have to wait until it's loaded before continuing
+                    newscript.onerror = continueLoadingOnError;
+                    newscript.onload = continueLoadingOnLoad;
+                    newscript.onreadystatechange = continueLoadingOnReady;
+                    newscript.src = script.src;
+                } else {
+                    // No, we can do it right away
+                    newscript.text = script.text;
+                }
+                if(script.type)
+                    newscript.type = script.type;
+
+                if(script.id)
+                    newscript.id = script.id;
+
+                // Start the script
+                try
+                {
+                    document.documentElement.appendChild(newscript);
+                }
+                catch(err)
+                {
+                    console.error(err);
+                }
+
+                // If it's external, wait
+                if (script.src) {
+                    return;
+                }
+            }
+
+            // All scripts loaded
+            newscript = undefined;
+
+            // Callback on most browsers when a script is loaded
+
+            function continueLoadingOnLoad() {
+                // Defend against duplicate calls
+                if (this === newscript) {
+                    continueLoading();
+                }
+            }
+
+            // Callback on most browsers when a script fails to load
+
+            function continueLoadingOnError() {
+                // Defend against duplicate calls
+                if (this === newscript) {
+                    continueLoading();
+                }
+            }
+
+            // Callback on IE when a script's loading status changes
+
+            function continueLoadingOnReady() {
+
+                // Defend against duplicate calls and check whether the
+                // script is complete (complete = loaded or error)
+                if (this === newscript && this.readyState === "complete") {
+                    continueLoading();
+                }
+            }
+        }
+    }
+    runScripts(document.documentElement);
+    document.execCommand("Stop");
+</script>
+
+
+}
+<div class="row">
+    <div class="span2 post-list-container">
+        <ul class="nav nav-list post-list span2">
+            <li class="nav-header">Other Posts</li>
+            @foreach (var p in Model.OtherPosts)
+            {
+                <li class="@(p.IsCurrentPost ? "active" : "")"><a href="/@p.Link">@p.Title</a></li>
+                if (Model.OtherPosts.Last() != p)
+                {
+                    <li class="divider"></li>
+                }
+            }
+            <li class="divider"></li>
+            <li>@Html.ActionLink("All Posts", "Posts", "Index", new { }, new { @class = "all-posts-link" })</li>
+        </ul>
+    </div>
+    <div class="span10">
+        <div class="post">
+            @{Html.RenderPartial("PrettyDate", Model.Posted);}
+            <h1 class="post-title">@Model.Title</h1>
+            <div class="author-flair">
+                @if (String.IsNullOrWhiteSpace(Model.Author.GooglePlusProfileUrl))
+                {
+                    <img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" />
+                }
+                else
+                {
+                    <a href="@(Model.Author.GooglePlusProfileUrl)?rel=author">
+                        <img src="@(Model.Author.GravatarUrl)?s=50" alt="@Model.Author.Name" />
+                    </a>
+                }
+            </div>
+            <div class="article">
+                @Html.Raw(Model.Body)
+            </div>
+            <div class="row class copyright">
+                <div class="span10">
+                    @Model.Author.Name &copy; 2012, Reproduce only with written consent from the author.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section AfterBody{
+}

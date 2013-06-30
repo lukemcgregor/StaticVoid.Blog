@@ -14,7 +14,6 @@ namespace StaticVoid.Blog.Site
 						"~/Scripts/openid-en.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/blog-admin").Include(
-                        "~/Scripts/Pure/pure.js",
                         "~/Scripts/modals.js",
                         "~/Scripts/validation-rules.js",
                         "~/Scripts/guid.js",

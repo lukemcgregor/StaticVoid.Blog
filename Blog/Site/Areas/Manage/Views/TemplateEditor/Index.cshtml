@@ -1,11 +1,11 @@
 ﻿@model StaticVoid.Blog.Site.Areas.Manage.Models.StyleModel
 
 @{
-    ViewBag.Title = "Edit Style";
+    ViewBag.Title = "Edit Template";
     ViewBag.Fluid = true;
 }
 @section AdditionalHead {
-    @Scripts.Render("~/bundles/style-editor")
+    @Scripts.Render("~/bundles/template-editor")
     <script type="text/javascript">
         var templateModes = {
             noscriptMetaRefresh: '@StaticVoid.Blog.Data.TemplateMode.NoscriptMetaRefresh.ToString()',
@@ -15,12 +15,12 @@
             noDomCustomisation: '@StaticVoid.Blog.Data.TemplateMode.NoDomCustomisation.ToString()'
         };
         $(function () {
-            var vm = new StyleEditorViewModel({ data: { css: @(Html.Raw(Json.Encode(Model.Css))), html: @(Html.Raw(Json.Encode(Model.HtmlTemplate))) }});
+            var vm = new TemplateEditorViewModel({ data: { css: @(Html.Raw(Json.Encode(Model.Css))), html: @(Html.Raw(Json.Encode(Model.HtmlTemplate))) }});
 
             ko.applyBindings(vm, $('#style-section')[0]);
             vm.load();
 
-            globalNav.select('/manage/styleeditor/editblogstyle');
+            globalNav.select('/manage/templateeditor');
 
             $('#template-tabs a').click(function (e) {
                 $(this).tab('show');

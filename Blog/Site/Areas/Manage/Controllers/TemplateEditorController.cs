@@ -11,13 +11,13 @@ using System.Web.Mvc;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-    public class StyleEditorController : BlogBaseController
+    public class TemplateEditorController : BlogBaseController
     {
         private readonly IRepository<BlogTemplate> _styleRepo;
         private readonly IRepository<Data.Blog> _blogRepo;
         private readonly IHttpContextService _httpContext;
 
-        public StyleEditorController(
+        public TemplateEditorController(
             IRepository<BlogTemplate> styleRepo, 
             IRepository<Data.Blog> blogRepo,
             IHttpContextService httpContext) : base(blogRepo, httpContext)
@@ -27,7 +27,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             _httpContext = httpContext;
         }
 
-        public ActionResult Edit(Guid? id)
+        public ActionResult Index(Guid? id)
         {
             if (!id.HasValue)
             {
@@ -35,7 +35,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
                 if (latestTemplate != null)
                 {
-                    return RedirectToAction("Edit", new { id = latestTemplate.Id });
+                    return RedirectToAction("Index", new { id = latestTemplate.Id });
                 }
 
                 var defaultTemplate =new BlogTemplate
@@ -48,7 +48,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
                 _styleRepo.Create(defaultTemplate);
 
-                return RedirectToAction("Edit", new { id = defaultTemplate.Id });
+                return RedirectToAction("Index", new { id = defaultTemplate.Id });
             }
             var style = _styleRepo.GetBy(s => s.Id == id);
 
@@ -62,24 +62,32 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             if (ModelState.IsValid)
             {
                 var blogTemplate = _styleRepo.GetLatestEditForBlog(CurrentBlog.Id);
-                if(CurrentBlog.BlogTemplateId == blogTemplate.Id)
+                if (CurrentBlog.BlogTemplateId == blogTemplate.Id)
                 {
-                    if( blogTemplate.Css== model.Css &&
-                        blogTemplate.HtmlTemplate == model.HtmlTemplate &&
-                        blogTemplate.TemplateMode == model.TemplateMode)
+                    if (blogTemplate.Css != model.Css ||
+                        blogTemplate.HtmlTemplate != model.HtmlTemplate ||
+                        blogTemplate.TemplateMode != model.TemplateMode)
                     {
-                        return Json(new { success = true }); //no modifications so no need to save
+                        //create a new version
+                        _styleRepo.Create(new BlogTemplate
+                        {
+                            Css = model.Css,
+                            HtmlTemplate = model.HtmlTemplate,
+                            TemplateMode = model.TemplateMode,
+                            LastModified = DateTime.Now,
+                            BlogId = CurrentBlog.Id
+                        });
                     }
-
-                    //create a new version
-                    throw new NotImplementedException();
                 }
+                else
+                {
 
-                blogTemplate.Css = model.Css;
-                blogTemplate.HtmlTemplate = model.HtmlTemplate;
-                blogTemplate.TemplateMode = model.TemplateMode;
-                blogTemplate.LastModified = DateTime.Now;
-                _styleRepo.Update(blogTemplate);
+                    blogTemplate.Css = model.Css;
+                    blogTemplate.HtmlTemplate = model.HtmlTemplate;
+                    blogTemplate.TemplateMode = model.TemplateMode;
+                    blogTemplate.LastModified = DateTime.Now;
+                    _styleRepo.Update(blogTemplate);
+                }
 
                 return Json(new { success = true });
             }

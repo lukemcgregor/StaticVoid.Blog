@@ -1,4 +1,4 @@
-﻿function StyleEditorViewModel(options) {
+﻿function TemplateEditorViewModel(options) {
     var self = {};
 
     self.css = ko.observable(options.data.css);

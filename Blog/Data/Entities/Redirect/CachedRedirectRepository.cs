@@ -56,7 +56,7 @@ namespace StaticVoid.Blog.Data
 
         public IQueryable<Data.Redirect> GetAll(params Expression<Func<Data.Redirect, object>>[] includes)
         {
-            if (includes != null)
+            if (includes != null && includes.Any())
             {
                 return _baseRepo.GetAll(includes);
             }

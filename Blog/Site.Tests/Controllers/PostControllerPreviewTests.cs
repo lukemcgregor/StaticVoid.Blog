@@ -20,12 +20,14 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
     public class PostControllerPreviewTests
     {
         private IRepository<Data.Blog> _blogRepo;
+        private IRepository<BlogTemplate> _templateRepo;
         private Mock<IHttpContextService> _mockHttpContext;
 
         [TestInitialize]
         public void Initialise()
         {
             _blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { Id = 1, AuthoritiveUrl = "http://blog.test.con" } }));
+            _templateRepo = new SimpleRepository<BlogTemplate>(new InMemoryRepositoryDataSource<BlogTemplate>());
             _mockHttpContext = new Mock<IHttpContextService>();
             _mockHttpContext.Setup(h => h.RequestUrl).Returns(new Uri("http://blog.test.con/blah"));
         }
@@ -47,7 +49,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 }
             }));
 
-            PostController sut = new PostController(postRepo, null, _blogRepo, _mockHttpContext.Object);
+            PostController sut = new PostController(postRepo, _blogRepo,_templateRepo, _mockHttpContext.Object);
             var result = (ViewResult)sut.Preview(1);
 
             Assert.IsNotNull(result);
@@ -77,7 +79,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 }
             }));
 
-            PostController sut = new PostController(postRepo, null, _blogRepo, _mockHttpContext.Object);
+            PostController sut = new PostController(postRepo, _blogRepo, _templateRepo, _mockHttpContext.Object);
             var result = (ViewResult)sut.Preview(1);
 
             Assert.IsNotNull(result);
@@ -107,7 +109,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 }
             }));
 
-            PostController sut = new PostController(postRepo, null, _blogRepo, _mockHttpContext.Object);
+            PostController sut = new PostController(postRepo, _blogRepo, _templateRepo, _mockHttpContext.Object);
             var result = sut.Preview(1);
 
             Assert.IsInstanceOfType(result, typeof(HttpStatusCodeResult));

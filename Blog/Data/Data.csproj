@@ -81,7 +81,6 @@
     <Compile Include="Entities\BlogTemplate\BlogTemplate.cs" />
     <Compile Include="Entities\User\CachedUserRepository.cs" />
     <Compile Include="Entities\User\User.cs" />
-    <Compile Include="Entities\Visit\Visit.cs" />
     <Compile Include="Migrations\201305280453075_AdminSecurable.cs" />
     <Compile Include="Migrations\201305280453075_AdminSecurable.Designer.cs">
       <DependentUpon>201305280453075_AdminSecurable.cs</DependentUpon>
@@ -101,6 +100,10 @@
     <Compile Include="Migrations\201307130858177_BlogTemplate.cs" />
     <Compile Include="Migrations\201307130858177_BlogTemplate.Designer.cs">
       <DependentUpon>201307130858177_BlogTemplate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307140654324_RemovingVisits.cs" />
+    <Compile Include="Migrations\201307140654324_RemovingVisits.Designer.cs">
+      <DependentUpon>201307140654324_RemovingVisits.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PersistanceModule.cs" />
@@ -126,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201307130858177_BlogTemplate.resx">
       <DependentUpon>201307130858177_BlogTemplate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307140654324_RemovingVisits.resx">
+      <DependentUpon>201307140654324_RemovingVisits.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

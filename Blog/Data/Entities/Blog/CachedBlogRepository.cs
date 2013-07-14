@@ -55,7 +55,7 @@ namespace StaticVoid.Blog.Data
 
         public IQueryable<Blog> GetAll(params System.Linq.Expressions.Expression<Func<Blog, object>>[] includes)
         {
-            if (includes != null)
+            if (includes != null && includes.Any())
             {
                 return _baseRepo.GetAll(includes);
             }

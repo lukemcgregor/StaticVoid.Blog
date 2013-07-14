@@ -24,7 +24,6 @@ namespace StaticVoid.Blog.Site.Wiring
         {
             Bind<DbContext>().To<BlogContext>().InRequestScope();
             Bind<IProvideDateTime>().To<DateTimeProvider>();
-            Bind<IVisitLoggerService>().To<VisitLoggerService>();
             Bind<OpenIdMembershipService>().ToSelf().InTransientScope();
             Bind<ISecurityHelper>().To<SecurityHelper>();
             Bind<ISendEmail>().To<EmailSender>();

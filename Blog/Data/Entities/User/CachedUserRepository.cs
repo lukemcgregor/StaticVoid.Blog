@@ -56,7 +56,7 @@ namespace StaticVoid.Blog.Data
 
         public IQueryable<Data.User> GetAll(params Expression<Func<Data.User, object>>[] includes)
         {
-            if (includes != null)
+            if (includes != null && includes.Any())
             {
                 return _baseRepo.GetAll(includes);
             }

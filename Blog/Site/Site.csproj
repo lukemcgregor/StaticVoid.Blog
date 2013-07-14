@@ -229,7 +229,6 @@
     <Compile Include="ElmahHandleErrorAttribute.cs" />
     <Compile Include="Extensions\BlogRepositoryExtensions.cs" />
     <Compile Include="Extensions\UserExtensions.cs" />
-    <Compile Include="IVisitLoggerService.cs" />
     <Compile Include="Models\IndexModels.cs" />
     <Compile Include="Routing\PostJsRouteConstraint.cs" />
     <Compile Include="Routing\PostRouteConstraint.cs" />
@@ -268,7 +267,6 @@
     <Compile Include="Security\SecurityHelper.cs" />
     <Compile Include="Services\HttpContextService.cs" />
     <Compile Include="Services\InvitationService.cs" />
-    <Compile Include="VisitLoggerService.cs" />
     <Compile Include="Wiring\BlogModule.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,13 +17,11 @@ namespace StaticVoid.Blog.Site.Controllers
 	public class PostController : BlogBaseController
 	{
 		private readonly IRepository<Post> _postRepository;
-		private readonly IVisitLoggerService _visitLogger;
         private readonly IRepository<Data.Blog> _blogRepo;
         private readonly IRepository<BlogTemplate> _blogTemplateRepo;
 
         public PostController(
             IRepository<Post> postRepository, 
-            IVisitLoggerService visitLogger, 
             IRepository<Data.Blog> blogRepo,
             IRepository<BlogTemplate> blogTemplateRepo,
             IHttpContextService httpContext)
@@ -31,7 +29,6 @@ namespace StaticVoid.Blog.Site.Controllers
 		{
 			_postRepository = postRepository;
             _blogTemplateRepo = blogTemplateRepo;
-			_visitLogger = visitLogger;
             _blogRepo = blogRepo;
 		}
 
@@ -54,7 +51,6 @@ namespace StaticVoid.Blog.Site.Controllers
         private PostModel PostModel(string path)
         {
              var currentBlog = CurrentBlog;
-            _visitLogger.LogCurrentRequest();
 
             var post = _postRepository.GetPostAtUrl(currentBlog.Id, path, p => p.Author);
 

@@ -19,12 +19,14 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
     public class PostControllerIndexTests
     {
         private IRepository<Data.Blog> _blogRepo;
+        private IRepository<BlogTemplate> _templateRepo;
         private Mock<IHttpContextService> _mockHttpContext;
 
         [TestInitialize]
         public void Initialise()
         {
             _blogRepo = new SimpleRepository<Data.Blog>(new InMemoryRepositoryDataSource<Data.Blog>(new List<Data.Blog> { new Data.Blog { Id = 1, AuthoritiveUrl = "http://blog.test.con" } }));
+            _templateRepo =  new SimpleRepository<BlogTemplate>(new InMemoryRepositoryDataSource<BlogTemplate>());
             _mockHttpContext = new Mock<IHttpContextService>();
             _mockHttpContext.Setup(h => h.RequestUrl).Returns(new Uri("http://blog.test.con/blah"));
         }
@@ -35,7 +37,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
         {
             IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>());
 
-            PostController sut = new PostController(postRepo, null, _blogRepo,_mockHttpContext.Object);
+            PostController sut = new PostController(postRepo, _blogRepo, _templateRepo, _mockHttpContext.Object);
             try
             {
                 sut.Index();
@@ -56,7 +58,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 new Post { Status = PostStatus.Unpublished } 
             }));
 
-            PostController sut = new PostController(postRepo, null, _blogRepo, _mockHttpContext.Object);
+            PostController sut = new PostController(postRepo, _blogRepo,_templateRepo, _mockHttpContext.Object);
             try
             {
                 sut.Index();
@@ -75,7 +77,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 new Post { Status = PostStatus.Published, Path ="2013/04/14/some-post", Posted = new DateTime(2013,4,14), BlogId = 1 }
             }));
 
-            PostController sut = new PostController(postRepo, null, _blogRepo, _mockHttpContext.Object);
+            PostController sut = new PostController(postRepo, _blogRepo,_templateRepo, _mockHttpContext.Object);
             var result = sut.Index();
 
             Assert.AreEqual("/2013/04/14/some-post", ((RedirectResult)result).Url);
@@ -89,7 +91,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 new Post { Status = PostStatus.Published, Path ="2013/04/14/some-post", Posted = new DateTime(2013,4,14), BlogId = 1 }
             }));
 
-            PostController sut = new PostController(postRepo, null, _blogRepo, _mockHttpContext.Object);
+            PostController sut = new PostController(postRepo, _blogRepo,_templateRepo, _mockHttpContext.Object);
             var result = sut.Index();
 
             Assert.AreEqual("/2013/04/14/some-post", ((RedirectResult)result).Url);

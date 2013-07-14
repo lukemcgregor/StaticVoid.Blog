@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@section AdditionalHead {
+    @Scripts.Render("~/bundles/manage/recovery")
+
+<script type="text/javascript">
+    $(function () {
+        globalNav.select('/manage/recovery');
+    });
+</script>
+}
+<div class="admin-content" id="recovery-section">
+    <div class="row-fluid">
+        <div class="span6" id="backup-section">
+            <h3>Backup</h3>
+
+            @Html.ActionLink("Download Backup", "Backup")
+            </div>
+        <div class="span6" id="restore-section">
+            <h3>Restore</h3>
+
+            <div class="upload-section" data-bind="visible: !loadComplete()">
+                <form class="drop-upload" data-bind="visible: !loading(), attr:{action: '@Url.Action("Restore")/' + correlationToken()}" method="post" enctype="multipart/form-data">
+                    <div class="drop-zone">
+                        <div>
+                            <div>Drop Backup Here</div>
+                            <a data-bind="click: upload">Browse</a>
+                            <input type="file" name="file" />
+                        </div>
+                    </div>
+                </form>
+                <div data-bind="visible: loading">
+                    <div class="progress progress-striped active">
+                        <div class="bar" data-bind="style: { width: percentageLoaded() + '%' }"></div>
+                    </div>
+                    <div style="color:white" data-bind="text: dataLoaded() + '/' + dataTotal() + ' (' + percentageLoaded() + '%)'"></div>
+                </div>
+            </div>
+            <div class="recovery-selection" data-bind="visible: loadComplete()">
+                <ul data-bind="foreach: posts">
+                    <li data-bind="text: Title"></li>
+                </ul>
+                <button class="btn" type="submit" data-bind="click: cancel">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>

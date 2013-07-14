@@ -349,8 +349,10 @@
     <Content Include="Areas\Manage\Views\Recovery\Restore.cshtml" />
     <Content Include="Content\blog-admin.less" />
     <Content Include="Areas\Manage\Views\TemplateEditor\Index.cshtml" />
+    <Content Include="Areas\Manage\Views\Recovery\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <Content Include="Scripts\admin-layout.js" />
+    <Content Include="Scripts\recovery.js" />
     <Content Include="Scripts\template-editor.js" />
     <Content Include="Scripts\dashboard.js" />
     <Content Include="Scripts\dropzone.js" />

@@ -1,0 +1,139 @@
+﻿@model StaticVoid.Blog.Site.Areas.Manage.Models.StyleModel
+
+@{
+    ViewBag.Title = "Edit Template";
+    ViewBag.Fluid = true;
+}
+@section AdditionalHead {
+    @Scripts.Render("~/bundles/template-editor")
+    <script type="text/javascript">
+        var templateModes = {
+            noscriptMetaRefresh: '@StaticVoid.Blog.Data.TemplateMode.NoscriptMetaRefresh.ToString()',
+            domRip: '@StaticVoid.Blog.Data.TemplateMode.DomRip.ToString()',
+            bodyOnly: '@StaticVoid.Blog.Data.TemplateMode.BodyOnly.ToString()',
+            noNojsFallback: '@StaticVoid.Blog.Data.TemplateMode.NoNojsFallback.ToString()',
+            noDomCustomisation: '@StaticVoid.Blog.Data.TemplateMode.NoDomCustomisation.ToString()'
+        };
+        $(function () {
+            var vm = new TemplateEditorViewModel({ data: { css: @(Html.Raw(Json.Encode(Model.Css))), html: @(Html.Raw(Json.Encode(Model.HtmlTemplate))) }});
+
+            ko.applyBindings(vm, $('#style-section')[0]);
+            vm.load();
+
+            globalNav.select('/manage/templateeditor');
+
+            $('#template-tabs a').click(function (e) {
+                $(this).tab('show');
+                vm.update();
+            })
+        });
+    </script>
+}
+<div class="admin-content" id="style-section">
+    <ul class="nav nav-tabs" id="template-tabs">
+        <li class="active"><a href="#template-mode">Template Mode</a></li>
+        <li><a href="#css">CSS</a></li>
+        <li data-bind="visible: htmlEditable"><a href="#html">HTML</a></li>
+        <li><a href="#preview-and-apply">Preview &amp; Apply</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="template-mode">
+            <div class="template-mode-explanation">
+                <p>A number of options are avaliable for how you can customise your content.</p>
+                <p>
+                    Each of these options will give you a different level of control over how much you can
+                    customise the HTML rendered to your users, however each method will also have some
+                    tradeoffs around what happens when javascript is not enabled which will prevent the
+                    content of your posts being provided to your layout.
+                </p>
+                <p>
+                    This is important to take into accont as not all search crawlers will interperate
+                    javascript based content.
+                </p>
+            </div>
+            <ul class="template-mode-options">
+                <li class="row-fluid todo" data-bind="css:{selected: noscriptMetaRefreshSelected}, click: selectNoscriptMetaRefresh">
+                    <div class=" checkbox span1"></div>
+                    <div class="span11">
+                        <h3>No Script Meta Refresh</h3>
+                        <p>
+                            Meta refresh redirects the browser to a No JS page if javascript isnt enabled.
+                            If a search crawler honours the meta-refresh it will correctly index your content.
+                        </p>
+                    </div>
+                </li>
+                <li class="row-fluid todo" data-bind="css:{selected: domRipSelected}, click: selectDomRip">
+                    <div class="checkbox span1"></div>
+                    <div class="span11">
+                        <h3>DOM Rip</h3>
+                        <p>
+                            This is an experimental mode which will completely replace the HTML node of your
+                            DOM at page load when javascript is enabled. This method has some performance issues
+                            as script loading is not optimised
+                        </p>
+                    </div>
+                </li>
+                <li class="row-fluid todo" data-bind="css:{selected: bodyOnlySelected}, click: selectBodyOnly">
+                    <div class="checkbox span1"></div>
+                    <div class="span11">
+                        <h3>Body Only</h3>
+                        <p>
+                            This option allows you to have complete control over the body node of your DOM but
+                            you will have only limited control over the head of the document. At page load the
+                            no-js body tag will be replaced by your custom one.
+                        </p>
+                    </div>
+                </li>
+                <li class="row-fluid todo" data-bind="css:{selected: noNojsFallbackSelected}, click: selectNoNojsFallback">
+                    <div class="checkbox span1"></div>
+                    <div class="span11">
+                        <h3>No No-Javascript Fallback</h3>
+                        <p>
+                            This option allows you to customise the entire DOM without restriction however no
+                            fallback is provided for clients which dont enable javascript. This option should only
+                            be used if you are happy for your content to not be crawled by crawlers which dont
+                            process javascript. Currenly only some search crawlers implement javascript based
+                            content crawling so this should be used with hesitation.
+                        </p>
+                    </div>
+                </li>
+                <li class="row-fluid" data-bind="css:{selected: noDomCustomisationSelected}, click: selectNoDomCustomisation">
+                    <div class="checkbox span1"></div>
+                    <div class="span11">
+                        <h3>No DOM Customisation</h3>
+                        <p>
+                            If you have no interest in changing the markup use this option. You will still however
+                            have full control over css.
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-pane" id="css">
+            <div id="style-editor">
+                <div class="style-editor-pane" data-bind="style: { height: editorHeight, width: editorWidth }">
+                    <div class="css-editor">
+                        <div id="css-editor"
+                             class="css-editor"
+                             data-bind="style: { height: editorHeight, width: editorWidth}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="html">
+            @*<div id="style-editor">
+                    <span data-bind="text: editorWidth"></span>
+                    <div class="style-editor-pane" data-bind="style: { width: editorWidth }">
+                        @Html.LabelFor(m => m.HtmlTemplate)
+                        <div class="html-template-editor">
+                            @Html.HiddenFor(m => m.HtmlTemplate, new { id = "hidden-html-template" })
+                            <div id="html-template-editor" class="html-template-editor" data-bind="style: { height: editorHeight, width: editorWidth }">@Model.HtmlTemplate</div>
+                        </div>
+                    </div>
+                </div>*@
+        </div>
+        <div class="tab-pane" id="preview-and-apply">
+            <button class="btn btn-success" type="submit" data-bind="click: applyTemplate">Apply</button>
+        </div>
+    </div>
+</div>

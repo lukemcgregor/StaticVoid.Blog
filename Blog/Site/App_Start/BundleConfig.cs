@@ -30,7 +30,10 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/modals.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
-            "~/Scripts/dashboard.js"));
+                        "~/Scripts/dashboard.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/style-editor").Include(
+                        "~/Scripts/style-editor.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css/openid").Include(
 						"~/Content/openid-shadow.css",

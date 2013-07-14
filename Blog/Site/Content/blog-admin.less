@@ -301,9 +301,94 @@ html, body{
 	display:block;
 	float:left;
 	margin:15px;
+    width:98% /* TODO: fix hack */
+}
+
+.with-local-nav {
+    width:inherit;
 	position:absolute;
 	top: 0;
 	bottom: 0;
 	right: 0;
 	left: @local-nav-width + 0px;
+}
+
+.css-editor,
+.html-template-editor {
+    padding:0;
+    margin:0;
+}
+
+.style-editor-pane {
+    float:left;
+}
+
+
+.expanded {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+
+    .actions {
+        position: absolute;
+        bottom: 0;
+        right:0;
+    }
+
+    .alerts {
+        position: absolute;
+        bottom: 0;
+        left:0;
+        .alert{
+            margin:0;
+        }
+    }
+}
+
+.template-mode-explanation,
+.template-mode-options {
+    max-width:900px;
+}
+
+ul.template-mode-options {
+    margin:0px;
+    list-style-type: none;
+}
+
+
+.template-mode-options li {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid;
+    border-color: rgba(0,0,0,0.2);
+    background-color: rgba(0,0,0,0.1);
+
+    &:hover {
+        border-color: rgba(0,0,0,0.5);
+    }
+
+    h3 {
+        margin-top: 0px;
+        font-size: 20px;
+        line-height: 20px;
+    }
+
+    &.selected {
+        background-color: #fff;
+        border-color: #000;
+
+        &:hover {
+            border-color: rgba(0,0,0,0.5);
+        }
+    }
+
+    &.todo {
+        opacity: 0.5;
+
+        &:hover {
+            border-color: rgba(0,0,0,0.2);
+        }
+    }
 }

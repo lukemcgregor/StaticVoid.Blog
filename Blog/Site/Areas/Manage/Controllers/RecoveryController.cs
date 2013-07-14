@@ -19,14 +19,14 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
     {
         private readonly IRepository<Post> _postRepository;
         private readonly IRepository<Redirect> _redirectRepository;
-        private readonly IRepository<Style> _styleRepository;
+        private readonly IRepository<BlogTemplate> _styleRepository;
         private readonly IRepository<Data.Blog> _blogRepository;
         private readonly ISecurityHelper _securityHelper;
 
         public RecoveryController(
             IRepository<Post> postRepository,
             IRepository<Redirect> redirectRepository,
-            IRepository<Style> styleRepository,
+            IRepository<BlogTemplate> styleRepository,
             IRepository<Data.Blog> blogRepository,
             ISecurityHelper securityHelper,
             IHttpContextService httpContext)
@@ -69,9 +69,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 Redirects = _redirectRepository.GetRedirects(CurrentBlog.Id).ToList()                
             };
 
-            if (CurrentBlog.StyleId.HasValue)
+            if (CurrentBlog.BlogTemplateId.HasValue)
             {
-                backup.BlogStyle = _styleRepository.GetById(CurrentBlog.StyleId.Value);
+                backup.BlogTemplate = _styleRepository.GetById(CurrentBlog.BlogTemplateId.Value);
             }
 
             var xml = backup.Serialise();
@@ -86,6 +86,6 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         {
             public List<Post> Posts { get; set; }
             public List<Redirect> Redirects { get; set; }
-            public Style BlogStyle { get; set; }
+            public BlogTemplate BlogTemplate { get; set; }
         }
 }

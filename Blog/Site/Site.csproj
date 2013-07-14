@@ -341,7 +341,6 @@
     <Content Include="Content\error.less" />
     <Content Include="Areas\Manage\Views\PostAuthoring\ConfirmPublishModal.cshtml" />
     <Content Include="Areas\Manage\Views\PostAuthoring\ConfirmUnPublishModal.cshtml" />
-    <Content Include="Areas\Manage\Views\StyleEditor\EditStyleModal.cshtml" />
     <Content Include="Areas\Manage\Views\UserProfile\EditMyProfileModal.cshtml" />
     <Content Include="Areas\Manage\Views\PermissionsEditor\EditPermissionsModal.cshtml" />
     <Content Include="Areas\Platform\Views\Web.config" />
@@ -351,8 +350,10 @@
     <Content Include="Areas\Manage\Views\Recovery\Recovery.cshtml" />
     <Content Include="Areas\Manage\Views\Recovery\Restore.cshtml" />
     <Content Include="Content\blog-admin.less" />
+    <Content Include="Areas\Manage\Views\StyleEditor\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <Content Include="Scripts\admin-layout.js" />
+    <Content Include="Scripts\style-editor.js" />
     <Content Include="Scripts\dashboard.js" />
     <Content Include="Scripts\dropzone.js" />
     <Content Include="Scripts\editor.js" />
@@ -393,6 +394,7 @@
     <Content Include="Views\Post\Script.cshtml" />
     <Content Include="Views\Post\PostNoJs.cshtml" />
     <Content Include="Views\Shared\_LayoutNoJs.cshtml" />
+    <Content Include="Views\Post\PostNoDomCustomisation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Platform\Views\Shared\" />

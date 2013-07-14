@@ -14,9 +14,9 @@
 
     @Styles.Render("~/Content/post_less")
     @RenderSection("Styles", required: false)
-    @if (ViewBag.BlogStyleId != null)
+    @if (ViewBag.BlogTemplateId != null)
     {
-        <link href="/Style/Css/@ViewBag.BlogStyleId" rel="stylesheet">
+        <link href="/Style/Css/@ViewBag.BlogTemplateId" rel="stylesheet">
     }
 
     @*<meta name="viewport" content="width=device-width" />*@

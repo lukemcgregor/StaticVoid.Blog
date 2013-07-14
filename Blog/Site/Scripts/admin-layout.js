@@ -13,13 +13,13 @@
     };
 
     self.menuItems = ko.observableArray([
-        new MenuItemViewModel({ data: { title: "Dashboard",     url: "/manage",                                     icon: "dashboard"       , cssClass:'' } }),
-        new MenuItemViewModel({ data: { title: "Author",        url: "/manage/postauthoring",                       icon: "format-quote"    , cssClass:'' } }),
-        new MenuItemViewModel({ data: { title: "Redirects",     url: "/manage/redirects",                           icon: "shuffle"         , cssClass:'' } }),
-        new MenuItemViewModel({ data: { title: "Style",         url: "/manage/styleeditor/editblogstyle",           icon: "quill"           , cssClass: 'edit-blog-style' } }),
+        new MenuItemViewModel({ data: { title: "Dashboard",     url: "/manage",                                     icon: "dashboard"       , cssClass: '' } }),
+        new MenuItemViewModel({ data: { title: "Author",        url: "/manage/postauthoring",                       icon: "format-quote"    , cssClass: '' } }),
+        new MenuItemViewModel({ data: { title: "Redirects",     url: "/manage/redirects",                           icon: "shuffle"         , cssClass: '' } }),
+        new MenuItemViewModel({ data: { title: "Style",         url: "/manage/styleeditor/edit",                    icon: "quill"           , cssClass: '' } }),
         new MenuItemViewModel({ data: { title: "Permissions",   url: "/manage/permissionseditor/editpermissions",   icon: "key"             , cssClass: 'permissions-editor' } }),
-        new MenuItemViewModel({ data: { title: "Recovery",      url: "/manage/recovery/recovery",                   icon: "drive-upload"    , cssClass:'blog-recovery' } }),
-        new MenuItemViewModel({ data: { title: "Config",        url: "/manage/blogconfiguration/edit",              icon: "gears"           , cssClass:'edit-blog-config' } }),
+        new MenuItemViewModel({ data: { title: "Recovery",      url: "/manage/recovery/recovery",                   icon: "drive-upload"    , cssClass: 'blog-recovery' } }),
+        new MenuItemViewModel({ data: { title: "Config",        url: "/manage/blogconfiguration/edit",              icon: "gears"           , cssClass: 'edit-blog-config' } }),
     ]);
 
     self.select = function (url) {

@@ -29,56 +29,57 @@
         <li class="divider"></li>
     </ul>
 </div>
-<div class="admin-content">   
+<div class="admin-content with-local-nav">
     <div class="">
-        @if(Model.SelectedPost !=null){
-        <div class="post-detail">
-            <div class="post-detail-loader" style="display: none;"></div>
-            <div class="post-detail-contents">
-                <div class="post-detail-header">
-                    <div class="post-title-link">
-                        <a data-bind="text: SelectedPost.Title, attr: { href: SelectedPost.Url }"></a>
-                    </div>
-                    <div class="actions">
-                        <div class="btn-group">
-                            <a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
-                                <i class="icon-cog"></i>
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a data-bind="attr: { href: '@Url.Action("Edit", new { area = "Manage", controller = "PostAuthoring" })'+ '/' + SelectedPost.Id() }"><i class="icon-edit"></i>Edit</a></li>
-                                <li data-bind="visible: SelectedPost.HasDraftContent()"><a data-bind="attr: { href: '@Url.Action("Preview", new { area = "", controller = "Post" })' + '/' + SelectedPost.Id() }"><i class="icon-eye-open"></i>Preview</a></li>
-                                <li><a data-bind="attr: { href: '@Url.Action("EditPostUrl", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="edit-post-url"><i class="icon-globe"></i>Edit Url</a></li>
-                                <li data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())' || SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())'"><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish</a></li>
-                                <li data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' && SelectedPost.HasDraftContent()"><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish Update</a></li>
-                                <li data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())'"><a data-bind="attr: { href: '@Url.Action("ConfirmUnPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-unpublish"><i class="icon-thumbs-down"></i>UnPublish</a></li>
-                            </ul>
+        @if (Model.SelectedPost != null)
+        {
+            <div class="post-detail">
+                <div class="post-detail-loader" style="display: none;"></div>
+                <div class="post-detail-contents">
+                    <div class="post-detail-header">
+                        <div class="post-title-link">
+                            <a data-bind="text: SelectedPost.Title, attr: { href: SelectedPost.Url }"></a>
                         </div>
-                    </div>
-                    <div class="post-badges">
-                        <span class="label label-info" data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())'">Draft</span>
-                        <span class="label label-success" data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())'">Published</span>
-                        <span class="label label-important" data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())'">Unpublished</span>
-                        <span class="label label-warning" data-bind="visible: SelectedPost.HasDraftContent() && SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())'">Drafts Pending</span>
+                        <div class="actions">
+                            <div class="btn-group">
+                                <a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
+                                    <i class="icon-cog"></i>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a data-bind="attr: { href: '@Url.Action("Edit", new { area = "Manage", controller = "PostAuthoring" })'+ '/' + SelectedPost.Id() }"><i class="icon-edit"></i>Edit</a></li>
+                                    <li data-bind="visible: SelectedPost.HasDraftContent()"><a data-bind="attr: { href: '@Url.Action("Preview", new { area = "", controller = "Post" })' + '/' + SelectedPost.Id() }"><i class="icon-eye-open"></i>Preview</a></li>
+                                    <li><a data-bind="attr: { href: '@Url.Action("EditPostUrl", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="edit-post-url"><i class="icon-globe"></i>Edit Url</a></li>
+                                    <li data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())' || SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())'"><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish</a></li>
+                                    <li data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' && SelectedPost.HasDraftContent()"><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish Update</a></li>
+                                    <li data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())'"><a data-bind="attr: { href: '@Url.Action("ConfirmUnPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-unpublish"><i class="icon-thumbs-down"></i>UnPublish</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="post-badges">
+                            <span class="label label-info" data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())'">Draft</span>
+                            <span class="label label-success" data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())'">Published</span>
+                            <span class="label label-important" data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())'">Unpublished</span>
+                            <span class="label label-warning" data-bind="visible: SelectedPost.HasDraftContent() && SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())'">Drafts Pending</span>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <div>
+                            <div class="published-date" data-bind="visible: SelectedPost.PublishedDate() != null">
+                                <label>Published: </label>
+                                <span data-bind="text: SelectedPost.friendlyPublishedDate()"></span>
+                            </div>
+                            <div class="last-modified">
+                                <label>Last Modified: </label>
+                                <span data-bind="text: SelectedPost.friendlyLastModified()"></span>
+                            </div>
+                        </div>
                     </div>
                     <div style="clear: both;"></div>
-                    <div>
-                        <div class="published-date" data-bind="visible: SelectedPost.PublishedDate() != null">
-                            <label>Published: </label>
-                            <span data-bind="text: new Date(parseInt(SelectedPost.PublishedDate().substr(6))).toDateString()"></span>
-                        </div>
-                        <div class="last-modified">
-                            <label>Last Modified: </label>
-                            <span data-bind="text: new Date(parseInt(SelectedPost.LastModified().substr(6))).toDateString()"></span>
-                        </div>
+                    <div class="">
+                        <p class="description" data-bind="text: SelectedPost.Description"></p>
                     </div>
                 </div>
-                <div style="clear: both;"></div>
-                <div class="">
-                    <p class="description" data-bind="text: SelectedPost.Description"></p>
-                </div>
             </div>
-        </div>
         }
     </div>
 </div>

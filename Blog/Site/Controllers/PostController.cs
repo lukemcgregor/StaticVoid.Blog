@@ -19,15 +19,18 @@ namespace StaticVoid.Blog.Site.Controllers
 		private readonly IRepository<Post> _postRepository;
 		private readonly IVisitLoggerService _visitLogger;
         private readonly IRepository<Data.Blog> _blogRepo;
+        private readonly IRepository<BlogTemplate> _blogTemplateRepo;
 
         public PostController(
             IRepository<Post> postRepository, 
             IVisitLoggerService visitLogger, 
             IRepository<Data.Blog> blogRepo,
+            IRepository<BlogTemplate> blogTemplateRepo,
             IHttpContextService httpContext)
             : base(blogRepo, httpContext)
 		{
 			_postRepository = postRepository;
+            _blogTemplateRepo = blogTemplateRepo;
 			_visitLogger = visitLogger;
             _blogRepo = blogRepo;
 		}
@@ -122,7 +125,18 @@ namespace StaticVoid.Blog.Site.Controllers
 
 		public ActionResult Display(string path)
 		{
-			return View("PostNoJs", PostModel(path));
+            if (CurrentBlog.BlogTemplateId.HasValue) 
+            { 
+                var template = _blogTemplateRepo.GetById(CurrentBlog.BlogTemplateId.Value);
+
+                switch (template.TemplateMode)
+                {
+                    case TemplateMode.NoDomCustomisation:
+                        return View("PostNoDomCustomisation", PostModel(path));
+                }
+            }
+            //default
+            return View("PostNoDomCustomisation", PostModel(path));
 		}
 
 		public ActionResult Preview(int id)

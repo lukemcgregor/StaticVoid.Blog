@@ -23,7 +23,7 @@ namespace StaticVoid.Blog.Data
 		public DbSet<Visit> Visits { get; set; }
         public DbSet<Redirect> Redirects { get; set; }
         public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Style> Styles { get; set; }
+        public DbSet<BlogTemplate> BlogTemplates { get; set; }
         public DbSet<Securable> Securables { get; set; }
         public DbSet<Invitation> Invitations { get; set; }
 
@@ -39,7 +39,7 @@ namespace StaticVoid.Blog.Data
             modelBuilder.Entity<Post>().Property(r => r.Path).IsRequired();
             modelBuilder.Entity<Post>().HasRequired(r => r.Blog).WithMany().HasForeignKey(p => p.BlogId);
 
-            modelBuilder.Entity<Blog>().HasOptional(b => b.Style).WithMany().HasForeignKey(b => b.StyleId);
+            modelBuilder.Entity<Blog>().HasOptional(b => b.BlogTemplate).WithMany().HasForeignKey(b => b.BlogTemplateId);
             modelBuilder.Entity<Blog>().HasRequired(b => b.AuthorSecurable).WithMany().HasForeignKey(b => b.AuthorSecurableId).WillCascadeOnDelete(false);
             modelBuilder.Entity<Blog>().HasRequired(b => b.AdminSecurable).WithMany().HasForeignKey(b => b.AdminSecurableId).WillCascadeOnDelete(false);
             modelBuilder.Entity<Blog>().Property(b => b.AuthoritiveUrl).IsRequired();
@@ -48,7 +48,7 @@ namespace StaticVoid.Blog.Data
 
             modelBuilder.Entity<PostModification>().HasRequired(b => b.Post).WithMany().HasForeignKey(b => b.PostId);
 
-            modelBuilder.Entity<Style>().Property(s => s.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<BlogTemplate>().Property(s => s.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<Invitation>().HasRequired(i => i.Securable).WithMany().HasForeignKey(i => i.SecurableId);
             modelBuilder.Entity<Invitation>().HasOptional(i => i.AssignedTo).WithMany().HasForeignKey(i => i.AssignedToId);

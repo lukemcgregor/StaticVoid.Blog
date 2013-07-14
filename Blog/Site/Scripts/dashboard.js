@@ -20,6 +20,21 @@
 
     self = ko.mapping.fromJS(options.data, mappingOptions);
 
+    self.SelectedPost.friendlyPublishedDate = ko.computed(function () {
+        if (!self.SelectedPost.PublishedDate()) {
+            return '';
+        }
+        return new Date(parseInt(self.SelectedPost.PublishedDate().substr(6))).toDateString();
+    });
+
+    self.SelectedPost.friendlyLastModified = ko.computed(function () {
+        if (!self.SelectedPost.LastModified()) {
+            return '';
+        }
+        return new Date(parseInt(self.SelectedPost.LastModified().substr(6))).toDateString();
+    });
+
+
     self.selectPost = function () {
         $('.post-detail-contents').hide();
         $('.post-detail-loader').show();

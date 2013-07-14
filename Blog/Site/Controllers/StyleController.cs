@@ -12,16 +12,16 @@ namespace StaticVoid.Blog.Site.Controllers
 {
     public class StyleController : Controller
     {
-        private readonly IRepository<Style> _styleRepo;
+        private readonly IRepository<BlogTemplate> _blogTemplateRepo;
 
-        public StyleController(IRepository<Style> styleRepo)
+        public StyleController(IRepository<BlogTemplate> blogTemplateRepo)
         {
-            _styleRepo = styleRepo;
+            _blogTemplateRepo = blogTemplateRepo;
         }
 
         public ActionResult Css(Guid id)
         {
-            var style = _styleRepo.GetBy(s => s.Id == id);
+            var style = _blogTemplateRepo.GetBy(s => s.Id == id);
 
             if (style == null)
             {

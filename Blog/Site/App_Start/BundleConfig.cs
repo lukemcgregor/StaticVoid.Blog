@@ -32,8 +32,11 @@ namespace StaticVoid.Blog.Site
             bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
                         "~/Scripts/dashboard.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/style-editor").Include(
-                        "~/Scripts/style-editor.js"));
+            bundles.Add(new ScriptBundle("~/bundles/template-editor").Include(
+                        "~/Scripts/template-editor.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/manage/recovery").Include(
+                        "~/Scripts/recovery.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css/openid").Include(
 						"~/Content/openid-shadow.css",

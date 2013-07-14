@@ -39,6 +39,11 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             _securityHelper = securityHelper;
         }
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult Recovery()
         {
             return PartialView("Recovery");

@@ -35,7 +35,7 @@ namespace StaticVoid.Blog.Data
 
         public void Create(BlogTemplate entity)
         {
-            _baseRepo.Create(entity);
+           _baseRepo.Create(entity);
             _cache.CachedBlogTemplates.Add(entity);
         }
 

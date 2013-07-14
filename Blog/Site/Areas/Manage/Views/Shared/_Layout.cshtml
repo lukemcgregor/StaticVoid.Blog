@@ -42,8 +42,6 @@
             setupModal('confirm-publish', true);
             setupModal('confirm-unpublish', true);
             setupModal('permissions-editor');
-            setupModal('blog-recovery');
-            //setupModal('blog-recovery-restore');
         }
     </script>
     @RenderSection("AdditionalHead", false)
@@ -100,16 +98,6 @@
 
     <div id='permissions-editor-modal' class='modal hide fade in modal-editor'>
         <div id='permissions-editor-container'>
-        </div>
-    </div>
-
-    <div id='blog-recovery-modal' class='modal hide fade in modal-editor'>
-        <div id='blog-recovery-container'>
-        </div>
-    </div>
-
-    <div id='blog-recovery-restore-modal' class='modal hide fade in modal-editor'>
-        <div id='blog-recovery-restore-container'>
         </div>
     </div>
     @RenderSection("scripts", required: false)

@@ -14,6 +14,12 @@ namespace StaticVoid.Blog.Site.Areas.Manage
 
 		public override void RegisterArea(AreaRegistrationContext context)
 		{
+            context.MapRoute(
+                "Manage_recovery",
+                "Manage/Recovery/{action}/{correlationToken}",
+                new { controller="Recovery", action = "Index" }
+            );
+
 			context.MapRoute(
 				"Manage_default",
 				"Manage/{controller}/{action}/{id}",

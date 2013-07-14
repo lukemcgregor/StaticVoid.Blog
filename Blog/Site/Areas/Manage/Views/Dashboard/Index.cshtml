@@ -8,182 +8,78 @@
     @Styles.Render("~/Content/dashboard")
 }
 
-<ul>
-    <li>@Html.ActionLink("Author Posts", "Index", "PostAuthoring")</li>
-    <li>@Html.ActionLink("Configure Redirects", "Index", "Redirects")</li>
-    <li>@Html.ActionLink("Modify Blog Config", "Edit", "BlogConfiguration", new { }, new { @class = "edit-blog-config" })</li>
-    <li>@Html.ActionLink("Modify Blog Style", "EditBlogStyle", "StyleEditor", new { }, new { @class = "edit-blog-style" })</li>
-    @if(Model.IsAdmin){
-    <li>@Html.ActionLink("Modify Permissions", "EditPermissions", "PermissionsEditor", new { }, new { @class = "permissions-editor" })</li>
-    }
-</ul>
-
-<div class="row">
+@section AdditionalHead {
+    @Scripts.Render("~/bundles/dashboard")
+    <script type="text/javascript">
+        $(function () {
+            ko.applyBindings(new AppViewModel({
+                data: @(Html.Raw(Json.Encode(Model))), 
+                postDetailUrl: '@Url.Action("PostDetail")'
+            }), $('.admin-content-wrapper')[0]);
+        });
+    </script>
+}
+<div class="local-nav">
+    <ul class="nav nav-stacked" data-bind="foreach: Posts">
+        <li>
+            <a href="#" data-bind="id: Item2, click: $parent.selectPost">
+                <span class="menu-title" data-bind="text: Item1">Redirects</span>
+            </a>
+        </li>
+        <li class="divider"></li>
+    </ul>
+</div>
+<div class="admin-content with-local-nav">
     <div class="">
-        <ul class="post-nav nav nav-list span3" data-bind="foreach: Posts">
-            <li data-bind="attr: { class: cssClass }"><a href="#" class="post-list-item" data-bind="text: Item1, id: Item2, click: $parent.selectPost"></a></li>
-        </ul>
-    </div>
-    @if(Model.SelectedPost !=null){
-    <div class="post-detail span8">
-        <div class="post-detail-loader" style="display: none;">loading</div>
-        <div class="post-detail-contents">
-            <div class="post-detail-header">
-                <div class="post-title-link">
-                    <a data-bind="text: SelectedPost.Title, attr: { href: SelectedPost.Url }"></a>
-                </div>
-                <div class="actions span1">
-                    <div class="btn-group">
-                        <a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
-                            <i class="icon-cog"></i>
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a data-bind="attr: { href: '@Url.Action("Edit", new { area = "Manage", controller = "PostAuthoring" })'+ '/' + SelectedPost.Id() }"><i class="icon-edit"></i>Edit</a></li>
-                            <!-- ko if: SelectedPost.HasDraftContent() -->
-                            <li><a data-bind="attr: { href: '@Url.Action("Preview", new { area = "", controller = "Post" })' + '/' + SelectedPost.Id() }"><i class="icon-eye-open"></i>Preview</a></li>
-                            <!-- /ko -->
-                            <li><a data-bind="attr: { href: '@Url.Action("EditPostUrl", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="edit-post-url"><i class="icon-globe"></i>Edit Url</a></li>
-                            <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())' || SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())' -->
-                            <li><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish</a></li>
-                            <!-- /ko -->
-                            <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' && SelectedPost.HasDraftContent() -->
-                            <li><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish Update</a></li>
-                            <!-- /ko -->
-                            <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' -->
-                            <li><a data-bind="attr: { href: '@Url.Action("ConfirmUnPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-unpublish"><i class="icon-thumbs-down"></i>UnPublish</a></li>
-                            <!-- /ko -->
-                        </ul>
-                    </div>
-                </div>
-                <div>
-                    <!-- ko if: SelectedPost.PublishedDate() != null -->
-                    <div class="published-date">
-                        <label>Published: </label>
-                        <span data-bind="text: new Date(parseInt(SelectedPost.PublishedDate().substr(6))).toDateString()"></span>
-                    </div>
-                    <!-- /ko -->
-                    <div class="last-modified">
-                        <label>Last Modified: </label>
-                        <span data-bind="text: new Date(parseInt(SelectedPost.LastModified().substr(6))).toDateString()"></span>
+        @if (Model.SelectedPost != null)
+        {
+            <div class="post-detail">
+                <div class="post-detail-loader" style="display: none;"></div>
+                <div class="post-detail-contents">
+                    <div class="post-detail-header">
+                        <div class="post-title-link">
+                            <a data-bind="text: SelectedPost.Title, attr: { href: SelectedPost.Url }"></a>
+                        </div>
+                        <div class="actions">
+                            <div class="btn-group">
+                                <a class="btn dropdown-toggle btn-small" data-toggle="dropdown" href="#">
+                                    <i class="icon-cog"></i>
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a data-bind="attr: { href: '@Url.Action("Edit", new { area = "Manage", controller = "PostAuthoring" })'+ '/' + SelectedPost.Id() }"><i class="icon-edit"></i>Edit</a></li>
+                                    <li data-bind="visible: SelectedPost.HasDraftContent()"><a data-bind="attr: { href: '@Url.Action("Preview", new { area = "", controller = "Post" })' + '/' + SelectedPost.Id() }"><i class="icon-eye-open"></i>Preview</a></li>
+                                    <li><a data-bind="attr: { href: '@Url.Action("EditPostUrl", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="edit-post-url"><i class="icon-globe"></i>Edit Url</a></li>
+                                    <li data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())' || SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())'"><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish</a></li>
+                                    <li data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' && SelectedPost.HasDraftContent()"><a data-bind="attr: { href: '@Url.Action("ConfirmPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-publish"><i class="icon-thumbs-up"></i>Publish Update</a></li>
+                                    <li data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())'"><a data-bind="attr: { href: '@Url.Action("ConfirmUnPublish", new { area = "Manage", controller = "PostAuthoring" })' + '/' + SelectedPost.Id() }" class="confirm-unpublish"><i class="icon-thumbs-down"></i>UnPublish</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="post-badges">
+                            <span class="label label-info" data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())'">Draft</span>
+                            <span class="label label-success" data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())'">Published</span>
+                            <span class="label label-important" data-bind="visible: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())'">Unpublished</span>
+                            <span class="label label-warning" data-bind="visible: SelectedPost.HasDraftContent() && SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())'">Drafts Pending</span>
+                        </div>
+                        <div style="clear: both;"></div>
+                        <div>
+                            <div class="published-date" data-bind="visible: SelectedPost.PublishedDate() != null">
+                                <label>Published: </label>
+                                <span data-bind="text: SelectedPost.friendlyPublishedDate()"></span>
+                            </div>
+                            <div class="last-modified">
+                                <label>Last Modified: </label>
+                                <span data-bind="text: SelectedPost.friendlyLastModified()"></span>
+                            </div>
+                        </div>
                     </div>
                     <div style="clear: both;"></div>
                     <div class="">
-                        <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Draft.ToString())' -->
-                        <span class="label label-info">Draft</span>
-                        <!-- /ko -->
-                        <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' -->
-                        <span class="label label-success">Published</span>
-                        <!-- /ko -->
-                        <!-- ko if: SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Unpublished.ToString())' -->
-                        <span class="label label-important">Unpublished</span>
-                        <!-- /ko -->
-                        <!-- ko if: SelectedPost.HasDraftContent() && SelectedPost.Status() == '@(StaticVoid.Blog.Data.PostStatus.Published.ToString())' -->
-                        <span class="label label-warning">Drafts Pending</span>
-                        <!-- /ko -->
+                        <p class="description" data-bind="text: SelectedPost.Description"></p>
                     </div>
                 </div>
             </div>
-            <div style="clear: both;"></div>
-            <div class="">
-                <p class="description" data-bind="text: SelectedPost.Description"></p>
-            </div>
-        </div>
-    </div>
-    }
-</div>
-
-<div id='edit-post-url-modal' class='modal hide fade in modal-editor'>
-    <div id='edit-post-url-container'>
+        }
     </div>
 </div>
-
-<div id='edit-blog-config-modal' class='modal hide fade in modal-editor'>
-    <div id='edit-blog-config-container'>
-    </div>
-</div>
-
-<div id='edit-blog-style-modal' class='modal hide fade in modal-editor'>
-    <div id='edit-blog-style-container'>
-    </div>
-</div>
-
-<div id='confirm-publish-modal' class='modal hide fade in modal-editor'>
-    <div id='confirm-publish-container'>
-    </div>
-</div>
-
-<div id='confirm-unpublish-modal' class='modal hide fade in modal-editor'>
-    <div id='confirm-unpublish-container'>
-    </div>
-</div>
-
-<div id='permissions-editor-modal' class='modal hide fade in modal-editor'>
-    <div id='permissions-editor-container'>
-    </div>
-</div>
-
-
-<script type="text/javascript">
-    function AppViewModel() {
-        var self;
-
-        var mappingOptions = {
-            'Posts': {
-                create: function (options) {
-                    return (new (function () {
-                        this.cssClass = ko.computed(function () {
-                            if (this.Item2() == self.SelectedPost.Id()) {
-                                return 'active';
-                            }
-                            return '';
-                        }, this);
-
-                        ko.mapping.fromJS(options.data, {}, this);
-                    })());
-                }
-            }
-        };
-
-        self = ko.mapping.fromJS( @(Html.Raw(Json.Encode(Model))), mappingOptions);
-
-        self.selectPost = function () {
-            $('.post-detail-contents').hide();
-            $('.post-detail-loader').show();
-
-            $.getJSON('@Url.Action("PostDetail")' + '/' + this.Item2(), function (data) {
-                //TODO: Must be a better way of remapping new data
-                //Have tried ko.mapping.fromJS(data, self.SelectedPost);
-                self.SelectedPost.Id(data.Id);
-                self.SelectedPost.Title(data.Title);
-                self.SelectedPost.Url(data.Url);
-                self.SelectedPost.Description(data.Description);
-                self.SelectedPost.HasDraftContent(data.HasDraftContent);
-                self.SelectedPost.Status(data.Status);
-                self.SelectedPost.PublishedDate(data.PublishedDate);
-                self.SelectedPost.LastModified(data.LastModified);
-
-                BindClicks();
-                $('.post-detail-loader').hide();
-                $('.post-detail-contents').show();
-            });
-        };
-        return self;
-    }
-
-    $(function () {
-        ko.applyBindings(new AppViewModel());
-
-        BindClicks();
-    });
-
-    function BindClicks()
-    {
-        setupModal('edit-post-url');
-        setupModal('edit-blog-config');
-        setupModal('edit-blog-style', true);
-        setupModal('confirm-publish', true);
-        setupModal('confirm-unpublish', true);
-        setupModal('permissions-editor');
-    }
-</script>

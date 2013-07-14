@@ -9,6 +9,8 @@ using StaticVoid.Repository;
 using StaticVoid.Blog.Site.Gravitar;
 using System.Net;
 using StaticVoid.Blog.Site.Services;
+using System.Reflection;
+using System.IO;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
@@ -17,15 +19,18 @@ namespace StaticVoid.Blog.Site.Controllers
 		private readonly IRepository<Post> _postRepository;
 		private readonly IVisitLoggerService _visitLogger;
         private readonly IRepository<Data.Blog> _blogRepo;
+        private readonly IRepository<BlogTemplate> _blogTemplateRepo;
 
         public PostController(
             IRepository<Post> postRepository, 
             IVisitLoggerService visitLogger, 
             IRepository<Data.Blog> blogRepo,
+            IRepository<BlogTemplate> blogTemplateRepo,
             IHttpContextService httpContext)
             : base(blogRepo, httpContext)
 		{
 			_postRepository = postRepository;
+            _blogTemplateRepo = blogTemplateRepo;
 			_visitLogger = visitLogger;
             _blogRepo = blogRepo;
 		}
@@ -40,9 +45,15 @@ namespace StaticVoid.Blog.Site.Controllers
 			return Redirect("/" + post.Path);
 		}
 
-		public ActionResult Display(string path)
-		{
-            var currentBlog = CurrentBlog;
+        //public ActionResult Script(string path)
+        //{
+        //    Response.ContentType = "text/javascript";
+        //    return View(PostModel(path.Substring(0,path.Length -3)));
+        //}
+
+        private PostModel PostModel(string path)
+        {
+             var currentBlog = CurrentBlog;
             _visitLogger.LogCurrentRequest();
 
             var post = _postRepository.GetPostAtUrl(currentBlog.Id, path, p => p.Author);
@@ -52,8 +63,16 @@ namespace StaticVoid.Blog.Site.Controllers
 
 			var md = new MarkdownDeep.Markdown();
 
+            var defaultTemplate ="";
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("StaticVoid.Blog.Site.Defaults.DefaultTemplate.html"))
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                defaultTemplate = reader.ReadToEnd();
+            }
+
             var model = new PostModel
             {
+                Template = defaultTemplate,
                 Body = md.Transform(post.Body),
                 Description = post.Description,
                 Title = post.Title,
@@ -100,8 +119,24 @@ namespace StaticVoid.Blog.Site.Controllers
                     Title = nextPost.Title
                 };
 			}
+            return model;
+        }
 
-			return View("Post", model);
+
+		public ActionResult Display(string path)
+		{
+            if (CurrentBlog.BlogTemplateId.HasValue) 
+            { 
+                var template = _blogTemplateRepo.GetById(CurrentBlog.BlogTemplateId.Value);
+
+                switch (template.TemplateMode)
+                {
+                    case TemplateMode.NoDomCustomisation:
+                        return View("PostNoDomCustomisation", PostModel(path));
+                }
+            }
+            //default
+            return View("PostNoDomCustomisation", PostModel(path));
 		}
 
 		public ActionResult Preview(int id)

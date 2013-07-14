@@ -72,8 +72,6 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                     });
                 }
 
-                
-
                 var admins = _securableRepo.GetBy(s => s.Id == blog.AdminSecurableId, s => s.Members).Members.Select(m => new PermissionMemberModel
                 {
                     CanChange = m.Id != currentUser.Id,

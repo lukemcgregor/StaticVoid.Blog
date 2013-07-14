@@ -1,0 +1,41 @@
+﻿@model StaticVoid.Blog.Site.Models.PostModel
+@{
+    Layout = null;
+    
+}
+function PostViewModel() {
+    var self = ko.mapping.fromJS(@(Html.Raw(Json.Encode(Model))));
+    self.allPostsUrl = '@(Url.Action("Posts", "Index"))';
+    self.NextPost.go = function () {
+        window.location = '/' + self.NextPost.Link();
+    };
+    if(self.NextPost.Date){
+        self.NextPost.Date= new DateModel(self.NextPost.Date());
+    }
+
+    self.PreviousPost.go = function () {
+        window.location = '/' + self.PreviousPost.Link();
+    };
+
+    if(self.PreviousPost.Date){
+        self.PreviousPost.Date= new DateModel(self.PreviousPost.Date());
+    }
+    self.disqus = '@ViewBag.Disqus';
+    self.hasDisqus = @((ViewBag.Disqus != null).ToString().ToLower());
+    self.Posted = new DateModel(self.Posted());
+
+    return self;
+}
+
+function DateModel(d){
+    var date = Date.parse(new Date(parseInt(d.substr(6))).toDateString());
+    self = {};
+    self.date = date;
+    self.isThisYear = parseInt(date.toString('yyyy')) === (new Date()).getFullYear();
+
+    return self;
+}
+$(function () {
+    ko.applyBindings(new PostViewModel());
+    ko.applyBindings(new PostViewModel(), $('html')[0]);
+});

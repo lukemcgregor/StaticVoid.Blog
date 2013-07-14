@@ -14,11 +14,16 @@ namespace StaticVoid.Blog.Site.Routing
     {
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
+            return Match(httpContext.Request.Url.LocalPath.TrimStart('/'));
+        }
+
+        internal bool Match(string path)
+        {
             var postRepo = DependencyResolver.Current.GetService<IRepository<Post>>();
             var blogRepo = DependencyResolver.Current.GetService<IRepository<Data.Blog>>();
             var httpContextService = DependencyResolver.Current.GetService<IHttpContextService>();
 
-            return postRepo.IsUrlAPost(blogRepo.GetCurrentBlog(httpContextService).Id, httpContext.Request.Url.LocalPath.TrimStart('/'));
+            return postRepo.IsUrlAPost(blogRepo.GetCurrentBlog(httpContextService).Id, path);
         }
     }
 }

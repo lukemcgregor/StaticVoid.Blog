@@ -34,7 +34,7 @@ namespace StaticVoid.Blog.Site.Controllers
             ViewBag.Analytics = blog.AnalyticsKey;
             ViewBag.Twitter = blog.Twitter;
             ViewBag.Disqus = blog.DisqusShortname;
-            ViewBag.BlogStyleId = blog.StyleId;
+            ViewBag.BlogTemplateId = blog.BlogTemplateId;
         }
     }
 }

@@ -26,8 +26,8 @@ namespace StaticVoid.Blog.Data.Migrations
             var admin = new User
             {
                 Id = 1,
-                ClaimedIdentifier = "https://www.google.com/accounts/o8/id?id=AItOawkczLfuxJhI-txNzlg53wsgWu2gdSALgVU",
-                Email = "luke.mcgregor@gmail.com",
+                ClaimedIdentifier = "",
+                Email = "test@gmail.com",
                 FirstName = "Luke",
                 LastName = "McGregor",
                 IsAuthor = true

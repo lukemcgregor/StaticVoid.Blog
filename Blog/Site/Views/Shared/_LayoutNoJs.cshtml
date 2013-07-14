@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    @{
+        Layout = null;
+    }
+    <meta charset="utf-8" />
+    <title>@(ViewBag.Title + (ViewBag.BlogName != null ? " - " + ViewBag.BlogName : ""))</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @RenderSection("Head", required: false)
+    
+    <link href="//cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+
+    @Styles.Render("~/Content/post_less")
+    @RenderSection("Styles", required: false)
+    @if (ViewBag.BlogStyleId != null)
+    {
+        <link href="/Style/Css/@ViewBag.BlogStyleId" rel="stylesheet">
+    }
+
+    @*<meta name="viewport" content="width=device-width" />*@
+</head>
+<body>
+    <div class="blog-header">
+        <div class="titlebar navbar-fixed-top">
+            <div class="container">
+                <div class="button-bar pull-right">
+                    <div class="button atom-button" title="Atom Feed">
+                        <a href="/feed.atom">
+                            <div class="button-filler"></div>
+                        </a>
+                    </div>
+                    @if (ViewBag.Twitter != null)
+                    {
+                    <div class="button twitter-button" title="Twitter">
+                        <a href="https://twitter.com/intent/user?screen_name=@ViewBag.Twitter">
+                            <div class="button-filler"></div>
+                        </a>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert">
+        <strong>Warning!</strong> It looks like you dont have JavaScript enabled. This site is best viewed in HTML 5 compliant browsers with JavaScript enabled.
+    </div>
+    <div class="body-content">
+        <div class="container">
+            @RenderBody()
+        </div>
+    </div>
+
+</body>
+</html>@RenderSection("AfterBody", required: false)

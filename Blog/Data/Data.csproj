@@ -39,10 +39,6 @@
     <Reference Include="Ninject">
       <HintPath>..\packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Core.Repository, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\StaticVoid.Core.Repository.2.0.0-beta1\lib\net45\StaticVoid.Core.Repository.dll</HintPath>
-    </Reference>
     <Reference Include="StaticVoid.Repository, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\StaticVoid.Repository.2.2.0\lib\net45\StaticVoid.Repository.dll</HintPath>
@@ -80,8 +76,9 @@
     <Compile Include="Entities\Redirect\Redirect.cs" />
     <Compile Include="Entities\Securable\Securable.cs" />
     <Compile Include="Entities\Securable\SecurableRepositoryExtensions.cs" />
-    <Compile Include="Entities\Style\CachedStyleRepository.cs" />
-    <Compile Include="Entities\Style\Style.cs" />
+    <Compile Include="Entities\BlogTemplate\CachedBlogTemplateRepository.cs" />
+    <Compile Include="Entities\BlogTemplate\BlogTemplateRepositoryExtensions.cs" />
+    <Compile Include="Entities\BlogTemplate\BlogTemplate.cs" />
     <Compile Include="Entities\User\CachedUserRepository.cs" />
     <Compile Include="Entities\User\User.cs" />
     <Compile Include="Entities\Visit\Visit.cs" />
@@ -100,6 +97,10 @@
     <Compile Include="Migrations\201306020702503_RedirectsToBlogs.cs" />
     <Compile Include="Migrations\201306020702503_RedirectsToBlogs.Designer.cs">
       <DependentUpon>201306020702503_RedirectsToBlogs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307130858177_BlogTemplate.cs" />
+    <Compile Include="Migrations\201307130858177_BlogTemplate.Designer.cs">
+      <DependentUpon>201307130858177_BlogTemplate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PersistanceModule.cs" />
@@ -122,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306020702503_RedirectsToBlogs.resx">
       <DependentUpon>201306020702503_RedirectsToBlogs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307130858177_BlogTemplate.resx">
+      <DependentUpon>201307130858177_BlogTemplate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

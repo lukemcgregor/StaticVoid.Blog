@@ -64,6 +64,14 @@ namespace StaticVoid.Blog.Site
                 constraints: new { redirectConstraint }
             );
 
+            //var postJsConstraint = new PostJsRouteConstraint();
+            //routes.MapRoute(
+            //    name: "PostJs",
+            //    url: "{*Path}",
+            //    defaults: new { controller = "Post", action = "Script" },
+            //    constraints: new { postJsConstraint }
+            //);
+
             var postConstraint = new PostRouteConstraint();
             routes.MapRoute(
                 name: "Post",

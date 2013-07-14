@@ -7,6 +7,7 @@ namespace StaticVoid.Blog.Site.Models
 {
 	public class PostModel
 	{
+        public string Template { get; set; }
         public String Title { get; set; }
         public String Description { get; set; }
         public String Body { get; set; }

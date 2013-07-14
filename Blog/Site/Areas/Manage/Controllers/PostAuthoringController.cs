@@ -60,7 +60,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 		public ActionResult Create()
 		{
 			ViewBag.Title = "Create";
-            return View("Edit", new PostEditModel { BlogStyleId = CurrentBlog.StyleId });
+            return View("Edit", new PostEditModel { BlogStyleId = CurrentBlog.BlogTemplateId });
 		}
 
 		[HttpPost,ValidateInput(false)]
@@ -105,7 +105,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 Description = post.GetDraftDescription(),
 				CanonicalUrl = post.Canonical,
 				Reposted = !String.IsNullOrWhiteSpace(post.Canonical) && post.Canonical != "/"+post.Path,
-                BlogStyleId = currentBlog.StyleId
+                BlogStyleId = currentBlog.BlogTemplateId
 			});
 		}
 

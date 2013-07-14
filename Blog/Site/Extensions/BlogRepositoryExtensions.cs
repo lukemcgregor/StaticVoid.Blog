@@ -14,7 +14,6 @@ namespace StaticVoid.Blog.Data
         {
             var host = httpContext.RequestUrl.Host;
 
-            //TODO use current url
             return repo.GetAll().ToArray().Where(b=> new Uri(b.AuthoritiveUrl).Host == host).FirstOrDefault();
         }
     }

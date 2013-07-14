@@ -13,54 +13,109 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
     public class StyleEditorController : BlogBaseController
     {
-        private readonly IRepository<Style> _styleRepo;
+        private readonly IRepository<BlogTemplate> _styleRepo;
         private readonly IRepository<Data.Blog> _blogRepo;
+        private readonly IHttpContextService _httpContext;
 
         public StyleEditorController(
-            IRepository<Style> styleRepo, 
+            IRepository<BlogTemplate> styleRepo, 
             IRepository<Data.Blog> blogRepo,
             IHttpContextService httpContext) : base(blogRepo, httpContext)
         {
             _styleRepo = styleRepo;
             _blogRepo = blogRepo;
+            _httpContext = httpContext;
         }
 
-        public ActionResult Edit(Guid id)
+        public ActionResult Edit(Guid? id)
         {
+            if (!id.HasValue)
+            {
+                var latestTemplate = _styleRepo.GetLatestEditForBlog(CurrentBlog.Id);
+
+                if (latestTemplate != null)
+                {
+                    return RedirectToAction("Edit", new { id = latestTemplate.Id });
+                }
+
+                var defaultTemplate =new BlogTemplate
+                {
+                    //todo
+                    BlogId = CurrentBlog.Id,
+                    TemplateMode = Data.TemplateMode.NoDomCustomisation,
+                    LastModified = DateTime.Now
+                };
+
+                _styleRepo.Create(defaultTemplate);
+
+                return RedirectToAction("Edit", new { id = defaultTemplate.Id });
+            }
             var style = _styleRepo.GetBy(s => s.Id == id);
 
-            return PartialView("EditStyleModal", new StyleModel { Css = style.Css });
+            return View(new StyleModel { Css = style.Css });
         }
 
         [HttpPost]
-        public ActionResult Edit(Guid id, StyleModel model)
+        [ActionName("save-blog-template")]
+        public ActionResult SaveBlogTemplate(StyleModel model)
         {
             if (ModelState.IsValid)
             {
-                var style = _styleRepo.GetBy(s => s.Id == id);
+                var blogTemplate = _styleRepo.GetLatestEditForBlog(CurrentBlog.Id);
+                if(CurrentBlog.BlogTemplateId == blogTemplate.Id)
+                {
+                    if( blogTemplate.Css== model.Css &&
+                        blogTemplate.HtmlTemplate == model.HtmlTemplate &&
+                        blogTemplate.TemplateMode == model.TemplateMode)
+                    {
+                        return Json(new { success = true }); //no modifications so no need to save
+                    }
 
-                style.Css = model.Css;
-                _styleRepo.Update(style);
+                    //create a new version
+                    throw new NotImplementedException();
+                }
+
+                blogTemplate.Css = model.Css;
+                blogTemplate.HtmlTemplate = model.HtmlTemplate;
+                blogTemplate.TemplateMode = model.TemplateMode;
+                blogTemplate.LastModified = DateTime.Now;
+                _styleRepo.Update(blogTemplate);
 
                 return Json(new { success = true });
             }
 
-            return PartialView("EditStyleModal", model);
+            return Json(new { success = false });
         }
 
-        public ActionResult EditBlogStyle()
+        
+        [HttpPost]
+        [ActionName("apply-blog-template")]
+        public ActionResult ApplyBlogTemplate(StyleModel model)
         {
-            var currentBlog = CurrentBlog;
-            if (!currentBlog.StyleId.HasValue)
+            var currentBlog = _blogRepo.GetCurrentBlog(_httpContext);
+
+            if (ModelState.IsValid)
             {
-                var blogStyle = new Style();
+                var blogTemplate = _styleRepo.GetLatestEditForBlog(currentBlog.Id);
+                if (currentBlog.BlogTemplateId == blogTemplate.Id)
+                {
+                    //no need to apply we already are
+                    return Json(new { success = true });
+                }
 
-                _styleRepo.Create(blogStyle);
+                blogTemplate.Css = model.Css;
+                blogTemplate.HtmlTemplate = model.HtmlTemplate;
+                blogTemplate.TemplateMode = model.TemplateMode;
+                blogTemplate.LastModified = DateTime.Now;
+                _styleRepo.Update(blogTemplate);
 
-                currentBlog.StyleId = blogStyle.Id;
+                currentBlog.BlogTemplateId = blogTemplate.Id;
                 _blogRepo.Update(currentBlog);
+
+                return Json(new { success = true });
             }
-            return RedirectToAction("Edit", new { id = currentBlog.StyleId });
+
+            return Json(new { success = false });
         }
     }
 }

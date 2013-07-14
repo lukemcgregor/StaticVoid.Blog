@@ -57,7 +57,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                     DisqusShortname = blog.DisqusShortname,
                     Name = blog.Name,
                     Twitter = blog.Twitter,
-                    BlogStyleId = blog.StyleId
+                    BlogStyleId = blog.BlogTemplateId
                 });
         }
 

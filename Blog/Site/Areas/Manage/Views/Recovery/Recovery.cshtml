@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Blog Recovery";
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#my-awesome-dropzone").dropzone({ /* options */ });
+    });
+</script>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Blog Recovery</h3>
+</div>
+
+<div class="modal-body blog-recovery-modal">
+    @Html.ActionLink("Download Backup", "Backup")
+</div>

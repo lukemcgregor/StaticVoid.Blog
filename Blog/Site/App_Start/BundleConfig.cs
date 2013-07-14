@@ -9,51 +9,40 @@ namespace StaticVoid.Blog.Site
 	{
 		public static void RegisterBundles(BundleCollection bundles)
 		{
-			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-						"~/Scripts/jquery-1.9.1.js"));
-
 			bundles.Add(new ScriptBundle("~/bundles/openid").Include(
 						"~/Scripts/openid-jquery.js",
 						"~/Scripts/openid-en.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/blog-admin").Include(
-                        "~/Scripts/jquery-1.9.1.js",
-                        "~/Scripts/modernizr-*",
-                        "~/Scripts/Prettify/prettify.js",
-                        "~/Scripts/Pure/pure.js",
-                        "~/Scripts/bootstrap.js",
                         "~/Scripts/modals.js",
-                        "~/Scripts/knockout-2.2.1.js",
-                        "~/Scripts/knockout.validation.js",
                         "~/Scripts/validation-rules.js",
-                        "~/Scripts/knockout.mapping-latest.js"));
+                        "~/Scripts/guid.js",
+                        "~/Scripts/jquery.fileupload.js",
+                        "~/Scripts/admin-layout.js"));
 
 			bundles.Add(new ScriptBundle("~/bundles/editor").Include(
 						"~/Scripts/MarkdownDeep.js",
 						"~/Scripts/MarkdownDeepEditor.js",
 						"~/Scripts/MarkdownDeepEditorUI.js",
-						"~/Scripts/jquery.ba-resize.js",
-                        "~/Scripts/editor.js", 
-                        "~/Scripts/jquery.unobtrusive-ajax.js",
-                        "~/Scripts/jquery.validate.js",
-                        "~/Scripts/jquery.validate.unobtrusive.js"));
+                        "~/Scripts/editor.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/blog").Include(
-                        "~/Scripts/jquery-1.9.1.js",
-                        "~/Scripts/modernizr-*",
-                        "~/Scripts/bootstrap.js",
-                        "~/Scripts/modals.js",
-                        "~/Scripts/Prettify/prettify.js",
-                        "~/Scripts/jquery.scrollTo.js"));
+                        "~/Scripts/modals.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
+                        "~/Scripts/dashboard.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/style-editor").Include(
+                        "~/Scripts/style-editor.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css/openid").Include(
 						"~/Content/openid-shadow.css",
 						"~/Content/openid.css"));
 
 			var post = new StyleBundle("~/Content/post_less").Include(
+						"~/Content/blog.css",
 						"~/Content/post.less",
-						"~/Content/trendy-date.less",
-						"~/Content/Prettify/prettify.css");
+						"~/Content/trendy-date.less");
 			post.Transforms.Clear();
 			post.Transforms.Add(new LessTransform());
 			post.Transforms.Add(new CssMinify());
@@ -73,18 +62,15 @@ namespace StaticVoid.Blog.Site
             dashboard.Transforms.Add(new CssMinify());
             bundles.Add(dashboard);
 
-			bundles.Add(new StyleBundle("~/Content/post").Include(
-						"~/Content/bootstrap.css",
-						"~/Content/bootstrap-responsive.css",
-						"~/Content/Prettify/prettify.css",
-						"~/Content/blog.css"));
-
-            bundles.Add(new StyleBundle("~/Content/blog-admin").Include(
-                        "~/Content/bootstrap.css",
-                        "~/Content/bootstrap-responsive.css",
+            var admin = new StyleBundle("~/Content/blog-admin").Include(
                         "~/Content/mdd_styles.css",
                         "~/Content/blog.css",
-                        "~/Content/blog-admin.css"));
+                        "~/Content/blog-admin.less");
+
+            admin.Transforms.Clear();
+            admin.Transforms.Add(new LessTransform());
+            admin.Transforms.Add(new CssMinify());
+            bundles.Add(admin);
 		}
 	}
 }

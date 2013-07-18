@@ -293,6 +293,7 @@
     <Content Include="Images\feed-icon-28x28.png" />
     <Content Include="Images\glyphicons-halflings-white.png" />
     <Content Include="Images\glyphicons-halflings.png" />
+    <Content Include="Images\gr_custom-inputs.png" />
     <Content Include="Images\icons\dashboard.png" />
     <Content Include="Images\icons\drive-upload.png" />
     <Content Include="Images\icons\format-quote.png" />

@@ -14,7 +14,7 @@
 
     self.menuItems = ko.observableArray([
         new MenuItemViewModel({ data: { title: "Dashboard",     url: "/manage",                                     icon: "dashboard"       , cssClass: '' } }),
-        new MenuItemViewModel({ data: { title: "Author",        url: "/manage/postauthoring",                       icon: "format-quote"    , cssClass: '' } }),
+        new MenuItemViewModel({ data: { title: "Author",        url: "/manage/postauthoring/create",                icon: "format-quote"    , cssClass: '' } }),
         new MenuItemViewModel({ data: { title: "Redirects",     url: "/manage/redirects",                           icon: "shuffle"         , cssClass: '' } }),
         new MenuItemViewModel({ data: { title: "Style",         url: "/manage/templateeditor",                      icon: "quill"           , cssClass: '' } }),
         new MenuItemViewModel({ data: { title: "Permissions",   url: "/manage/permissionseditor/editpermissions",   icon: "key"             , cssClass: 'permissions-editor' } }),

@@ -293,7 +293,6 @@
     <Content Include="Images\feed-icon-28x28.png" />
     <Content Include="Images\glyphicons-halflings-white.png" />
     <Content Include="Images\glyphicons-halflings.png" />
-    <Content Include="Images\gr_custom-inputs.png" />
     <Content Include="Images\icons\dashboard.png" />
     <Content Include="Images\icons\drive-upload.png" />
     <Content Include="Images\icons\format-quote.png" />
@@ -331,7 +330,6 @@
     <Content Include="Areas\Manage\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Manage\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Manage\Views\PostAuthoring\Edit.cshtml" />
-    <Content Include="Areas\Manage\Views\PostAuthoring\Index.cshtml" />
     <Content Include="Areas\Manage\Views\BlogConfiguration\EditModal.cshtml" />
     <Content Include="Areas\Manage\Views\Redirects\Index.cshtml" />
     <Content Include="Areas\Manage\Views\Redirects\DeleteModal.cshtml" />

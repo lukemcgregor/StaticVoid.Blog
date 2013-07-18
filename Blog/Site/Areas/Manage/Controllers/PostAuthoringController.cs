@@ -44,19 +44,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             _securityHelper = securityHelper;
             _dateTime = dateTime;
 		}
-
-		public ActionResult Index()
-		{
-            return View(_postRepository.PostsForBlog(CurrentBlog.Id).OrderByDescending(p => p.Posted).AsEnumerable().Select(p => new PostModel
-					{
-						Id = p.Id,
-						Title = p.GetDraftTitle(),
-						Status = p.Status,
-                        Posted = p.Posted,
-						HasDraftContent= p.HasDraftContent()
-					}));
-		}
-
+        
 		public ActionResult Create()
 		{
 			ViewBag.Title = "Create";

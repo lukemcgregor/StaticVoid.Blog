@@ -13,7 +13,7 @@ using System.Web.Mvc;
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
     [CurrentBlogAdminAuthorize]
-    public class PermissionsEditorController : Controller
+    public class PermissionsEditorController : ManageBaseController
     {
         private readonly IRepository<User> _userRepo;
         private readonly IRepository<Data.Blog> _blogRepo;
@@ -32,7 +32,9 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             ISecurityHelper securityHelper,
             IInvitationService invitationService,
             IAttacher<Securable> securableAttacher,
-            IAttacher<Data.Blog> blogAttacher)
+            IAttacher<Data.Blog> blogAttacher,
+            IHttpContextService httpContext)
+            : base(blogRepo, httpContext, securityHelper, userRepo, securableRepo)
         {
             _userRepo = userRepo;
             _blogRepo = blogRepo;

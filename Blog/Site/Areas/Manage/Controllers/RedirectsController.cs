@@ -14,11 +14,17 @@ using System.Web.Mvc;
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
     [CurrentBlogAuthorAuthorize]
-    public class RedirectsController : BlogBaseController
+    public class RedirectsController : ManageBaseController
     {
         private readonly IRepository<Redirect> _redirectRepository;
-        public RedirectsController(IRepository<Redirect> redirectRepository, IRepository<Data.Blog> blogRepo, IHttpContextService httpContext)
-            : base(blogRepo, httpContext) 
+        public RedirectsController(
+            IRepository<Redirect> redirectRepository, 
+            IRepository<Data.Blog> blogRepo, 
+            IHttpContextService httpContext,
+            IRepository<User> userRepository,
+            IRepository<Securable> securableRepository,
+            ISecurityHelper securityHelper)
+            : base(blogRepo, httpContext, securityHelper, userRepository, securableRepository)
         {
             _redirectRepository = redirectRepository;
         }

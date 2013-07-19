@@ -15,7 +15,7 @@ using System.Runtime.Serialization;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-    public class RecoveryController : BlogBaseController
+    public class RecoveryController : ManageBaseController
     {
         private readonly IRepository<Post> _postRepository;
         private readonly IRepository<Redirect> _redirectRepository;
@@ -27,10 +27,12 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             IRepository<Post> postRepository,
             IRepository<Redirect> redirectRepository,
             IRepository<BlogTemplate> styleRepository,
+            IRepository<User> userRepository,
+            IRepository<Securable> securableRepository,
             IRepository<Data.Blog> blogRepository,
             ISecurityHelper securityHelper,
             IHttpContextService httpContext)
-            : base(blogRepository, httpContext)
+            : base(blogRepository, httpContext, securityHelper, userRepository, securableRepository)
         {
             _postRepository = postRepository;
             _redirectRepository = redirectRepository;

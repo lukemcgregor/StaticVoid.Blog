@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
-    public class TemplateEditorController : BlogBaseController
+    public class TemplateEditorController : ManageBaseController
     {
         private readonly IRepository<BlogTemplate> _styleRepo;
         private readonly IRepository<Data.Blog> _blogRepo;
@@ -20,7 +20,11 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         public TemplateEditorController(
             IRepository<BlogTemplate> styleRepo, 
             IRepository<Data.Blog> blogRepo,
-            IHttpContextService httpContext) : base(blogRepo, httpContext)
+            IHttpContextService httpContext,
+            IRepository<User> userRepository,
+            IRepository<Securable> securableRepository,
+            ISecurityHelper securityHelper)
+            : base(blogRepo, httpContext, securityHelper, userRepository, securableRepository)
         {
             _styleRepo = styleRepo;
             _blogRepo = blogRepo;

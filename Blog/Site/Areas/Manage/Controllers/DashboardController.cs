@@ -13,7 +13,7 @@ using StaticVoid.Blog.Site.Services;
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
 	[CurrentBlogAuthorAuthorize]
-    public class DashboardController : BlogBaseController
+    public class DashboardController : ManageBaseController
 	{
         private readonly IRepository<Post> _postRepo;
         private readonly IRepository<PostModification> _postModRepo;
@@ -29,7 +29,8 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             IRepository<Securable> securableRepo,
             IRepository<Data.Blog> blogRepo,
             ISecurityHelper securityHelper,
-            IHttpContextService httpContext) : base(blogRepo, httpContext)
+            IHttpContextService httpContext)
+            : base(blogRepo, httpContext, securityHelper, userRepo, securableRepo)
         {
             _postRepo = postRepo;
             _postModRepo = postModRepo;

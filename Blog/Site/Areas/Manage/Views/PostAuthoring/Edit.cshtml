@@ -4,42 +4,44 @@
     ViewBag.Fluid = true;
 }
 
-@using (Html.BeginForm())
-{
-    @Html.ValidationSummary(true)
-    <div class="row-fluid">
-        <div class="span12 vertical-fill">
-            <table>
-                <tr>
-                    <td>@Html.TextBoxFor(model => model.Title, new { placeholder = "Title", @class = "input-xxlarge" })</td>
-                    <td>@Html.LabelFor(model => model.Reposted)</td>
-                    <td>@Html.CheckBoxFor(model => model.Reposted, new { @class = "input-xxlarge" })</td>
-                    <td>@Html.TextBoxFor(model => model.CanonicalUrl, new { placeholder = "Reposted From Url", @class = "input-xxlarge", style=(Model!=null && Model.Reposted ?"":"display:none;") })</td>
-                </tr>
-                <tr>
-                   <td colspan="4">@Html.LabelFor(model => model.Description)</td> 
-                </tr>
-                <tr>
-                   <td colspan="4">@Html.TextAreaFor(model => model.Description, new { placeholder = "Description", @class = "input-xxlarge" })</td> 
-                </tr>
-            </table>
+<div class="admin-content">
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true)
+        <div class="row-fluid">
+            <div class="span12 vertical-fill">
+                <table>
+                    <tr>
+                        <td>@Html.TextBoxFor(model => model.Title, new { placeholder = "Title", @class = "input-xxlarge" })</td>
+                        <td>@Html.LabelFor(model => model.Reposted)</td>
+                        <td>@Html.CheckBoxFor(model => model.Reposted, new { @class = "input-xxlarge" })</td>
+                        <td>@Html.TextBoxFor(model => model.CanonicalUrl, new { placeholder = "Reposted From Url", @class = "input-xxlarge", style = (Model != null && Model.Reposted ? "" : "display:none;") })</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">@Html.LabelFor(model => model.Description)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">@Html.TextAreaFor(model => model.Description, new { placeholder = "Description", @class = "input-xxlarge" })</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-    </div>
-    <div id="editor-row" class="row-fluid">
-        <div class="span6 vertical-fill">
-            <div class="mdd_toolbar"></div>
-            @Html.TextAreaFor(m => m.Body, new { id = "body-edit", @class = "horizontal-fill vertical-fill mdd_editor" })
+        <div id="editor-row" class="row-fluid">
+            <div class="span6 vertical-fill">
+                <div class="mdd_toolbar"></div>
+                @Html.TextAreaFor(m => m.Body, new { id = "body-edit", @class = "horizontal-fill vertical-fill mdd_editor" })
+            </div>
+            <div id="editor-preview" class="span6 mdd_preview article"></div>
         </div>
-        <div id="editor-preview" class="span6 mdd_preview article"></div>
-    </div>
-    <div class="spacer"></div>
-    <p>
-        <input class="btn btn-success" type="submit" value="Save" />
-    </p>
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-}
+        <div class="spacer"></div>
+        <p>
+            <input class="btn btn-success" type="submit" value="Save" />
+        </p>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
 
 
 @section Scripts {
@@ -49,6 +51,7 @@
 
     <script>
         $(function () {
+            globalNav.select('/manage/postauthoring/create');
             $("#Reposted").click(function () {
                 $('#CanonicalUrl').toggle();
             });

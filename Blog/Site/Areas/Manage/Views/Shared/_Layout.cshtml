@@ -32,6 +32,21 @@
 
     <script type="text/javascript">
         $(function () {
+            var menu = globalNav.menuItems;
+            menu.push(new MenuItemViewModel({ data: { title: "Dashboard", url: "/manage", icon: "dashboard", cssClass: '' } }));
+            menu.push(new MenuItemViewModel({ data: { title: "Author", url: "/manage/postauthoring/create", icon: "format-quote", cssClass: '' } }));
+            menu.push(new MenuItemViewModel({ data: { title: "Redirects", url: "/manage/redirects", icon: "shuffle", cssClass: '' } }));
+            menu.push(new MenuItemViewModel({ data: { title: "Style", url: "/manage/templateeditor", icon: "quill", cssClass: '' } }));
+
+            @if (ViewBag.IsBlogAdmin)
+            {
+                <text>
+            menu.push(new MenuItemViewModel({ data: { title: "Permissions", url: "/manage/permissionseditor/editpermissions", icon: "key", cssClass: 'permissions-editor' } }));
+                </text>
+            }
+            menu.push(new MenuItemViewModel({ data: { title: "Recovery", url: "/manage/recovery", icon: "drive-upload", cssClass: 'blog-recovery' } }));
+            menu.push(new MenuItemViewModel({ data: { title: "Config", url: "/manage/blogconfiguration/edit", icon: "gears", cssClass: 'edit-blog-config' } }));
+
             prettyPrint();
             BindClicks();
         });
@@ -76,28 +91,28 @@
             @RenderBody()
         </div>
     </div>
-    <div id='edit-post-url-modal' class='modal hide fade in modal-editor'>
-        <div id='edit-post-url-container'>
+    <div id="edit-post-url-modal" class="modal hide fade in modal-editor">
+        <div id="edit-post-url-container">
         </div>
     </div>
 
-    <div id='edit-blog-config-modal' class='modal hide fade in modal-editor'>
-        <div id='edit-blog-config-container'>
+    <div id="edit-blog-config-modal" class="modal hide fade in modal-editor">
+        <div id="edit-blog-config-container">
         </div>
     </div>
 
-    <div id='confirm-publish-modal' class='modal hide fade in modal-editor'>
-        <div id='confirm-publish-container'>
+    <div id="confirm-publish-modal" class="modal hide fade in modal-editor">
+        <div id="confirm-publish-container">
         </div>
     </div>
 
-    <div id='confirm-unpublish-modal' class='modal hide fade in modal-editor'>
-        <div id='confirm-unpublish-container'>
+    <div id="confirm-unpublish-modal" class="modal hide fade in modal-editor">
+        <div id="confirm-unpublish-container">
         </div>
     </div>
 
-    <div id='permissions-editor-modal' class='modal hide fade in modal-editor'>
-        <div id='permissions-editor-container'>
+    <div id="permissions-editor-modal" class="modal hide fade in modal-editor">
+        <div id="permissions-editor-container">
         </div>
     </div>
     @RenderSection("scripts", required: false)

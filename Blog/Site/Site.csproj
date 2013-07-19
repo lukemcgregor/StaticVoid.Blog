@@ -208,6 +208,7 @@
     <Compile Include="App_Start\BundleTransforms\LessTransform.cs" />
     <Compile Include="App_Start\EntityFrameworkConfiguration.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
+    <Compile Include="Areas\Manage\Controllers\ManageBaseController.cs" />
     <Compile Include="Areas\Manage\Controllers\RecoveryController.cs" />
     <Compile Include="Areas\Manage\Controllers\HacksController.cs" />
     <Compile Include="Areas\Manage\Controllers\PermissionsEditorController.cs" />

@@ -15,7 +15,7 @@ using StaticVoid.Blog.Site.Services;
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
 	[CurrentBlogAuthorAuthorize]
-	public class PostAuthoringController : BlogBaseController
+    public class PostAuthoringController : ManageBaseController
 	{
 		private readonly IRepository<Post> _postRepository;
         private readonly IRepository<PostModification> _postModificationRepository;
@@ -28,13 +28,14 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         public PostAuthoringController(
             IRepository<Post> postRepository, 
             IRepository<PostModification> postModificationRepository,
-            IRepository<User> userRepository, 
+            IRepository<User> userRepository,
             IRepository<Redirect> redirectRepository,
+            IRepository<Securable> securableRepository,
             IRepository<Data.Blog> blogRepository,
             ISecurityHelper securityHelper,
             IProvideDateTime dateTime,
             IHttpContextService httpContext)
-            : base(blogRepository, httpContext)
+            : base(blogRepository, httpContext, securityHelper, userRepository, securableRepository)
 		{
 			_postRepository = postRepository;
             _postModificationRepository = postModificationRepository;

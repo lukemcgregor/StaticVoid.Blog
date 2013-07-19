@@ -24,6 +24,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
         private Mock<ISecurityHelper> _mockSecurityHelper;
         private IRepository<Data.User> _userRepo;
         private IRepository<Data.Redirect> _redirectRepo;
+        private IRepository<Data.Securable> _securableRepo;
         private Mock<IHttpContextService> _mockHttpContext;
         
         [TestInitialize]
@@ -47,6 +48,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
            _redirectRepo = new SimpleRepository<Data.Redirect>(new InMemoryRepositoryDataSource<Data.Redirect>(new List<Data.Redirect> { new Data.Redirect { } }));
            _mockHttpContext = new Mock<IHttpContextService>();
            _mockHttpContext.Setup(h => h.RequestUrl).Returns(new Uri("http://blog.test.con/blah"));
+           _securableRepo = new SimpleRepository<Data.Securable>(new InMemoryRepositoryDataSource<Data.Securable>());
         }
 
         [TestMethod]
@@ -70,6 +72,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 _postModificationRepo,
                 _userRepo,
                 _redirectRepo,
+                _securableRepo,
                 _blogRepo,
                 _mockSecurityHelper.Object,
                 new DateTimeProvider(),
@@ -120,6 +123,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 _postModificationRepo,
                 _userRepo,
                 _redirectRepo,
+                _securableRepo,
                 _blogRepo,
                 _mockSecurityHelper.Object,
                 new DateTimeProvider(),
@@ -163,6 +167,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 _postModificationRepo,
                 _userRepo,
                 _redirectRepo,
+                _securableRepo,
                 _blogRepo,
                 _mockSecurityHelper.Object,
                 new DateTimeProvider(),
@@ -206,6 +211,7 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
                 _postModificationRepo,
                 _userRepo,
                 _redirectRepo,
+                _securableRepo,
                 _blogRepo,
                 _mockSecurityHelper.Object,
                 new DateTimeProvider(),

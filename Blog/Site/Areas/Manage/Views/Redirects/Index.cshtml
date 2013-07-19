@@ -5,55 +5,57 @@
 }
 
 
-
-<div class="row">
-    <div class="span8">
-        <h2>Redirects</h2>
+<div class="admin-content">
+    <div class="row-fluid">
+        <div class="span10">
+            <h2>Redirects</h2>
+        </div>
+        <div class="span2">
+            <p>
+                @Html.ActionLink("Add Redirect", "Create", new { }, new { @class = "btn pull-right add-redirect" })
+            </p>
+        </div>
     </div>
-    <div class="span4">
-        <p>
-            @Html.ActionLink("Add Redirect", "Create", new { }, new { @class = "btn pull-right add-redirect" })
-        </p>
-    </div>
-</div>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <td>From</td>
-            <td>To</td>
-            <td></td>
-            <td></td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var r in Model)
-        {
+    <table class="table table-hover">
+        <thead>
             <tr>
-                <td><a href="@r.From">@r.From</a></td>
-                <td><a href="@r.To">@r.To</a></td>
-                <td>@(r.Temporary ? "Temporary" : "Permanant")</td>
-                <td>@Html.ActionLink("Remove Redirect", "Delete", new { id = r.Id }, new {@class = "btn btn-danger btn-small delete-redirect" })</td>
+                <td>From</td>
+                <td>To</td>
+                <td></td>
+                <td></td>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var r in Model)
+            {
+                <tr>
+                    <td><a href="@r.From">@r.From</a></td>
+                    <td><a href="@r.To">@r.To</a></td>
+                    <td>@(r.Temporary ? "Temporary" : "Permanant")</td>
+                    <td>@Html.ActionLink("Remove Redirect", "Delete", new { id = r.Id }, new { @class = "btn btn-danger btn-small delete-redirect" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
 
-<div id='delete-redirect-modal' class='modal hide fade in modal-editor'>
-    <div id='delete-redirect-container'>
+    <div id="delete-redirect-modal" class="modal hide fade in modal-editor">
+        <div id="delete-redirect-container">
+        </div>
     </div>
-</div>
 
-<div id='add-redirect-modal' class='modal hide fade in modal-editor'>
-    <div id='add-redirect-container'>
+    <div id="add-redirect-modal" class="modal hide fade in modal-editor">
+        <div id="add-redirect-container">
+        </div>
     </div>
-</div>
 
-<script type="text/javascript">
-    $(function () {
-        globalNav.select('/manage/redirects');
-        setupModal('add-redirect', true);
-        setupModal('delete-redirect', true);
-    });
-</script>
+    <script type="text/javascript">
+        $(function () {
+            globalNav.select('/manage/redirects');
+            setupModal('add-redirect', true);
+            setupModal('delete-redirect', true);
+        });
+    </script>
+
+</div>

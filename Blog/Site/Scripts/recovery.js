@@ -24,11 +24,67 @@
         self.loadComplete(false);
     };
 
+    selectedCount = ko.computed(function () {
+        var count = 0;
+        $.each(self.posts(), function (index, post) {
+            if (post.selected()) count++;
+        });
+        return count;
+    });
+
+    self.allSelected = ko.computed(function () {
+        return self.posts().length === selectedCount();
+    });
+
+    self.restoreButtonText = ko.computed(function () {
+        if(selectedCount()===0)
+        {
+            return 'Restore no posts';
+        }
+        else if (selectedCount() === 1) {
+            return 'Restore 1 post';
+        }
+        else {
+            return 'Restore ' + selectedCount() + ' posts';
+        }
+    });
+
+    self.clickSelectAll = function () {
+        if (self.posts().length === selectedCount()) {
+            $.each(self.posts(), function (index, post) {
+                post.selected(false);
+            });
+        }
+        else {
+            $.each(self.posts(), function (index, post) {
+                post.selected(true);
+            });
+        }
+        return false;
+    };
+
+    self.restoreSelected = function () {
+        var selectedGuids=  new Array();
+
+        $.each(self.posts(), function (index, post) {
+            if (post.selected()) selectedGuids.push(post.PostGuid());
+        });
+
+        $.ajax({
+            url: 'recovery/restore-posts/' + self.correlationToken(),
+            type: 'POST',
+            data: JSON.stringify(selectedGuids),
+            contentType: 'application/json'
+        }).done(function (data) {
+            self.cancel();
+        });
+        return false;
+    };
+
     var initialise = function () {
         $('.drop-upload').fileupload({
             dropZone: $('.drop-zone'),
             add: function (e, data) {
-                debugger;
                 self.correlationToken(newGuid());
                 self.dataLoaded(data.loaded);
                 self.dataTotal(data.total);
@@ -65,6 +121,12 @@
 
 var postViewModel = function (options) {
     var self = ko.mapping.fromJS(options.data, {}, this);
+
+    self.selected = ko.observable(false);
+    self.toggleSelected = function () {
+        self.selected(!self.selected());
+        return false;
+    };
 
     return self;
 };

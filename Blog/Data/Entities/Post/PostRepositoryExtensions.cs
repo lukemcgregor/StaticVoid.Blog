@@ -56,5 +56,10 @@ namespace StaticVoid.Blog.Data
         {
             return repo.PublishedPosts(blogId).Any(p => p.Path.ToLower() == url.ToLower());
         }
+
+        public static Post GetByGuid(this IRepository<Post> repo, int blogId, Guid postGuid)
+        {
+            return repo.PostsForBlog(blogId).SingleOrDefault(p => p.PostGuid == postGuid);
+        }
 	}
 }

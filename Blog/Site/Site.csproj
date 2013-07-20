@@ -118,9 +118,9 @@
     <Reference Include="StaticVoid.Mockable">
       <HintPath>..\packages\StaticVoid.Mockable.0.1.1.0\lib\net45\StaticVoid.Mockable.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Repository, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="StaticVoid.Repository, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\StaticVoid.Repository.2.2.0\lib\net45\StaticVoid.Repository.dll</HintPath>
+      <HintPath>..\packages\StaticVoid.Repository.2.2.1\lib\net45\StaticVoid.Repository.dll</HintPath>
     </Reference>
     <Reference Include="StaticVoid.Stream">
       <HintPath>..\packages\StaticVoid.Stream.1.0.0.1\lib\net45\StaticVoid.Stream.dll</HintPath>
@@ -216,6 +216,7 @@
     <Compile Include="Areas\Manage\Controllers\UserProfileController.cs" />
     <Compile Include="Areas\Manage\Models\MyProfileModels.cs" />
     <Compile Include="Areas\Manage\Models\PermissionsModel.cs" />
+    <Compile Include="Areas\Manage\Models\RecoveryModels.cs" />
     <Compile Include="Areas\Manage\Models\StyleEditorModels.cs" />
     <Compile Include="Areas\Platform\Controllers\BlogController.cs" />
     <Compile Include="Areas\Platform\Controllers\DashboardController.cs" />
@@ -290,6 +291,7 @@
     <Content Include="Global.asax" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\border.png" />
+    <Content Include="Images\checkbox_states.png" />
     <Content Include="Images\dropzone-border-image.png" />
     <Content Include="Images\feed-icon-28x28.png" />
     <Content Include="Images\glyphicons-halflings-white.png" />

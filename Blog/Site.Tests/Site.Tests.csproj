@@ -47,9 +47,9 @@
     <Reference Include="StaticVoid.Mockable">
       <HintPath>..\packages\StaticVoid.Mockable.0.1.1.0\lib\net45\StaticVoid.Mockable.dll</HintPath>
     </Reference>
-    <Reference Include="StaticVoid.Repository, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="StaticVoid.Repository, Version=2.2.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\StaticVoid.Repository.2.2.0\lib\net45\StaticVoid.Repository.dll</HintPath>
+      <HintPath>..\packages\StaticVoid.Repository.2.2.1\lib\net45\StaticVoid.Repository.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />

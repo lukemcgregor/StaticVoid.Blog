@@ -15,6 +15,8 @@ using Ninject.Web.Mvc.FilterBindingSyntax;
 using Ninject.Web.Common;
 using StaticVoid.Blog.Email;
 using StaticVoid.Blog.Site.Services;
+using StaticVoid.Blog.Site.Areas.Manage.Models;
+using StaticVoid.Repository;
 
 namespace StaticVoid.Blog.Site.Wiring
 {
@@ -25,6 +27,7 @@ namespace StaticVoid.Blog.Site.Wiring
             Bind<DbContext>().To<BlogContext>().InRequestScope();
             Bind<IProvideDateTime>().To<DateTimeProvider>();
             Bind<OpenIdMembershipService>().ToSelf().InTransientScope();
+            Bind<IRepositoryDataSource<TemporaryUploadedBlogBackup>>().To<InMemoryRepositoryDataSource<TemporaryUploadedBlogBackup>>().InSingletonScope();
             Bind<ISecurityHelper>().To<SecurityHelper>();
             Bind<ISendEmail>().To<EmailSender>();
             Bind<IInvitationService>().To<InvitationService>();

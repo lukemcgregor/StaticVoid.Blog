@@ -1,6 +1,7 @@
 ﻿using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Areas.Manage.Models;
 using StaticVoid.Blog.Site.Controllers;
+using StaticVoid.Blog.Site.Security;
 using StaticVoid.Blog.Site.Services;
 using StaticVoid.Repository;
 using System;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 {
+    [CurrentBlogAuthorAuthorize]
     public class TemplateEditorController : ManageBaseController
     {
         private readonly IRepository<BlogTemplate> _styleRepo;

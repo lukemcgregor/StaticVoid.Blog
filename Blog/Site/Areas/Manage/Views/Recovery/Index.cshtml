@@ -38,13 +38,21 @@
                 </div>
             </div>
             <div id="recovery-selection" data-bind="visible: loadComplete()">
+                <div class="list-header row-fluid">
+                    <div data-bind="click: clickSelectAll, css:{selected: allSelected}">
+                        <div class="checkbox span1"></div><span>Select All</span>
+                    </div>
+                </div>
                 <ul data-bind="foreach: posts" class="posts">
-                    <li class ="row-fluid">
-                        <div class="span1 row-checkbox"><input type="checkbox" /></div>
-                        <div class="span8" data-bind="text: Title" ></div>
+                    <li class="row-fluid" data-bind="css: {selected: selected}, click: toggleSelected">
+                        <div class="span1 row-checkbox">
+                            <div class="checkbox"></div>
+                        </div>
+                        <div class="span11" data-bind="text: Title"></div>
                     </li>
                 </ul>
                 <button class="btn" type="submit" data-bind="click: cancel">Cancel</button>
+                <button class="btn btn-success" type="submit" data-bind="click: restoreSelected, text: restoreButtonText, enable: selectedCount() > 0"></button>
             </div>
 
         </div>

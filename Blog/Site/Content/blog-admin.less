@@ -388,6 +388,10 @@ ul.template-mode-options {
             border-color: rgba(0,0,0,0.2);
         }
     }
+
+    .checkbox{
+        margin: auto;
+    }
 }
 
 
@@ -399,13 +403,6 @@ ul.template-mode-options {
         li {
             border: 1px solid rgba(0,0,0,0.2);
             margin-bottom: 5px;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: moz-none;
-            -ms-user-select: none;
-            user-select: none;
-            cursor: pointer;
 
             &:hover {
                 border-color: rgba(0,0,0,0.5);
@@ -426,13 +423,6 @@ ul.template-mode-options {
         margin-bottom:10px;
         padding:10px 0 10px 8px;
         background-color: rgba(0,0,0,0.05);
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: moz-none;
-        -ms-user-select: none;
-        user-select: none;
-        cursor: pointer;
 
         span{
             line-height:29px;
@@ -451,4 +441,19 @@ ul.template-mode-options {
 
 .selected .checkbox {
     background-position: 0 -29px;
+}
+
+
+.action-column{
+    width:50px;
+}
+
+.clickable-row {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: moz-none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
 }

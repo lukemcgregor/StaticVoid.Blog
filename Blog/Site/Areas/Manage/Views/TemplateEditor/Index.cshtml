@@ -52,9 +52,8 @@
                 </p>
             </div>
             <ul class="template-mode-options">
-                <li class="row-fluid todo" data-bind="css:{selected: noscriptMetaRefreshSelected}, click: selectNoscriptMetaRefresh">
-                    <div class=" checkbox span1"></div>
-                    <div class="span11">
+                <li class="clickable-row todo" data-bind="css:{selected: noscriptMetaRefreshSelected}, click: selectNoscriptMetaRefresh">
+                    <div>
                         <h3>No Script Meta Refresh</h3>
                         <p>
                             Meta refresh redirects the browser to a No JS page if javascript isnt enabled.
@@ -62,9 +61,8 @@
                         </p>
                     </div>
                 </li>
-                <li class="row-fluid todo" data-bind="css:{selected: domRipSelected}, click: selectDomRip">
-                    <div class="checkbox span1"></div>
-                    <div class="span11">
+                <li class="clickable-row todo" data-bind="css:{selected: domRipSelected}, click: selectDomRip">
+                    <div>
                         <h3>DOM Rip</h3>
                         <p>
                             This is an experimental mode which will completely replace the HTML node of your
@@ -73,9 +71,8 @@
                         </p>
                     </div>
                 </li>
-                <li class="row-fluid todo" data-bind="css:{selected: bodyOnlySelected}, click: selectBodyOnly">
-                    <div class="checkbox span1"></div>
-                    <div class="span11">
+                <li class="todo clickable-row" data-bind="css:{selected: bodyOnlySelected}, click: selectBodyOnly">
+                    <div>
                         <h3>Body Only</h3>
                         <p>
                             This option allows you to have complete control over the body node of your DOM but
@@ -84,9 +81,8 @@
                         </p>
                     </div>
                 </li>
-                <li class="row-fluid todo" data-bind="css:{selected: noNojsFallbackSelected}, click: selectNoNojsFallback">
-                    <div class="checkbox span1"></div>
-                    <div class="span11">
+                <li class="clickable-row todo" data-bind="css:{selected: noNojsFallbackSelected}, click: selectNoNojsFallback">
+                    <div>
                         <h3>No No-Javascript Fallback</h3>
                         <p>
                             This option allows you to customise the entire DOM without restriction however no
@@ -97,9 +93,8 @@
                         </p>
                     </div>
                 </li>
-                <li class="row-fluid" data-bind="css:{selected: noDomCustomisationSelected}, click: selectNoDomCustomisation">
-                    <div class="checkbox span1"></div>
-                    <div class="span11">
+                <li class="clickable-row" data-bind="css:{selected: noDomCustomisationSelected}, click: selectNoDomCustomisation">
+                    <div>
                         <h3>No DOM Customisation</h3>
                         <p>
                             If you have no interest in changing the markup use this option. You will still however
@@ -110,7 +105,7 @@
             </ul>
         </div>
         <div class="tab-pane" id="css">
-            <div id="style-editor">
+            <div class="style-editor">
                 <div class="style-editor-pane" data-bind="style: { height: editorHeight, width: editorWidth }">
                     <div class="css-editor">
                         <div id="css-editor"
@@ -121,16 +116,15 @@
             </div>
         </div>
         <div class="tab-pane" id="html">
-            @*<div id="style-editor">
-                    <span data-bind="text: editorWidth"></span>
-                    <div class="style-editor-pane" data-bind="style: { width: editorWidth }">
-                        @Html.LabelFor(m => m.HtmlTemplate)
-                        <div class="html-template-editor">
-                            @Html.HiddenFor(m => m.HtmlTemplate, new { id = "hidden-html-template" })
-                            <div id="html-template-editor" class="html-template-editor" data-bind="style: { height: editorHeight, width: editorWidth }">@Model.HtmlTemplate</div>
-                        </div>
+            <div class="style-editor">
+                <div class="style-editor-pane" data-bind="style: { height: editorHeight, width: editorWidth }">
+                    <div class="html-template-editor">
+                        <div id="html-template-editor"
+                             class="html-template-editor"
+                             data-bind="style: { height: editorHeight, width: editorWidth}"></div>
                     </div>
-                </div>*@
+                </div>
+            </div>
         </div>
         <div class="tab-pane" id="preview-and-apply">
             <button class="btn btn-success" type="submit" data-bind="click: applyTemplate">Apply</button>

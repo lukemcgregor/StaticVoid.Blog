@@ -58,7 +58,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             }
             var style = _styleRepo.GetBy(s => s.Id == id);
 
-            return View(new StyleModel { Css = style.Css });
+            return View(new StyleModel { Css = style.Css, HtmlTemplate = style.HtmlTemplate, TemplateMode = style.TemplateMode });
         }
 
         [HttpPost]

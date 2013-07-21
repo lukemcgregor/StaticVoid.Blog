@@ -59,16 +59,16 @@ namespace StaticVoid.Blog.Site.Controllers
 
 			var md = new MarkdownDeep.Markdown();
 
-            var defaultTemplate ="";
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("StaticVoid.Blog.Site.Defaults.DefaultTemplate.html"))
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                defaultTemplate = reader.ReadToEnd();
-            }
+            //var defaultTemplate ="";
+            //using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("StaticVoid.Blog.Site.Defaults.DefaultTemplate.html"))
+            //using (StreamReader reader = new StreamReader(stream))
+            //{
+            //    defaultTemplate = reader.ReadToEnd();
+            //}
 
             var model = new PostModel
             {
-                Template = defaultTemplate,
+                //Template = defaultTemplate,
                 Body = md.Transform(post.Body),
                 Description = post.Description,
                 Title = post.Title,

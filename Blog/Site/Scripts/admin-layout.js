@@ -1,8 +1,6 @@
 ﻿function GlobalNavViewModel() {
-    var self = {};
-
-
-
+    var self = this;
+    
     self.menuItems = ko.observableArray([]);
 
     self.select = function (url) {
@@ -15,7 +13,6 @@
             }
         });
     };
-    return self;
 }
 
 var MenuItemViewModel = function (options) {
@@ -25,8 +22,6 @@ var MenuItemViewModel = function (options) {
     self.cssClass = ko.observable(options.data.cssClass);
     self.iconUrl = ko.observable('/images/icons/' + options.data.icon + '.png');
     self.selected = ko.observable(false);
-
-    return self;
 };
 
 var globalNav = new GlobalNavViewModel();

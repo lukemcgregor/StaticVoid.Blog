@@ -17,6 +17,7 @@ namespace StaticVoid.Blog.Site.Areas.Platform.Controllers
         public DashboardController(IRepository<Data.Blog> blogRepo)
         {
             _blogRepo = blogRepo;
+            ViewBag.IsBlogAdmin = true;
         }
 
         public ActionResult Index()

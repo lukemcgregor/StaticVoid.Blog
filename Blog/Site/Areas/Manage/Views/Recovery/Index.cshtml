@@ -38,13 +38,13 @@
                 </div>
             </div>
             <div id="recovery-selection" data-bind="visible: loadComplete()">
-                <div class="list-header row-fluid">
+                <div class="list-header row-fluid clickable-row">
                     <div data-bind="click: clickSelectAll, css:{selected: allSelected}">
                         <div class="checkbox span1"></div><span>Select All</span>
                     </div>
                 </div>
                 <ul data-bind="foreach: posts" class="posts">
-                    <li class="row-fluid" data-bind="css: {selected: selected}, click: toggleSelected">
+                    <li class="row-fluid clickable-row" data-bind="css: {selected: selected}, click: toggleSelected">
                         <div class="span1 row-checkbox">
                             <div class="checkbox"></div>
                         </div>

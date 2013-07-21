@@ -19,7 +19,6 @@
         return self.templateMode() === templateModes.domRip;
     });
     self.selectDomRip = function () {
-        //TODO: Not Implemented yet
         //self.templateMode(templateModes.domRip);
         return false;
     };
@@ -65,7 +64,7 @@
         return self.containerHeight() + 'px';
     });
 
-    self.container = $('#style-editor');
+    self.container = $('.tab-content');
 
     var lastAutosave = {
         time: Date.now(),
@@ -145,15 +144,19 @@
         cssEditor.getSession().on('change', function (e) {
             self.css(cssEditor.getValue());
         });
-        //var htmlEditor = ace.edit("html-template-editor");
-        //htmlEditor.setTheme("ace/theme/twilight");
-        //htmlEditor.getSession().setMode("ace/mode/html");
+
+        var htmlEditor = ace.edit("html-template-editor");
+        htmlEditor.setTheme("ace/theme/twilight");
+        htmlEditor.getSession().setMode("ace/mode/less");
+        htmlEditor.setValue(self.html());
+        htmlEditor.getSession().on('change', function (e) {
+            self.html(htmlEditor.getValue());
+        });
 
         $(window).resize(function () {
             self.update();
         });
         self.update();
-
     };
 
     //kick off the autosave

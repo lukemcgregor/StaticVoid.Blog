@@ -296,6 +296,8 @@
     <Content Include="Images\feed-icon-28x28.png" />
     <Content Include="Images\glyphicons-halflings-white.png" />
     <Content Include="Images\glyphicons-halflings.png" />
+    <Content Include="Images\icons\comment-feed.png" />
+    <Content Include="Images\icons\control-panel.png" />
     <Content Include="Images\icons\dashboard.png" />
     <Content Include="Images\icons\drive-upload.png" />
     <Content Include="Images\icons\format-quote.png" />
@@ -352,6 +354,9 @@
     <Content Include="Content\blog-admin.less" />
     <Content Include="Areas\Manage\Views\TemplateEditor\Index.cshtml" />
     <Content Include="Areas\Manage\Views\Recovery\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Web.config" />
+    <Content Include="Areas\Platform\Views\Shared\_PlatformLayout.cshtml" />
     <None Include="Properties\PublishProfiles\Dropbox.pubxml" />
     <Content Include="Scripts\admin-layout.js" />
     <Content Include="Scripts\recovery.js" />
@@ -398,9 +403,7 @@
     <Content Include="Views\Shared\_LayoutNoJs.cshtml" />
     <Content Include="Views\Post\PostNoDomCustomisation.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Platform\Views\Shared\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>

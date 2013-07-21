@@ -27,6 +27,7 @@ namespace StaticVoid.Blog.Site.Areas.Platform.Controllers
             _blogRepo = blogRepo;
             _securableRepo = securableRepo;
             _invitationService = invitationService;
+            ViewBag.IsBlogAdmin = true;
         }
 
         public ActionResult Create()

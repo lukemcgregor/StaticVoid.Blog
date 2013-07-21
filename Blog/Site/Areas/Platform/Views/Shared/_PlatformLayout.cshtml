@@ -1,0 +1,40 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Styles {
+    @RenderSection("Styles", false)
+}
+
+@section AdditionalHead {
+    <script type="text/javascript">
+        $(function () {
+            var menu = globalNav.menuItems;
+            menu.push(new MenuItemViewModel({ data: { title: "Blogs", url: "/platform", icon: "comment-feed", cssClass: '' } }));
+            BindClicks();
+        });
+
+        function BindClicks() {
+            setupModal('edit-post-url');
+        }
+    </script>
+    @RenderSection("AdditionalHead", false)
+}
+
+@section masthead {
+    @RenderSection("masthead", false)
+}
+
+@section modals{
+
+    <div id="edit-post-url-modal" class="modal hide fade in modal-editor">
+        <div id="edit-post-url-container">
+        </div>
+    </div>
+}
+@section scripts{
+    @RenderSection("scripts", required: false)
+}
+
+@RenderBody()

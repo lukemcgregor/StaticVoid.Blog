@@ -61,5 +61,4 @@
 
 $(function () {
     globalNav.select('/manage');
-    globalNav.menuItems()[0].selected(true);
 });

@@ -4,7 +4,7 @@
     self.css = ko.observable(options.data.css);
     self.html = ko.observable(options.data.html);
 
-    self.templateMode = ko.observable(templateModes.noDomCustomisation);
+    self.templateMode = ko.observable(options.data.templateMode);
 
     self.noscriptMetaRefreshSelected = ko.computed(function () {
         return self.templateMode() === templateModes.noscriptMetaRefresh;
@@ -19,7 +19,7 @@
         return self.templateMode() === templateModes.domRip;
     });
     self.selectDomRip = function () {
-        //self.templateMode(templateModes.domRip);
+        self.templateMode(templateModes.domRip);
         return false;
     };
 
@@ -27,8 +27,7 @@
         return self.templateMode() === templateModes.bodyOnly;
     });
     self.selectBodyOnly = function () {
-        //TODO: Not Implemented yet
-        //self.templateMode(templateModes.bodyOnly);
+        self.templateMode(templateModes.bodyOnly);
         return false;
     };
 

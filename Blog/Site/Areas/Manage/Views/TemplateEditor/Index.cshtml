@@ -15,7 +15,12 @@
             noDomCustomisation: '@StaticVoid.Blog.Data.TemplateMode.NoDomCustomisation.ToString()'
         };
         $(function () {
-            var vm = new TemplateEditorViewModel({ data: { css: @(Html.Raw(Json.Encode(Model.Css))), html: @(Html.Raw(Json.Encode(Model.HtmlTemplate))) }});
+            var vm = new TemplateEditorViewModel({ 
+                data: { 
+                    css: @(Html.Raw(Json.Encode(Model.Css))), 
+                    html: @(Html.Raw(Json.Encode(Model.HtmlTemplate))), 
+                    templateMode: @(Html.Raw(Json.Encode(Model.TemplateMode.ToString()))) 
+                }});
 
             ko.applyBindings(vm, $('#style-section')[0]);
             vm.load();
@@ -61,7 +66,7 @@
                         </p>
                     </div>
                 </li>
-                <li class="clickable-row todo" data-bind="css:{selected: domRipSelected}, click: selectDomRip">
+                <li class="clickable-row" data-bind="css:{selected: domRipSelected}, click: selectDomRip">
                     <div>
                         <h3>DOM Rip</h3>
                         <p>
@@ -71,7 +76,7 @@
                         </p>
                     </div>
                 </li>
-                <li class="todo clickable-row" data-bind="css:{selected: bodyOnlySelected}, click: selectBodyOnly">
+                <li class="clickable-row" data-bind="css:{selected: bodyOnlySelected}, click: selectBodyOnly">
                     <div>
                         <h3>Body Only</h3>
                         <p>

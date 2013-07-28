@@ -224,6 +224,7 @@
     <Compile Include="Areas\Platform\Models\DashboardModels.cs" />
     <Compile Include="Areas\Platform\PlatformAreaRegistration.cs" />
     <Compile Include="Controllers\BlogBaseController.cs" />
+    <Compile Include="Controllers\PingController.cs" />
     <Compile Include="Controllers\StyleController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\IndexController.cs" />
@@ -399,9 +400,11 @@
     <Content Include="Views\Index\Posts.cshtml" />
     <Content Include="Views\Shared\PrettyDate.cshtml" />
     <Content Include="Views\Post\Script.cshtml" />
-    <Content Include="Views\Post\PostNoJs.cshtml" />
+    <Content Include="Views\Post\PostDomRip.cshtml" />
     <Content Include="Views\Shared\_LayoutNoJs.cshtml" />
     <Content Include="Views\Post\PostNoDomCustomisation.cshtml" />
+    <Content Include="Views\Post\PostBodyOnly.cshtml" />
+    <Content Include="Views\Ping\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

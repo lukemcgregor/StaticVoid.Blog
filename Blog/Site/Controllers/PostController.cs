@@ -42,14 +42,25 @@ namespace StaticVoid.Blog.Site.Controllers
 			return Redirect("/" + post.Path);
 		}
 
-        //public ActionResult Script(string path)
-        //{
-        //    Response.ContentType = "text/javascript";
-        //    return View(PostModel(path.Substring(0,path.Length -3)));
-        //}
-
-        private PostModel PostModel(string path)
+        private TemplatedPostModel TemplatedPostModel(string path) 
         {
+            var model = new TemplatedPostModel();
+
+            if(CurrentBlog.BlogTemplateId.HasValue)
+            {
+                var template = _blogTemplateRepo.GetById(CurrentBlog.BlogTemplateId.Value);
+                model.Template = template.HtmlTemplate;
+            }
+            return (TemplatedPostModel)PostModel(path, model);
+        }
+
+        private PostModel PostModel(string path, PostModel model = null)
+        {
+            if (model == null)
+            {
+                model = new PostModel();
+            }
+
              var currentBlog = CurrentBlog;
 
             var post = _postRepository.GetPostAtUrl(currentBlog.Id, path, p => p.Author);
@@ -58,28 +69,17 @@ namespace StaticVoid.Blog.Site.Controllers
 			var nextPost = _postRepository.GetPostAfter(post);
 
 			var md = new MarkdownDeep.Markdown();
-
-            //var defaultTemplate ="";
-            //using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("StaticVoid.Blog.Site.Defaults.DefaultTemplate.html"))
-            //using (StreamReader reader = new StreamReader(stream))
-            //{
-            //    defaultTemplate = reader.ReadToEnd();
-            //}
-
-            var model = new PostModel
+            
+            model.Body = md.Transform(post.Body);
+            model.Description = post.Description;
+            model.Title = post.Title;
+            model.Posted = post.Posted;
+            model.CanonicalUrl = post.Canonical;
+            model.Author = new PostAuthor
             {
-                //Template = defaultTemplate,
-                Body = md.Transform(post.Body),
-                Description = post.Description,
-                Title = post.Title,
-                Posted = post.Posted,
-                CanonicalUrl = post.Canonical,
-                Author = new PostAuthor
-                {
-                    GravatarUrl = post.Author.Email.GravitarUrlFromEmail(),
-                    Name = post.Author.FullName(),
-                    GooglePlusProfileUrl = post.Author.GooglePlusProfileUrl
-                }
+                GravatarUrl = post.Author.Email.GravitarUrlFromEmail(),
+                Name = post.Author.FullName(),
+                GooglePlusProfileUrl = post.Author.GooglePlusProfileUrl
             };
 
             model.OtherPosts = new List<PartialPostForLinkModel>();
@@ -129,6 +129,12 @@ namespace StaticVoid.Blog.Site.Controllers
                 {
                     case TemplateMode.NoDomCustomisation:
                         return View("PostNoDomCustomisation", PostModel(path));
+
+                    case TemplateMode.DomRip:
+                        return View("PostDomRip", TemplatedPostModel(path));
+
+                    case TemplateMode.BodyOnly:
+                        return View("PostBodyOnly", TemplatedPostModel(path));
                 }
             }
             //default

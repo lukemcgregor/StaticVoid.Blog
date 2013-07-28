@@ -7,7 +7,6 @@ namespace StaticVoid.Blog.Site.Models
 {
 	public class PostModel
 	{
-        public string Template { get; set; }
         public String Title { get; set; }
         public String Description { get; set; }
         public String Body { get; set; }
@@ -37,5 +36,10 @@ namespace StaticVoid.Blog.Site.Models
         public string Name { get; set; }
         public string GravatarUrl { get; set; }
         public string GooglePlusProfileUrl { get; set; }
+    }
+
+    public class TemplatedPostModel : PostModel
+    {
+        public string Template { get; set; }
     }
 }

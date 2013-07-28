@@ -6,7 +6,9 @@ using StaticVoid.Blog.Site.Services;
 using StaticVoid.Repository;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -38,23 +40,32 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             if (!id.HasValue)
             {
                 var latestTemplate = _styleRepo.GetLatestEditForBlog(CurrentBlog.Id);
-
+                
                 if (latestTemplate != null)
                 {
                     return RedirectToAction("Index", new { id = latestTemplate.Id });
                 }
 
-                var defaultTemplate =new BlogTemplate
+                //TODO move to some kinda shared thingimibob
+                var defaultHtmlTemplate = "";
+                using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("StaticVoid.Blog.Site.Defaults.DefaultTemplate.html"))
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    defaultHtmlTemplate = reader.ReadToEnd();
+                }
+
+                var defaultBlogTemplate =new BlogTemplate
                 {
                     //todo
                     BlogId = CurrentBlog.Id,
                     TemplateMode = Data.TemplateMode.NoDomCustomisation,
+                    HtmlTemplate = defaultHtmlTemplate,
                     LastModified = DateTime.Now
                 };
 
-                _styleRepo.Create(defaultTemplate);
+                _styleRepo.Create(defaultBlogTemplate);
 
-                return RedirectToAction("Index", new { id = defaultTemplate.Id });
+                return RedirectToAction("Index", new { id = defaultBlogTemplate.Id });
             }
             var style = _styleRepo.GetBy(s => s.Id == id);
 

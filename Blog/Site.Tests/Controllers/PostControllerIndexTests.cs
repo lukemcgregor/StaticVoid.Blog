@@ -54,8 +54,8 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
         public void RedirectToLatestPostWithNoPublishedPostsTest()
         {
             IRepository<Post> postRepo = new SimpleRepository<Post>(new InMemoryRepositoryDataSource<Post>(new List<Post> { 
-                new Post { Status = PostStatus.Draft }, 
-                new Post { Status = PostStatus.Unpublished } 
+                new Post { Status = PostStatus.Draft, BlogId=1 }, 
+                new Post { Status = PostStatus.Unpublished, BlogId=1 } 
             }));
 
             PostController sut = new PostController(postRepo, _blogRepo,_templateRepo, _mockHttpContext.Object);

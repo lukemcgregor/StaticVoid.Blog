@@ -5,8 +5,20 @@
     @Scripts.Render("~/bundles/manage/recovery")
 
     <script type="text/javascript">
-        $(function () {
-            globalNav.select('/manage/recovery');
+        define('startup',
+        [
+            'jquery',
+            'knockout',
+            'admin/global-nav',
+            'manage/template-editor-view-model'
+        ], function ($, ko, globalNav, templateEditorViewModel) {
+            
+            return {
+                onStart: function () {
+                    console.debug('Recovery startup.onStart');
+                    globalNav.select('/manage/recovery');
+                }
+            };
         });
     </script>
 }

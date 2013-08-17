@@ -9,38 +9,32 @@
 
 @section AdditionalHead {
     <script type="text/javascript">
-        $(function () {
-            var menu = globalNav.menuItems;
-            menu.push(new MenuItemViewModel({ data: { title: "Dashboard", url: "/manage", icon: "dashboard", cssClass: '' } }));
-            menu.push(new MenuItemViewModel({ data: { title: "Author", url: "/manage/postauthoring/create", icon: "format-quote", cssClass: '' } }));
-            menu.push(new MenuItemViewModel({ data: { title: "Redirects", url: "/manage/redirects", icon: "shuffle", cssClass: '' } }));
-            menu.push(new MenuItemViewModel({ data: { title: "Style", url: "/manage/templateeditor", icon: "quill", cssClass: '' } }));
+        define("layout-startup",
+            [
+                'jquery',
+                'manage/global-nav-items',
+                'library/modals'
+            ], function ($, globalNavItems, modals) {
+                return {
+                    onStart: function () {
+                        console.debug('layout-startup.onStart');
 
-            @if (ViewBag.IsBlogAdmin)
-            {
-                <text>
-            menu.push(new MenuItemViewModel({ data: { title: "Permissions", url: "/manage/permissionseditor/editpermissions", icon: "key", cssClass: 'permissions-editor' } }));
-                </text>
+                        globalNavItems.setup();
+                        //prettyPrint();
+                        modals.setupModal('edit-post-url');
+                        modals.setupModal('edit-blog-config');
+                        modals.setupModal('confirm-publish', true);
+                        modals.setupModal('confirm-unpublish', true);
+                        modals.setupModal('permissions-editor');
+                    }
+                }
             }
-            menu.push(new MenuItemViewModel({ data: { title: "Recovery", url: "/manage/recovery", icon: "drive-upload", cssClass: 'blog-recovery' } }));
-            menu.push(new MenuItemViewModel({ data: { title: "Config", url: "/manage/blogconfiguration/edit", icon: "gears", cssClass: 'edit-blog-config' } }));
-
-            prettyPrint();
-            BindClicks();
-        });
-
-        function BindClicks() {
-            setupModal('edit-post-url');
-            setupModal('edit-blog-config');
-            setupModal('confirm-publish', true);
-            setupModal('confirm-unpublish', true);
-            setupModal('permissions-editor');
-        }
+        );
     </script>
     @RenderSection("AdditionalHead", false)
 }
 
-@section BodyTagAdditions{ onload="prettyPrint()"}
+@*section BodyTagAdditions{ onload="prettyPrint()"}*@
 @section masthead {
     @RenderSection("masthead", false)
 }

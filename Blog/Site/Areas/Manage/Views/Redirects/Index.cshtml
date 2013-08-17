@@ -4,6 +4,26 @@
     ViewBag.Title = "Redirects";
 }
 
+@section AdditionalHead {
+    <script type="text/javascript">
+        define("startup",
+            [
+                "jquery",
+                'admin/global-nav',
+                'library/modals'
+            ], function ($, globalNav, modals) {
+            return {
+                onStart: function () {
+                    console.debug('startup.onStart');
+
+                    globalNav.select('/manage/redirects');
+                    modals.setupModal('add-redirect', true);
+                    modals.setupModal('delete-redirect', true);
+                }
+            }
+        });
+    </script>
+}
 
 <div class="admin-content">
     <div class="row-fluid">
@@ -49,13 +69,4 @@
         <div id="add-redirect-container">
         </div>
     </div>
-
-    <script type="text/javascript">
-        $(function () {
-            globalNav.select('/manage/redirects');
-            setupModal('add-redirect', true);
-            setupModal('delete-redirect', true);
-        });
-    </script>
-
 </div>

@@ -48,7 +48,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             var posts = _postRepo.PostsForBlog(currentBlog.Id).OrderByDescending(p => p.Posted).ToArray();
 
             return View(new DashboardModel{
-                Posts = posts.Select(p => new Tuple<string, int>(p.GetDraftTitle(), p.Id)).ToList(),
+                Posts = posts.Select(p => new { Title = p.GetDraftTitle(), PostId = p.Id}).Cast<object>().ToList(),
                 SelectedPost = posts.Any() ? GetDashboardPostModel( posts.First().Id): null,
                 IsAdmin = currentUser.IsAdminOfBlog(currentBlog, _securableRepo)
             });

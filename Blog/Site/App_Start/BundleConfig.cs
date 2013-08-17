@@ -17,14 +17,12 @@ namespace StaticVoid.Blog.Site
                         "~/Scripts/modals.js",
                         "~/Scripts/validation-rules.js",
                         "~/Scripts/guid.js",
-                        "~/Scripts/jquery.fileupload.js",
-                        "~/Scripts/admin-layout.js"));
+                        "~/Scripts/jquery.fileupload.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/editor").Include(
+			bundles.Add(new ScriptBundle("~/bundles/markdown.js").Include(
 						"~/Scripts/MarkdownDeep.js",
 						"~/Scripts/MarkdownDeepEditor.js",
-						"~/Scripts/MarkdownDeepEditorUI.js",
-                        "~/Scripts/editor.js"));
+						"~/Scripts/MarkdownDeepEditorUI.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/blog").Include(
                         "~/Scripts/modals.js"));

@@ -5,32 +5,47 @@
     ViewBag.Fluid = true;
 }
 @section AdditionalHead {
-    @Scripts.Render("~/bundles/template-editor")
     <script type="text/javascript">
-        var templateModes = {
-            noscriptMetaRefresh: '@StaticVoid.Blog.Data.TemplateMode.NoscriptMetaRefresh.ToString()',
-            domRip: '@StaticVoid.Blog.Data.TemplateMode.DomRip.ToString()',
-            bodyOnly: '@StaticVoid.Blog.Data.TemplateMode.BodyOnly.ToString()',
-            noNojsFallback: '@StaticVoid.Blog.Data.TemplateMode.NoNojsFallback.ToString()',
-            noDomCustomisation: '@StaticVoid.Blog.Data.TemplateMode.NoDomCustomisation.ToString()'
-        };
-        $(function () {
-            var vm = new TemplateEditorViewModel({ 
-                data: { 
-                    css: @(Html.Raw(Json.Encode(Model.Css))), 
-                    html: @(Html.Raw(Json.Encode(Model.HtmlTemplate))), 
-                    templateMode: @(Html.Raw(Json.Encode(Model.TemplateMode.ToString()))) 
-                }});
+        define('startup',
+        [
+            'jquery',
+            'knockout',
+            'admin/global-nav',
+            'manage/template-editor-view-model'
+        ], function ($, ko, globalNav, templateEditorViewModel) {
+            
+            return {
+                onStart: function () {
+                    console.debug('EditTemplate startup.onStart');
 
-            ko.applyBindings(vm, $('#style-section')[0]);
-            vm.load();
+                    globalNav.select('/manage/templateeditor');
+                    
+                    var templateModes = {
+                        noscriptMetaRefresh: '@StaticVoid.Blog.Data.TemplateMode.NoscriptMetaRefresh.ToString()',
+                        domRip: '@StaticVoid.Blog.Data.TemplateMode.DomRip.ToString()',
+                        bodyOnly: '@StaticVoid.Blog.Data.TemplateMode.BodyOnly.ToString()',
+                        noNojsFallback: '@StaticVoid.Blog.Data.TemplateMode.NoNojsFallback.ToString()',
+                        noDomCustomisation: '@StaticVoid.Blog.Data.TemplateMode.NoDomCustomisation.ToString()'
+                    };
 
-            globalNav.select('/manage/templateeditor');
+                    var vm = new templateEditorViewModel({
+                        data: {
+                            css: @(Html.Raw(Json.Encode(Model.Css))),
+                            html: @(Html.Raw(Json.Encode(Model.HtmlTemplate))),
+                            templateMode: @(Html.Raw(Json.Encode(Model.TemplateMode.ToString()))),
+                            templateModes: templateModes
+                        }
+                    });
 
-            $('#template-tabs a').click(function (e) {
-                $(this).tab('show');
-                vm.update();
-            })
+                    ko.applyBindings(vm, $('#style-section')[0]);
+                    vm.load();
+
+                    $('#template-tabs a').click(function (e) {
+                        $(this).tab('show');
+                        vm.update();
+                    })
+                }
+            };
         });
     </script>
 }

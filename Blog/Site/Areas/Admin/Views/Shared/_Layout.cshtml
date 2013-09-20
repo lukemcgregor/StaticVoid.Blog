@@ -25,7 +25,7 @@
             };
         });
 
-        define("root-layout-startup", ['bootstrap'], function () {
+        define("root-layout-startup", ['jquery','bootstrap'], function ($) {
             return {
                 onStart: function () {
                     console.debug('root layout start');

@@ -19,7 +19,7 @@
         "markdown-deep-editor-ui": "/Scripts/MarkdownDeepEditorUI",
     },
     shim: {
-        "bootstrap": ['jquery'],
+    	"bootstrap": ['jquery'],
         "ba-resize": ['jquery'],
         "markdown-deep": ['jquery'],
         "markdown-deep-editor": ['markdown-deep'],

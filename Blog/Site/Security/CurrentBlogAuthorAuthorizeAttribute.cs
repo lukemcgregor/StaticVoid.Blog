@@ -16,43 +16,38 @@ namespace StaticVoid.Blog.Site.Security
 
 	//filter
 	public class CurrentBlogAuthorAuthorizeFilter : IAuthorizationFilter
-    {
-        private readonly IRepository<User> _userRepository;
-        private readonly IRepository<Data.Blog> _blogRepository;
-        private readonly IRepository<Securable> _securableRepository;
-        private readonly ISecurityHelper _securityHelper;
-        private readonly IHttpContextService _httpContext;
+	{
+		private readonly IRepository<User> _userRepository;
+		private readonly IRepository<Data.Blog> _blogRepository;
+		private readonly IRepository<Securable> _securableRepository;
+		private readonly ISecurityHelper _securityHelper;
+		private readonly IHttpContextService _httpContext;
 
-        public CurrentBlogAuthorAuthorizeFilter(
-            IRepository<User> userRepository, 
-            IRepository<Data.Blog> blogRepository, 
-            IRepository<Securable> securableRepository, 
-            ISecurityHelper securityHelper,
-            IHttpContextService httpContext)
+		public CurrentBlogAuthorAuthorizeFilter(
+			IRepository<User> userRepository,
+			IRepository<Data.Blog> blogRepository,
+			IRepository<Securable> securableRepository,
+			ISecurityHelper securityHelper,
+			IHttpContextService httpContext)
 		{
-            _userRepository = userRepository;
-            _blogRepository = blogRepository;
-            _securableRepository = securableRepository;
-            _securityHelper = securityHelper;
-            _httpContext = httpContext;
+			_userRepository = userRepository;
+			_blogRepository = blogRepository;
+			_securableRepository = securableRepository;
+			_securityHelper = securityHelper;
+			_httpContext = httpContext;
 		}
 
 		public void OnAuthorization(AuthorizationContext filterContext)
 		{
-            var currentBlog = _blogRepository.GetCurrentBlog(_httpContext);
-            if (HttpContext.Current.User.Identity.IsAuthenticated && 
-				_securityHelper.CurrentUser != null &&
-                !String.IsNullOrWhiteSpace(_securityHelper.CurrentUser.ClaimedIdentifier))
-            {
-                var currentUser = _userRepository.GetCurrentUser(_securityHelper);
-                if (currentUser != null)
-                {
-                    if (currentUser.IsAuthorOfBlog(currentBlog, _securableRepository))
-                    {
-                        return; //no unauthorized
-                    }
-                }
-            }
+			var currentBlog = _blogRepository.GetCurrentBlog(_httpContext);
+			if (HttpContext.Current.User.Identity.IsAuthenticated &&
+				_securityHelper.CurrentUser != null)
+			{
+				if (_securityHelper.CurrentUser.IsAuthorOfBlog(currentBlog, _securableRepository))
+				{
+					return; //no unauthorized
+				}
+			}
 			filterContext.Result = new HttpUnauthorizedResult();
 		}
 	}

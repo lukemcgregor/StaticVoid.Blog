@@ -22,8 +22,12 @@ namespace StaticVoid.Blog.Site.Routing
             var postRepo = DependencyResolver.Current.GetService<IRepository<Post>>();
             var blogRepo = DependencyResolver.Current.GetService<IRepository<Data.Blog>>();
             var httpContextService = DependencyResolver.Current.GetService<IHttpContextService>();
+			var currentBlog = blogRepo.GetCurrentBlog(httpContextService);
+			if(currentBlog == null){
+				return false;
+			}
 
-            return postRepo.IsUrlAPost(blogRepo.GetCurrentBlog(httpContextService).Id, path);
+            return postRepo.IsUrlAPost(currentBlog.Id, path);
         }
     }
 }

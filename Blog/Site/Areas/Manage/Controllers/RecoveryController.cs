@@ -127,7 +127,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                     _postRepository.Create(new Post
                     {
                         //TODO make this recover based on who origionally posted the article
-                        AuthorId = _userRepository.GetCurrentUser(_securityHelper).Id,
+						AuthorId = _securityHelper.CurrentUser.Id,
                         BlogId = CurrentBlog.Id,
                         Path = toRestore.Path,
                         Posted = toRestore.Posted,

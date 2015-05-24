@@ -9,30 +9,30 @@ using System.Web.Mvc;
 
 namespace StaticVoid.Blog.Site.Areas.Platform.Controllers
 {
-    [PlatformAdminAuthorize]
-    public class DashboardController : Controller
-    {
-        public readonly IRepository<Data.Blog> _blogRepo;
+	[PlatformAdminAuthorize]
+	public class DashboardController : Controller
+	{
+		public readonly IRepository<Data.Blog> _blogRepo;
 
-        public DashboardController(IRepository<Data.Blog> blogRepo)
-        {
-            _blogRepo = blogRepo;
-            ViewBag.IsBlogAdmin = true;
-        }
+		public DashboardController(IRepository<Data.Blog> blogRepo)
+		{
+			_blogRepo = blogRepo;
+			ViewBag.IsBlogAdmin = true;
+		}
 
-        public ActionResult Index()
-        {
-            var blogs = _blogRepo.GetAll().Select(b => new DashboardBlogModel
-            {
-                Id = b.Id,
-                Name = b.Name,
-                Url = b.AuthoritiveUrl
-            }).ToList();
+		public ActionResult Index()
+		{
+			var blogs = _blogRepo.GetAll().Select(b => new DashboardBlogModel
+			{
+				Id = b.Id,
+				Name = b.Name,
+				Url = b.AuthoritiveUrl
+			}).ToList();
 
-            return View(new PlatformDashboardModel
-            {
-                Blogs = blogs
-            });
-        }
-    }
+			return View(new PlatformDashboardModel
+			{
+				Blogs = blogs
+			});
+		}
+	}
 }

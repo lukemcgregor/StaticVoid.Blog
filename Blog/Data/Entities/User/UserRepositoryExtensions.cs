@@ -9,24 +9,9 @@ namespace StaticVoid.Blog.Data
 {
 	public static class UserRepositoryExtensions
 	{
-		public static User EnsureUser(this IRepository<User> repository, User user)
+		public static User GetById(this IQueryable<User> users, int id)
 		{
-			var existingUser = repository.GetBy(u => u.ClaimedIdentifier == user.ClaimedIdentifier);
-			if (existingUser == null)
-			{
-				repository.Create(user);
-                return user;
-			}
-			else//update existing deets
-			{
-				existingUser.Email = user.Email;
-				existingUser.FirstName = user.FirstName;
-				existingUser.LastName = user.LastName;
-				repository.Update(existingUser);
-                
-                return existingUser;
-			}
-
+			return users.SingleOrDefault(u => u.Id == id);
 		}
 	}
 }

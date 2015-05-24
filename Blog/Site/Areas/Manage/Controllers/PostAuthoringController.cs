@@ -62,7 +62,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
 				_postRepository.Create(new Post
 				{
-					AuthorId = _userRepository.GetCurrentUser(_securityHelper).Id,
+					AuthorId = _securityHelper.CurrentUser.Id,
 					DraftBody = model.Body,
                     DraftDescription = model.Description,
 					Posted = _dateTime.Now,

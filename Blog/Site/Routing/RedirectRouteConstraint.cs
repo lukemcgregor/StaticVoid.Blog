@@ -16,8 +16,16 @@ namespace StaticVoid.Blog.Site.Routing
         {
             var blogRepo = DependencyResolver.Current.GetService<IRepository<Data.Blog>>();
             var httpContextService = DependencyResolver.Current.GetService<IHttpContextService>();
+			var redirectRepo = DependencyResolver.Current.GetService<IRepository<Redirect>>();
 
-            return DependencyResolver.Current.GetService<IRepository<Redirect>>().GetRedirectFor(httpContext.Request.Url.LocalPath.TrimStart('/'), blogRepo.GetCurrentBlog(httpContextService).Id) != null;
+			var currentBlog = blogRepo.GetCurrentBlog(httpContextService);
+
+			if (currentBlog == null)
+			{
+				return false;
+			}
+
+			return redirectRepo.GetRedirectFor(httpContext.Request.Url.LocalPath.TrimStart('/'), currentBlog.Id) != null;
         }
     }
 }

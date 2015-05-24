@@ -71,6 +71,9 @@
     <Compile Include="Entities\Post\PostExtensions.cs" />
     <Compile Include="Entities\Post\PostHelpers.cs" />
     <Compile Include="Entities\Post\PostRepositoryExtensions.cs" />
+    <Compile Include="Entities\ProviderLogin\ProviderLogin.cs" />
+    <Compile Include="Entities\ProviderLogin\ProviderLoginMappings.cs" />
+    <Compile Include="Entities\ProviderLogin\ProviderLoginRepositoryExtensions.cs" />
     <Compile Include="Entities\Redirect\CachedRedirectRepository.cs" />
     <Compile Include="Entities\Redirect\RedirectRepositoryExtensions.cs" />
     <Compile Include="Entities\Redirect\Redirect.cs" />
@@ -105,6 +108,10 @@
     <Compile Include="Migrations\201307140654324_RemovingVisits.Designer.cs">
       <DependentUpon>201307140654324_RemovingVisits.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505210445127_NewUserSystem.cs" />
+    <Compile Include="Migrations\201505210445127_NewUserSystem.Designer.cs">
+      <DependentUpon>201505210445127_NewUserSystem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PersistanceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -132,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201307140654324_RemovingVisits.resx">
       <DependentUpon>201307140654324_RemovingVisits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505210445127_NewUserSystem.resx">
+      <DependentUpon>201505210445127_NewUserSystem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

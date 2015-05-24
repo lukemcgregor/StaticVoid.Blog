@@ -40,7 +40,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
             {
                 blog = _blogRepo.GetBy(b => b.Id == blogId.Value);
 
-                if(!_userRepository.GetCurrentUser(_securityHelper).IsAdminOfBlog(blog,_securableRepository))
+                if(!_securityHelper.CurrentUser.IsAdminOfBlog(blog,_securableRepository))
                 {
                     throw new HttpException(403, "Not Authorized");
                 }
@@ -71,7 +71,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
                 {
                     blog = _blogRepo.GetBy(b => b.Id == blogId.Value);
 
-                    if (!_userRepository.GetCurrentUser(_securityHelper).IsAdminOfBlog(blog, _securableRepository))
+					if (!_securityHelper.CurrentUser.IsAdminOfBlog(blog, _securableRepository))
                     {
                         throw new HttpException(403, "Not Authorized");
                     }

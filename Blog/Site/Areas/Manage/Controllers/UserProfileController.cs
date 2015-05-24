@@ -24,7 +24,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult EditMyProfile()
         {
-            var currentUser = _userRepo.GetCurrentUser(_securityHelper);
+			var currentUser = _securityHelper.CurrentUser;
 
             return PartialView("EditMyProfileModal", new MyProfileModel { 
                 GooglePlusProfileUrl = currentUser.GooglePlusProfileUrl
@@ -36,7 +36,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         {
             if (ModelState.IsValid)
             {
-                var currentUser = _userRepo.GetCurrentUser(_securityHelper);
+				var currentUser = _securityHelper.CurrentUser;
 
                 currentUser.GooglePlusProfileUrl = model.GooglePlusProfileUrl;
 

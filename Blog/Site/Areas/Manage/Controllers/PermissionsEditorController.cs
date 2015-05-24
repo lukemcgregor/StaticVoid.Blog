@@ -48,7 +48,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult EditPermissions(int? blogId = null)
         {
-            var currentUser = _userRepo.GetCurrentUser(_securityHelper);
+			var currentUser = _securityHelper.CurrentUser;
 
             var ownedBlogs = _securableRepo.BlogsUserIsAdminOf(_blogRepo, currentUser.Id).Where(b=> !blogId.HasValue || b.Id== blogId.Value);
 
@@ -113,7 +113,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         [HttpPost]
         public JsonResult Invite(InviteModel model)
         {
-            var currentUser = _userRepo.GetCurrentUser(_securityHelper);
+			var currentUser = _securityHelper.CurrentUser;
             if (!_securableRepo.BlogsUserIsAdminOf(_blogRepo, currentUser.Id).Any(b => b.AuthorSecurableId == model.SecurableId))
             {
                 throw new HttpException(403, "Not Authorised");
@@ -126,7 +126,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
         [HttpPost]
         public JsonResult Revoke(RevokeModel model)
         {
-            var currentUser = _userRepo.GetCurrentUser(_securityHelper);
+			var currentUser = _securityHelper.CurrentUser;
             if (!_securableRepo.BlogsUserIsAdminOf(_blogRepo, currentUser.Id).Any(b => b.AuthorSecurableId == model.SecurableId))
             {
                 throw new HttpException(403, "Not Authorised");

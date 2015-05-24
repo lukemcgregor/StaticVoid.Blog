@@ -37,10 +37,14 @@ namespace StaticVoid.Blog.Site.Tests.Controllers
             }));
             _postModificationRepo = new SimpleRepository<Data.PostModification>(new InMemoryRepositoryDataSource<Data.PostModification>());
             _mockSecurityHelper = new Mock<ISecurityHelper>();
-            _mockSecurityHelper.Setup(s => s.CurrentUser).Returns(new OpenIdUser("") { ClaimedIdentifier = "zzz" });
+
+			_mockSecurityHelper.Setup(s => s.CurrentUser).Returns(new User()
+			{
+				Email = "joe@bloggs.com"
+			});
 
             _userRepo = new SimpleRepository<Data.User>(new InMemoryRepositoryDataSource<Data.User>(new List<Data.User> { new Data.User { 
-                ClaimedIdentifier = "zzz", 
+                //ClaimedIdentifier = "zzz", 
                 Email = "joe@bloggs.com"
             }}));
             _redirectRepo = new SimpleRepository<Data.Redirect>(new InMemoryRepositoryDataSource<Data.Redirect>(new List<Data.Redirect> { new Data.Redirect { } }));

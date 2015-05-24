@@ -24,9 +24,9 @@ namespace StaticVoid.Blog.Site.Wiring
     {
         public override void Load()
         {
-            Bind<DbContext>().To<BlogContext>().InRequestScope();
+            Bind<IBlogContext, DbContext>().To<BlogContext>().InRequestScope();
             Bind<IProvideDateTime>().To<DateTimeProvider>();
-            Bind<OpenIdMembershipService>().ToSelf().InTransientScope();
+			//Bind<OpenIdMembershipService>().ToSelf().InTransientScope();
             Bind<IRepositoryDataSource<TemporaryUploadedBlogBackup>>().To<InMemoryRepositoryDataSource<TemporaryUploadedBlogBackup>>().InSingletonScope();
             Bind<ISecurityHelper>().To<SecurityHelper>();
             Bind<ISendEmail>().To<EmailSender>();

@@ -1,4 +1,5 @@
-﻿using StaticVoid.Blog.Site.Models;
+﻿using StaticVoid.Blog.Data;
+using StaticVoid.Blog.Site.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace StaticVoid.Blog.Site
 {
-    public interface ISecurityHelper
-    {
-        OpenIdUser CurrentUser { get; }
-    }
+	public interface ISecurityHelper
+	{
+		User CurrentUser { get; }
+	}
 }

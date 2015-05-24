@@ -42,7 +42,7 @@ namespace StaticVoid.Blog.Site.Areas.Manage.Controllers
 
         public ActionResult Index()
         {
-            var currentUser = _userRepo.GetCurrentUser(_securityHelper);
+			var currentUser = _securityHelper.CurrentUser;
             var currentBlog = CurrentBlog;
 
             var posts = _postRepo.PostsForBlog(currentBlog.Id).OrderByDescending(p => p.Posted).ToArray();

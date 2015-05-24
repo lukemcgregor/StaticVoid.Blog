@@ -7,6 +7,7 @@ using System.Web.Security;
 using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Models;
 using System.Security.Claims;
+using StaticVoid.Blog.Site.Gravitar;
 
 namespace StaticVoid.Blog.Site
 {
@@ -49,38 +50,28 @@ namespace StaticVoid.Blog.Site
 			}
 		}
 
+		public static string CurrentUserName
+		{
+			get
+			{
+				if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+				{
+					return ((ClaimsIdentity)HttpContext.Current.User.Identity).FindFirst(ClaimTypes.Name).Value;
+				}
+				return null;
+			}
+		}
 
-		//public OpenIdUser CurrentUser
-		//{
-		//	get
-		//	{
-		//		if (HttpContext.Current.User.Identity.IsAuthenticated)
-		//		{
-		//			var authenticatedCookie = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
-		//			if (authenticatedCookie != null)
-		//			{
-		//				var authenticatedCookieValue = authenticatedCookie.Value.ToString();
-		//				if (!string.IsNullOrWhiteSpace(authenticatedCookieValue))
-		//				{
-		//					var decryptedTicket = FormsAuthentication.Decrypt(authenticatedCookieValue);
-		//					return new OpenIdUser(decryptedTicket.UserData);
-		//				}
-		//			}
-		//		}
-		//		return null;
-		//	}
-		//}
-
-		///// <summary>
-		///// This is not mockable, please dont use me anywhere you dont have to, this is only there so
-		///// in a non-injectable place like a view with no model this can still be used eg _LoginPartial
-		///// </summary>
-		//public static OpenIdUser UnsafeCurrentUser
-		//{
-		//	get
-		//	{
-		//		return new SecurityHelper().CurrentUser;
-		//	}
-		//}
+		public static string CurrentUserPicture
+		{
+			get
+			{
+				if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity.IsAuthenticated)
+				{
+					return ((ClaimsIdentity)HttpContext.Current.User.Identity).FindFirst(ClaimTypes.Email).Value.GravitarUrlFromEmail();
+				}
+				return null;
+			}
+		}
 	}
 }

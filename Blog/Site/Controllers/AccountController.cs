@@ -14,6 +14,7 @@ using StaticVoid.Blog.Site.Security;
 using StaticVoid.Blog.Data;
 using StaticVoid.Blog.Site.Services;
 using System.Collections.Generic;
+using StaticVoid.Blog.Site.Gravitar;
 
 namespace StaticVoid.Blog.Site.Controllers
 {
@@ -48,27 +49,6 @@ namespace StaticVoid.Blog.Site.Controllers
 			_securityHelper = securityHelper;
 		}
 
-//		public ActionResult Login()
-//		{
-//			var user = _openIdMembership.GetUser();
-//			if (user != null)
-//			{
-//				var authenticatedUser = _userRepository.EnsureUser(new User
-//				{
-//					//ClaimedIdentifier = user.ClaimedIdentifier,
-//					Email = user.Email,
-//					FirstName = user.FullName.Split(' ').First(),
-//					LastName = user.FullName.Split(' ').Last(),
-//					CreatedVia = Request.Url.Authority
-//				});
-
-//				var cookie = _openIdMembership.CreateFormsAuthenticationCookie(user);
-//				HttpContext.Response.Cookies.Add(cookie);
-
-//				return new RedirectResult(Request.Params["ReturnUrl"] ?? "/");
-//			}
-//			return View();
-//		}
 
 		public ActionResult Register(string token)
 		{
@@ -103,26 +83,6 @@ namespace StaticVoid.Blog.Site.Controllers
 			return RedirectToAction("Index", "Dashboard", new { Area = "Manage" });
 		}
 
-//		[HttpPost]
-//		public ActionResult Login(string openid_identifier)
-//		{
-//			var response = _openIdMembership.ValidateAtOpenIdProvider(openid_identifier);
-
-//			if (response != null)
-//			{
-//				return response.RedirectingResponse.AsActionResult();
-//			}
-
-//			return View();
-//		}
-
-//		[OpenIdAuthorize]
-//		public ActionResult LogOff()
-//		{
-//			FormsAuthentication.SignOut();
-
-//			return RedirectToAction("Index", "Post");
-//		}
 
 		[AllowAnonymous]
 		public ActionResult Login(string returnUrl)
@@ -241,6 +201,8 @@ namespace StaticVoid.Blog.Site.Controllers
 
 			ClaimsIdentity identity = new ClaimsIdentity(DefaultAuthenticationTypes.ApplicationCookie, ClaimTypes.Name, ClaimTypes.Role);
 			identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+			identity.AddClaim(new Claim(ClaimTypes.Name, user.FullName()));
+			identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
 
 			AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);
 		}

@@ -30,6 +30,7 @@ namespace StaticVoid.Blog.Site
 
 		public User GetCurrentUser(HttpContext context)
 		{
+			
 			if (context.User != null && context.User.Identity.IsAuthenticated)
 			{
 				var id = int.Parse(((ClaimsIdentity)context.User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value);

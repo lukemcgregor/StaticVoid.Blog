@@ -115,6 +115,10 @@
     <Compile Include="Migrations\201505210445127_NewUserSystem.Designer.cs">
       <DependentUpon>201505210445127_NewUserSystem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505250136093_MissingIndex.cs" />
+    <Compile Include="Migrations\201505250136093_MissingIndex.Designer.cs">
+      <DependentUpon>201505250136093_MissingIndex.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PersistanceModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -145,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505210445127_NewUserSystem.resx">
       <DependentUpon>201505210445127_NewUserSystem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505250136093_MissingIndex.resx">
+      <DependentUpon>201505250136093_MissingIndex.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
